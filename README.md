@@ -1,6 +1,10 @@
 # Phầm mềm Quản lý Đảng viên
 ### Giới thiệu #
 Phần mềm Quản lý Đảng viên được sử dụng nhằm mục đích phục vụ công tác quản lý Đảng viên, giúp việc đánh giá, nhận xét Đảng viên, tổ chức Đảng viên hàng năm được nhanh gọn, chính xác và tiết kiệm thời gian, thông suốt từ Đảng ủy cấp đơn vị cao nhất đến các Chi bộ. 
+#### Thành viên nhóm
++ Lê Thành Nam   22010489
++ Bùi Ngọc Đức   22010065
++ Vũ Thành Dương 22010501
 ### Tính năng #
 #### Quản lý hồ sơ Đảng viên #
 + Thêm mới Đảng viên
