@@ -8,7 +8,6 @@ Phần mềm Quản lý Đảng viên được sử dụng nhằm mục đích p
 ### Tính năng #
 #### Quản lý hồ sơ Đảng viên #
 + Thêm mới Đảng viên
-+ Xuất phiếu Đảng viên
 + Tìm kiếm Đảng viên
 + Giới thiệu sinh hoạt Đảng
 #### Quản lý tình trạng Đảng viên
