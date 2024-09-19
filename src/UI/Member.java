@@ -26,9 +26,6 @@ public class Member extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jplSlideMenu = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         lblThanhTich = new javax.swing.JLabel();
         lblTrangChu = new javax.swing.JLabel();
         lblSinhHoat = new javax.swing.JLabel();
@@ -38,6 +35,10 @@ public class Member extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         lblDangVien = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        BackgroundMenu = new javax.swing.JLabel();
         jplTitle = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
@@ -76,6 +77,7 @@ public class Member extends javax.swing.JFrame {
         jLabel43 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel44 = new javax.swing.JLabel();
         cardYeuCau = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -92,6 +94,7 @@ public class Member extends javax.swing.JFrame {
         jEditorPane3 = new javax.swing.JEditorPane();
         jLabel20 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel45 = new javax.swing.JLabel();
         cardDangVien = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -114,6 +117,7 @@ public class Member extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
+        jLabel46 = new javax.swing.JLabel();
         cardThanhTich = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
         jLabel37 = new javax.swing.JLabel();
@@ -123,6 +127,7 @@ public class Member extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jLabel41 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -138,38 +143,8 @@ public class Member extends javax.swing.JFrame {
         jplSlideMenu.setPreferredSize(new java.awt.Dimension(190, 590));
         jplSlideMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/avatar.png"))); // NOI18N
-
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel4.setText("Bui Ngoc Duc");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(59, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(54, 54, 54))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addContainerGap())
-        );
-
-        jplSlideMenu.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 150));
-
         lblThanhTich.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblThanhTich.setForeground(new java.awt.Color(255, 255, 255));
         lblThanhTich.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblThanhTich.setText("Thành Tích");
         lblThanhTich.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -181,6 +156,7 @@ public class Member extends javax.swing.JFrame {
 
         lblTrangChu.setBackground(new java.awt.Color(255, 255, 255));
         lblTrangChu.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblTrangChu.setForeground(new java.awt.Color(255, 255, 255));
         lblTrangChu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTrangChu.setText("Trang Chủ");
         lblTrangChu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -191,6 +167,7 @@ public class Member extends javax.swing.JFrame {
         jplSlideMenu.add(lblTrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 200, 30));
 
         lblSinhHoat.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblSinhHoat.setForeground(new java.awt.Color(255, 255, 255));
         lblSinhHoat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSinhHoat.setText("Sinh Hoạt");
         lblSinhHoat.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -201,6 +178,7 @@ public class Member extends javax.swing.JFrame {
         jplSlideMenu.add(lblSinhHoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 200, 30));
 
         lblYeuCau.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblYeuCau.setForeground(new java.awt.Color(255, 255, 255));
         lblYeuCau.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblYeuCau.setText("Yêu Cầu");
         lblYeuCau.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -218,16 +196,19 @@ public class Member extends javax.swing.JFrame {
         jplSlideMenu.add(lblDangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 200, 30));
 
         jLabel10.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Giới Thiệu");
         jplSlideMenu.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 200, 30));
 
         jLabel11.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Trợ Giúp");
         jplSlideMenu.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 200, 30));
 
         lblDangVien.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblDangVien.setForeground(new java.awt.Color(255, 255, 255));
         lblDangVien.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDangVien.setText("Đảng Viên");
         lblDangVien.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -236,6 +217,19 @@ public class Member extends javax.swing.JFrame {
             }
         });
         jplSlideMenu.add(lblDangVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 200, 30));
+
+        jLabel21.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Bui Ngoc Duc");
+        jplSlideMenu.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 200, -1));
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/avatar.png"))); // NOI18N
+        jplSlideMenu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+        jplSlideMenu.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 200, 20));
+
+        BackgroundMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/BackgroundMenu.jpeg"))); // NOI18N
+        jplSlideMenu.add(BackgroundMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 650));
 
         jPanel1.add(jplSlideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 650));
 
@@ -408,10 +402,12 @@ public class Member extends javax.swing.JFrame {
         jplMain.add(cardTrangChu, "card2");
 
         cardSinhHoat.setBackground(new java.awt.Color(255, 255, 255));
+        cardSinhHoat.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel40.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(255, 51, 51));
         jLabel40.setText("Sinh Hoạt Chi Bộ:");
+        cardSinhHoat.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 21, -1, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -434,388 +430,192 @@ public class Member extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable1);
 
-        jTextField12.setText("Tìm kiếm ");
+        cardSinhHoat.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 365, 938, 209));
 
+        jTextField12.setText("Tìm kiếm ");
+        cardSinhHoat.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(734, 27, 128, -1));
+
+        jButton4.setBackground(new java.awt.Color(0, 204, 255));
+        jButton4.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Tìm");
+        cardSinhHoat.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(868, 27, 61, -1));
 
         jLabel5.setText("Tên Buổi Sinh Hoạt:");
+        cardSinhHoat.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 69, -1, -1));
 
         jTextField13.setText("Buổi Sinh Hoạt Tháng 9");
+        cardSinhHoat.add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 92, 268, -1));
 
         jLabel8.setText("ID Buổi Sinh Hoạt:");
+        cardSinhHoat.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 69, -1, -1));
 
         jTextField14.setText("CS092024");
+        cardSinhHoat.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 92, 106, -1));
 
         jLabel9.setText("Ngày bắt đầu:");
+        cardSinhHoat.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 127, 106, -1));
 
         jTextField15.setText("01/09/2004");
+        cardSinhHoat.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 150, 106, -1));
 
         jLabel23.setText("Ngày kết thúc:");
+        cardSinhHoat.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 127, 106, -1));
 
         jTextField16.setText("30/09/2004");
+        cardSinhHoat.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 150, 106, -1));
 
         jLabel42.setText("Mô tả:");
+        cardSinhHoat.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 186, -1, -1));
 
         jEditorPane5.setContentType("text/html"); // NOI18N
         jEditorPane5.setText("<html>\n  <head>\n\n  </head>\n  <body>\n    <p style=\"margin-top: 0\">\n      10/1974 - 7/1979:<br>\n      Học viên Đại học An ninh nhân dân.<br><br>\n\n      7/1979 - 12/1988:<br>\n      Cán bộ, Cục Bảo vệ Chính trị I, Bộ Công an.<br><br>\n\n      12/1988 - 5/1990:<br>\n      Phó Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1990 - 6/1993:<br>\n      Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/1993 - 5/1997:<br>\n      Phó Cục trưởng Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1997 - 6/2006:<br>\n      Cục trưởng Cục Bảo vệ Chính trị III, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/2006 - 12/2009:<br>\n      Phó Tổng cục trưởng Tổng cục An ninh, Bộ Công an.\n    </p>\n  </body>\n</html>\n\n");
         jScrollPane10.setViewportView(jEditorPane5);
 
+        cardSinhHoat.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 209, 484, 124));
+
         jTextField17.setText("Chưa đăng ký");
+        cardSinhHoat.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 151, 106, -1));
 
         jLabel43.setText("Trạng thái:");
+        cardSinhHoat.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 127, -1, -1));
 
         jButton5.setBackground(new java.awt.Color(51, 204, 0));
         jButton5.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Đăng Ký ");
+        cardSinhHoat.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 150, 124, -1));
 
         jButton6.setBackground(new java.awt.Color(255, 51, 0));
         jButton6.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Huỷ");
+        cardSinhHoat.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 186, 124, -1));
 
-        javax.swing.GroupLayout cardSinhHoatLayout = new javax.swing.GroupLayout(cardSinhHoat);
-        cardSinhHoat.setLayout(cardSinhHoatLayout);
-        cardSinhHoatLayout.setHorizontalGroup(
-            cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5)
-                .addContainerGap())
-            .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel40)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-            .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                        .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, cardSinhHoatLayout.createSequentialGroup()
-                                .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(34, 34, 34)
-                                .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(32, 32, 32)
-                        .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel43)))
-                    .addComponent(jLabel42)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(110, 110, 110)
-                .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(188, Short.MAX_VALUE))
-        );
-        cardSinhHoatLayout.setVerticalGroup(
-            cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardSinhHoatLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
-                .addGap(18, 18, 18)
-                .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                        .addComponent(jLabel23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                        .addComponent(jLabel43)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(cardSinhHoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                        .addComponent(jLabel42)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(cardSinhHoatLayout.createSequentialGroup()
-                        .addComponent(jButton6)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+        jLabel44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
+        cardSinhHoat.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
 
         jplMain.add(cardSinhHoat, "card3");
 
         cardYeuCau.setBackground(new java.awt.Color(255, 255, 255));
+        cardYeuCau.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         jLabel1.setText("Xin Thôi Công tác:");
+        cardYeuCau.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 325, 200, 30));
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         jLabel2.setText("Xin Chuyển Công tác:");
+        cardYeuCau.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, 200, 30));
 
         jScrollPane2.setViewportView(jEditorPane2);
 
+        cardYeuCau.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 396, 596, 162));
+
         jLabel6.setText("Lý Do:");
+        cardYeuCau.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 373, -1, -1));
 
         jButton1.setBackground(new java.awt.Color(102, 204, 0));
         jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Gửi Yêu Cầu");
+        cardYeuCau.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 455, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel7.setText("Chuyển đơn vị công tác chính thức:");
+        cardYeuCau.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 55, -1, -1));
+        cardYeuCau.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
 
         jLabel18.setText("Mã Tổ Chức:");
+        cardYeuCau.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 93, -1, -1));
 
         jLabel19.setText("Ngày Chuyển:");
+        cardYeuCau.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 93, 84, -1));
+        cardYeuCau.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 90, 108, -1));
 
         jScrollPane8.setViewportView(jEditorPane3);
 
+        cardYeuCau.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 148, 597, 159));
+
         jLabel20.setText("Chi tiết:");
+        cardYeuCau.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 125, -1, -1));
 
         jButton2.setBackground(new java.awt.Color(102, 204, 0));
         jButton2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Gửi Yêu Cầu");
+        cardYeuCau.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 168, -1, -1));
 
-        javax.swing.GroupLayout cardYeuCauLayout = new javax.swing.GroupLayout(cardYeuCau);
-        cardYeuCau.setLayout(cardYeuCauLayout);
-        cardYeuCauLayout.setHorizontalGroup(
-            cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardYeuCauLayout.createSequentialGroup()
-                .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(cardYeuCauLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(cardYeuCauLayout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addGroup(cardYeuCauLayout.createSequentialGroup()
-                                        .addComponent(jScrollPane2)
-                                        .addGap(40, 40, 40)
-                                        .addComponent(jButton1))))
-                            .addGroup(cardYeuCauLayout.createSequentialGroup()
-                                .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(112, 112, 112))))
-                    .addGroup(cardYeuCauLayout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(cardYeuCauLayout.createSequentialGroup()
-                                .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(cardYeuCauLayout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel20)
-                                            .addGroup(cardYeuCauLayout.createSequentialGroup()
-                                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(60, 60, 60)
-                                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 149, Short.MAX_VALUE))
-                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(40, 40, 40)
-                                .addComponent(jButton2)))))
-                .addGap(121, 121, 121))
-        );
-        cardYeuCauLayout.setVerticalGroup(
-            cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardYeuCauLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel19)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel20)
-                .addGroup(cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cardYeuCauLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(264, 264, 264)
-                        .addComponent(jButton1)
-                        .addGap(102, 102, 102))
-                    .addGroup(cardYeuCauLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))))
-        );
+        jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
+        cardYeuCau.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
 
         jplMain.add(cardYeuCau, "card4");
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel16.setText("ảnh");
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 39, 160, 210));
 
         jTextField1.setText("bui ngoc duc");
+        jPanel4.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 39, 167, -1));
 
         jLabel17.setText("Họ và Tên:");
+        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 22, -1, -1));
 
         jLabel29.setText("Mã Đảng viên:");
+        jPanel4.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 22, -1, -1));
 
         jTextField2.setText("22010065");
+        jPanel4.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 39, 126, -1));
 
         jLabel30.setText("Ngày Sinh:");
+        jPanel4.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 80, -1, -1));
 
         jTextField3.setText("27/09/2004");
+        jPanel4.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 97, 137, -1));
 
         jLabel31.setText("Ngày Vào Đảng:");
+        jPanel4.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 126, -1, -1));
 
         jTextField4.setText("22/12/2022");
+        jPanel4.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 143, 137, -1));
 
         jLabel32.setText("Địa chỉ:");
+        jPanel4.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 242, -1, -1));
 
         jTextField5.setText("Nhân Quyền Bình Giang Hải Dương");
+        jPanel4.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 259, 313, -1));
 
         jLabel33.setText("Email:");
+        jPanel4.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 184, -1, -1));
 
         jTextField6.setText("22010065@gmail.com");
+        jPanel4.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 201, 167, -1));
 
         jLabel34.setText("Số điện thoại:");
+        jPanel4.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 184, -1, -1));
 
         jTextField7.setText("0349643475");
+        jPanel4.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 201, 128, -1));
 
         jLabel35.setText("Chức Vụ:");
+        jPanel4.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 126, -1, -1));
 
         jTextField8.setText("Đội trưởng");
+        jPanel4.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 143, 128, -1));
 
         jLabel36.setText("Quy trình công tác:");
+        jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 300, -1, -1));
 
         jEditorPane1.setContentType("text/html"); // NOI18N
         jEditorPane1.setText("<html>\n  <head>\n\n  </head>\n  <body>\n    <p style=\"margin-top: 0\">\n      10/1974 - 7/1979:<br>\n      Học viên Đại học An ninh nhân dân.<br><br>\n\n      7/1979 - 12/1988:<br>\n      Cán bộ, Cục Bảo vệ Chính trị I, Bộ Công an.<br><br>\n\n      12/1988 - 5/1990:<br>\n      Phó Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1990 - 6/1993:<br>\n      Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/1993 - 5/1997:<br>\n      Phó Cục trưởng Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1997 - 6/2006:<br>\n      Cục trưởng Cục Bảo vệ Chính trị III, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/2006 - 12/2009:<br>\n      Phó Tổng cục trưởng Tổng cục An ninh, Bộ Công an.\n    </p>\n  </body>\n</html>\n\n");
         jScrollPane6.setViewportView(jEditorPane1);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel30)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel31, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(122, 122, 122)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel29)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(257, 257, 257)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel32)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel33)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel34)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                                .addComponent(jLabel35)
-                                .addComponent(jTextField8))))
-                    .addComponent(jLabel36)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(153, 168, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(0, 0, 0)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel30)
-                        .addGap(0, 0, 0)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel31)
-                                .addGap(0, 0, 0)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel35)
-                                .addGap(0, 0, 0)
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel33)
-                                .addGap(0, 0, 0)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel34)
-                                .addGap(0, 0, 0)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel32)
-                        .addGap(0, 0, 0)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel36)
-                        .addGap(0, 0, 0)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                        .addGap(42, 42, 42))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
+        jPanel4.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 317, 467, 221));
+
+        jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
+        jPanel4.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
 
         javax.swing.GroupLayout cardDangVienLayout = new javax.swing.GroupLayout(cardDangVien);
         cardDangVien.setLayout(cardDangVienLayout);
@@ -835,9 +635,11 @@ public class Member extends javax.swing.JFrame {
         jplMain.add(cardDangVien, "card5");
 
         jPanel19.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel37.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel37.setText("Khen Thưởng Đảng VIên Đã Có Thành Tích Tốt:");
+        jPanel19.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 86, -1, 31));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -860,8 +662,11 @@ public class Member extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(jTable2);
 
+        jPanel19.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 379, 802, 171));
+
         jLabel38.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel38.setText("Kỷ Luật Đảng VIên Đã Có Những Sai Phạm:");
+        jPanel19.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 330, -1, 31));
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -884,43 +689,15 @@ public class Member extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(jTable4);
 
+        jPanel19.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 135, 802, 168));
+
         jLabel41.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(255, 51, 51));
         jLabel41.setText("Khen Thưởng - Kỷ Luật:");
+        jPanel19.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 28, -1, 40));
 
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel37)
-                            .addComponent(jScrollPane7)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 802, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel41)))
-                .addContainerGap(89, Short.MAX_VALUE))
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-        );
+        jLabel47.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
+        jPanel19.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 590));
 
         javax.swing.GroupLayout cardThanhTichLayout = new javax.swing.GroupLayout(cardThanhTich);
         cardThanhTich.setLayout(cardThanhTichLayout);
@@ -1039,6 +816,7 @@ public class Member extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BackgroundMenu;
     private javax.swing.JPanel cardDangVien;
     private javax.swing.JPanel cardSinhHoat;
     private javax.swing.JPanel cardThanhTich;
@@ -1056,6 +834,7 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1065,6 +844,7 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -1072,7 +852,6 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -1083,11 +862,14 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1097,7 +879,6 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1110,6 +891,7 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable4;
