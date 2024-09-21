@@ -11,7 +11,7 @@ public class MySQLConnect {
         // URL kết nối MySQL
         String jdbcURL = "jdbc:mysql://localhost:3306/PartyManagement";
         String username = "root";
-        String password = "duc12345678";
+        String password = "Duong20012004";
 
         Connection connection = null;
 
