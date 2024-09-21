@@ -916,8 +916,8 @@ public class Organization extends javax.swing.JFrame {
 
         jLabel55.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel55.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel55.setText("Kỷ Luật Đảng Viên:");
-        jPanel4.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 6, -1, 40));
+        jLabel55.setText("Kỷ Luật Đảng Viên");
+        jPanel4.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, -1, 40));
 
         jLabel56.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel56.setText("Danh Sách Đảng Viên Đã Vi Phạm Kỷ Luật:");
@@ -949,6 +949,9 @@ public class Organization extends javax.swing.JFrame {
         jTextField15.setText("Tìm kiếm ");
         jPanel4.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 37, 128, -1));
 
+        jButton14.setBackground(new java.awt.Color(0, 204, 255));
+        jButton14.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jButton14.setForeground(new java.awt.Color(255, 255, 255));
         jButton14.setText("Tìm");
         jPanel4.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(849, 37, 61, -1));
 
