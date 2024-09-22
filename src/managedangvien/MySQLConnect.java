@@ -11,14 +11,8 @@ public class MySQLConnect {
         // URL kết nối MySQL
         String jdbcURL = "jdbc:mysql://20.6.136.74:3306/PartyManagement";
         String username = "root";
-<<<<<<< HEAD
-        String password = "thanhnam";
-=======
         String password = "Duong20012004";
->>>>>>> c10289a67dccb6e52264267f411142de8f72e9e2
-
         Connection connection = null;
-
         try {
             // Kết nối tới MySQL
             connection = DriverManager.getConnection(jdbcURL, username, password);

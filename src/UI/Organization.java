@@ -801,13 +801,13 @@ public class Organization extends javax.swing.JFrame {
         cardDangVien.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 121, -1, -1));
 
         TextFieldNgaySinh.setText("27/09/2004");
-        cardDangVien.add(TextFieldNgaySinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 138, 137, -1));
+        cardDangVien.add(TextFieldNgaySinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 138, 170, -1));
 
         jLabel31.setText("Ngày Vào Đảng:");
         cardDangVien.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 171, -1, -1));
 
         TextFieldNgayVao.setText("22/12/2022");
-        cardDangVien.add(TextFieldNgayVao, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 188, 137, -1));
+        cardDangVien.add(TextFieldNgayVao, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 188, 170, -1));
 
         jLabel32.setText("Địa chỉ:");
         cardDangVien.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 287, -1, -1));
