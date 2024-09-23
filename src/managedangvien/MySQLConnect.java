@@ -9,9 +9,9 @@ import java.sql.ResultSet;
 public class MySQLConnect {
     public static void main(String[] args) {
         // URL kết nối MySQL
-        String jdbcURL = "jdbc:mysql://20.6.136.74:3306/PartyManagement";
+        String jdbcURL = "jdbc:mysql://127.0.0.1:3306/DangVien";
         String username = "root";
-        String password = "Duong20012004";
+        String password = "duc12345678";
         Connection connection = null;
         try {
             // Kết nối tới MySQL
@@ -20,14 +20,14 @@ public class MySQLConnect {
 
             // Tạo statement để thực hiện truy vấn SQL
             Statement statement = connection.createStatement();
-            String sql = "SELECT * FROM User";
+            String sql = "SELECT * FROM PartyMember";
 
             // Thực hiện truy vấn
             ResultSet resultSet = statement.executeQuery(sql);
 
             // Xử lý kết quả
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("id") + " " + resultSet.getString("username"));
+                System.out.println(resultSet.getString("id"));
             }
 
         } catch (SQLException e) {

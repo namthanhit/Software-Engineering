@@ -5,11 +5,17 @@
  */
 package UI;
 
+import Class.PartyMember;
+import java.awt.List;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author User
  */
 public class Member extends javax.swing.JFrame {
+    
+    List<PartyMember> listDangVien = new ArrayList<>();
 
     public Member() {
         initComponents();
@@ -193,6 +199,11 @@ public class Member extends javax.swing.JFrame {
         lblDangXuat.setForeground(new java.awt.Color(255, 51, 0));
         lblDangXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDangXuat.setText("Đăng Xuất");
+        lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseClicked(evt);
+            }
+        });
         jplSlideMenu.add(lblDangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 200, 30));
 
         jLabel10.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
@@ -224,8 +235,8 @@ public class Member extends javax.swing.JFrame {
         jLabel21.setText("Bui Ngoc Duc");
         jplSlideMenu.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 200, -1));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/avatar.png"))); // NOI18N
-        jplSlideMenu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-user.png"))); // NOI18N
+        jplSlideMenu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
         jplSlideMenu.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 200, 20));
 
         BackgroundMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/BackgroundMenu.jpeg"))); // NOI18N
@@ -778,6 +789,11 @@ public class Member extends javax.swing.JFrame {
         cardDangVien.setVisible(false);
         cardThanhTich.setVisible(true);
     }//GEN-LAST:event_lblThanhTichMouseClicked
+
+    private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_lblDangXuatMouseClicked
 
     /**
      * @param args the command line arguments

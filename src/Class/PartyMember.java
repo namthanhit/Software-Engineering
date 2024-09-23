@@ -5,12 +5,14 @@
 package Class;
 
 import java.util.Date;
+import javax.swing.Icon;
 
 /**
  *
  * @author THANH DUONG
  */
 public class PartyMember {
+    private Icon avatar;
     private String id;
     private String fullName;
     private Date birthDate;
@@ -23,7 +25,8 @@ public class PartyMember {
     public PartyMember() {
     }
 
-    public PartyMember(String id, String fullName, Date birthDate, Date joinDate, String address, String email, String phoneNumber, String status) {
+    public PartyMember(Icon avatar, String id, String fullName, Date birthDate, Date joinDate, String address, String email, String phoneNumber, String status) {
+        this.avatar = avatar;
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
@@ -33,7 +36,12 @@ public class PartyMember {
         this.phoneNumber = phoneNumber;
         this.status = status;
     }
+    
+    public Icon getAvatar() {
+        return avatar;
+    }
 
+    
     public String getId() {
         return id;
     }
@@ -65,7 +73,11 @@ public class PartyMember {
     public String getStatus() {
         return status;
     }
-
+    
+    public void setAvatar(Icon avatar) {
+        this.avatar = avatar;
+    }
+    
     public void setId(String id) {
         this.id = id;
     }
@@ -108,4 +120,6 @@ public class PartyMember {
     public void searchPartyMember(){
         
     }
+    
+    
 }
