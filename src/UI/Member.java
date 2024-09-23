@@ -88,18 +88,18 @@ public class Member extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jEditorPane2 = new javax.swing.JEditorPane();
+        editorPaneYCLiDoNghi = new javax.swing.JEditorPane();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        buttonYCNghi = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        textFieldYCMaChuyen = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        textFieldYCNgayChuyen = new javax.swing.JTextField();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jEditorPane3 = new javax.swing.JEditorPane();
+        editorPaneYCLiDoChuyen = new javax.swing.JEditorPane();
         jLabel20 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        buttonYCChuyen = new javax.swing.JButton();
         jLabel45 = new javax.swing.JLabel();
         cardDangVien = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -519,43 +519,48 @@ public class Member extends javax.swing.JFrame {
         jLabel2.setText("Xin Chuyển Công tác:");
         cardYeuCau.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, 200, 30));
 
-        jScrollPane2.setViewportView(jEditorPane2);
+        jScrollPane2.setViewportView(editorPaneYCLiDoNghi);
 
         cardYeuCau.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 396, 596, 162));
 
         jLabel6.setText("Lý Do:");
         cardYeuCau.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 373, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(102, 204, 0));
-        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Gửi Yêu Cầu");
-        cardYeuCau.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 455, -1, -1));
+        buttonYCNghi.setBackground(new java.awt.Color(102, 204, 0));
+        buttonYCNghi.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonYCNghi.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYCNghi.setText("Gửi Yêu Cầu");
+        cardYeuCau.add(buttonYCNghi, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 455, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel7.setText("Chuyển đơn vị công tác chính thức:");
         cardYeuCau.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 55, -1, -1));
-        cardYeuCau.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
+        cardYeuCau.add(textFieldYCMaChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
 
         jLabel18.setText("Mã Tổ Chức:");
         cardYeuCau.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 93, -1, -1));
 
         jLabel19.setText("Ngày Chuyển:");
         cardYeuCau.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 93, 84, -1));
-        cardYeuCau.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 90, 108, -1));
+        cardYeuCau.add(textFieldYCNgayChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 90, 108, -1));
 
-        jScrollPane8.setViewportView(jEditorPane3);
+        jScrollPane8.setViewportView(editorPaneYCLiDoChuyen);
 
         cardYeuCau.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 148, 597, 159));
 
         jLabel20.setText("Chi tiết:");
         cardYeuCau.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 125, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(102, 204, 0));
-        jButton2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Gửi Yêu Cầu");
-        cardYeuCau.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 168, -1, -1));
+        buttonYCChuyen.setBackground(new java.awt.Color(102, 204, 0));
+        buttonYCChuyen.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonYCChuyen.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYCChuyen.setText("Gửi Yêu Cầu");
+        buttonYCChuyen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonYCChuyenActionPerformed(evt);
+            }
+        });
+        cardYeuCau.add(buttonYCChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 168, -1, -1));
 
         jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         cardYeuCau.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
@@ -795,6 +800,15 @@ public class Member extends javax.swing.JFrame {
         
     }//GEN-LAST:event_lblDangXuatMouseClicked
 
+    private void buttonYCChuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyenActionPerformed
+        String ycMaToChuc, ycNgayChuyen, ycLiDoChuyen,ycLiDoNghi;
+        textFieldYCMaChuyen.getText();
+        textFieldYCNgayChuyen.getText();
+        editorPaneYCLiDoChuyen.getText();
+        
+        
+    }//GEN-LAST:event_buttonYCChuyenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -833,19 +847,19 @@ public class Member extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundMenu;
+    private javax.swing.JButton buttonYCChuyen;
+    private javax.swing.JButton buttonYCNghi;
     private javax.swing.JPanel cardDangVien;
     private javax.swing.JPanel cardSinhHoat;
     private javax.swing.JPanel cardThanhTich;
     private javax.swing.JPanel cardTrangChu;
     private javax.swing.JPanel cardYeuCau;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JEditorPane editorPaneYCLiDoChuyen;
+    private javax.swing.JEditorPane editorPaneYCLiDoNghi;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JEditorPane jEditorPane2;
-    private javax.swing.JEditorPane jEditorPane3;
     private javax.swing.JEditorPane jEditorPane5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -912,7 +926,6 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
@@ -926,7 +939,6 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel jplMain;
     private javax.swing.JPanel jplSlideMenu;
     private javax.swing.JPanel jplTitle;
@@ -936,5 +948,7 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel lblThanhTich;
     private javax.swing.JLabel lblTrangChu;
     private javax.swing.JLabel lblYeuCau;
+    private javax.swing.JTextField textFieldYCMaChuyen;
+    private javax.swing.JTextField textFieldYCNgayChuyen;
     // End of variables declaration//GEN-END:variables
 }
