@@ -6,7 +6,7 @@
 package UI;
 
 import Class.PartyMember;
-import java.awt.List;
+import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 /**
@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Member extends javax.swing.JFrame {
     
-    List<PartyMember> listDangVien = new ArrayList<>();
+     List<PartyMember> listDangVien = new ArrayList<>();
 
     public Member() {
         initComponents();
