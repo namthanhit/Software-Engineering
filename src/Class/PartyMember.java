@@ -20,12 +20,12 @@ public class PartyMember {
     private String address;
     private String email;
     private String phoneNumber;
-    private String status;
+    private String position;
 
     public PartyMember() {
     }
 
-    public PartyMember(Icon avatar, String id, String fullName, Date birthDate, Date joinDate, String address, String email, String phoneNumber, String status) {
+    public PartyMember(Icon avatar, String id, String fullName, Date birthDate, Date joinDate, String address, String email, String phoneNumber, String position) {
         this.avatar = avatar;
         this.id = id;
         this.fullName = fullName;
@@ -34,7 +34,7 @@ public class PartyMember {
         this.address = address;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.status = status;
+        this.position = position;
     }
     
     public Icon getAvatar() {
@@ -70,8 +70,8 @@ public class PartyMember {
         return phoneNumber;
     }
 
-    public String getStatus() {
-        return status;
+    public String getPosition() {
+        return position;
     }
     
     public void setAvatar(Icon avatar) {
@@ -106,8 +106,8 @@ public class PartyMember {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(String position) {
+        this.position = position;
     }
     
     
@@ -121,5 +121,19 @@ public class PartyMember {
         
     }
     
+    @Override
+    public String toString() {
+        return "PartyMember{" +
+               "id='" + id + '\'' +
+               ", fullName='" + fullName + '\'' +
+               ", birthDate='" + birthDate + '\'' +
+               ", joinDate='" + joinDate + '\'' +
+               ", address='" + address + '\'' +
+               ", email='" + email + '\'' +
+               ", phoneNumber='" + phoneNumber + '\'' +
+               ", position='" + position + '\'' +
+               
+               '}';
+    }
     
 }
