@@ -1,25 +1,19 @@
 package Class;
 
 public class User {
-    private String id;
     private String partyMemberId;
     private String partOrgId;
     private String password;
-    private String role;
+    private boolean role;
 
     public User() {
     }
 
-    public User(String id, String partyMemberId, String partOrgId, String password, String role) {
-        this.id = id;
+    public User(String partyMemberId, String partOrgId, String password, boolean role) {
         this.partyMemberId = partyMemberId;
         this.partOrgId = partOrgId;
         this.password = password;
         this.role = role;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getPartyMemberId() {
@@ -34,12 +28,8 @@ public class User {
         return password;
     }
 
-    public String getRole() {
+    public boolean getRole() {
         return role;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setPartyMemberId(String partyMemberId) {
@@ -54,7 +44,7 @@ public class User {
         this.password = password;
     }
 
-    public void setRole(String role) {
+    public void setRole(boolean role) {
         this.role = role;
     }
     
