@@ -9,9 +9,9 @@ import java.sql.ResultSet;
 public class MySQLConnect {
     public static void main(String[] args) {
         // URL kết nối MySQL
-        String jdbcURL = "jdbc:mysql://127.0.0.1:3306/DangVien";
+        String jdbcURL = "jdbc:mysql://192.168.137.253:3306/PartyManagement";
         String username = "root";
-        String password = "duc12345678";
+        String password = "thanhnam";
         Connection connection = null;
         try {
             // Kết nối tới MySQL
