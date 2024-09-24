@@ -1091,20 +1091,14 @@
                     <Property name="useNullLayout" type="boolean" value="false"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel16">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="&#x1ea3;nh"/>
-                      </Properties>
+                    <Component class="javax.swing.JLabel" name="jLabelAvatar">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="622" y="39" width="160" height="210"/>
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="bui ngoc duc"/>
-                      </Properties>
+                    <Component class="javax.swing.JTextField" name="jTextFieldFullName">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="54" y="39" width="167" height="-1"/>
@@ -1131,9 +1125,9 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField2">
+                    <Component class="javax.swing.JTextField" name="jTextFieldIdMember">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="22010065"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1151,10 +1145,7 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField3">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="27/09/2004"/>
-                      </Properties>
+                    <Component class="javax.swing.JTextField" name="jTextFieldBirthDay">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="54" y="97" width="137" height="-1"/>
@@ -1171,10 +1162,7 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField4">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="22/12/2022"/>
-                      </Properties>
+                    <Component class="javax.swing.JTextField" name="jTextFieldDateJoin">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="54" y="143" width="137" height="-1"/>
@@ -1191,10 +1179,7 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField5">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Nh&#xe2;n Quy&#x1ec1;n B&#xec;nh Giang H&#x1ea3;i D&#x1b0;&#x1a1;ng"/>
-                      </Properties>
+                    <Component class="javax.swing.JTextField" name="jTextFieldAddress">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="54" y="259" width="313" height="-1"/>
@@ -1211,10 +1196,7 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField6">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="22010065@gmail.com"/>
-                      </Properties>
+                    <Component class="javax.swing.JTextField" name="jTextFieldEmail">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="54" y="201" width="167" height="-1"/>
@@ -1231,10 +1213,7 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField7">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="0349643475"/>
-                      </Properties>
+                    <Component class="javax.swing.JTextField" name="jTextFieldPhoneNumber">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="239" y="201" width="128" height="-1"/>
@@ -1251,10 +1230,7 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField8">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="&#x110;&#x1ed9;i tr&#x1b0;&#x1edf;ng"/>
-                      </Properties>
+                    <Component class="javax.swing.JTextField" name="jTextFieldPositon">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="239" y="143" width="128" height="-1"/>
