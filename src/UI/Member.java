@@ -6,11 +6,8 @@
 package UI;
 
 import Class.PartyMember;
-<<<<<<< HEAD
 import Database.ListPartyMember;
 import java.text.SimpleDateFormat;
-=======
->>>>>>> aab2530144d5af690170bcb1870745f4d8214551
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,11 +17,7 @@ import java.util.ArrayList;
  */
 public class Member extends javax.swing.JFrame {
     
-<<<<<<< HEAD
     List<PartyMember> listPartyMember = new ArrayList<>();
-=======
-     List<PartyMember> listDangVien = new ArrayList<>();
->>>>>>> aab2530144d5af690170bcb1870745f4d8214551
 
     private static int pos = 0;
     private static int state = 0;
