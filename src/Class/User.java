@@ -5,17 +5,17 @@ public class User {
     private String partyMemberId;
     private String partOrgId;
     private String password;
-    private String status;
+    private String role;
 
     public User() {
     }
 
-    public User(String id, String partyMemberId, String partOrgId, String password, String status) {
+    public User(String id, String partyMemberId, String partOrgId, String password, String role) {
         this.id = id;
         this.partyMemberId = partyMemberId;
         this.partOrgId = partOrgId;
         this.password = password;
-        this.status = status;
+        this.role = role;
     }
 
     public String getId() {
@@ -34,8 +34,8 @@ public class User {
         return password;
     }
 
-    public String getStatus() {
-        return status;
+    public String getRole() {
+        return role;
     }
 
     public void setId(String id) {
@@ -54,8 +54,8 @@ public class User {
         this.password = password;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setRole(String role) {
+        this.role = role;
     }
     
     
