@@ -304,7 +304,7 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void lblThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThemMouseClicked
-
+        
         cardAdmin.setVisible(false);
     }//GEN-LAST:event_lblThemMouseClicked
 

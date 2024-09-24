@@ -6,24 +6,33 @@
 package UI;
 
 import Class.PartyMember;
-import java.awt.List;
+import Database.ListPartyMember;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
  */
 public class Member extends javax.swing.JFrame {
     
-    List<PartyMember> listDangVien = new ArrayList<>();
+    List<PartyMember> listPartyMember = new ArrayList<>();
 
+    private static int pos = 0;
+    private static int state = 0;
+    
     public Member() {
         initComponents();
+        
+        //hiển thị trang chủ:
         cardTrangChu.setVisible(true);
         cardSinhHoat.setVisible(false);
         cardYeuCau.setVisible(false);
         cardDangVien.setVisible(false);
         cardThanhTich.setVisible(false);
+        
+        listPartyMember = ListPartyMember.getAllPartyMembers();
     }
 
     @SuppressWarnings("unchecked")
@@ -103,23 +112,23 @@ public class Member extends javax.swing.JFrame {
         jLabel45 = new javax.swing.JLabel();
         cardDangVien = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jLabelAvatar = new javax.swing.JLabel();
+        jTextFieldFullName = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldIdMember = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldBirthDay = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jTextFieldDateJoin = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldAddress = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        jTextFieldEmail = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        jTextFieldPhoneNumber = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        jTextFieldPositon = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
@@ -565,11 +574,9 @@ public class Member extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel16.setText("ảnh");
-        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 39, 160, 210));
-
-        jTextField1.setText("bui ngoc duc");
-        jPanel4.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 39, 167, -1));
+        jLabelAvatar.setText("ảnh");
+        jPanel4.add(jLabelAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 39, 160, 210));
+        jPanel4.add(jTextFieldFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 39, 167, -1));
 
         jLabel17.setText("Họ và Tên:");
         jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 22, -1, -1));
@@ -577,44 +584,36 @@ public class Member extends javax.swing.JFrame {
         jLabel29.setText("Mã Đảng viên:");
         jPanel4.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 22, -1, -1));
 
-        jTextField2.setText("22010065");
-        jPanel4.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 39, 126, -1));
+        jTextFieldIdMember.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldIdMemberActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jTextFieldIdMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 39, 126, -1));
 
         jLabel30.setText("Ngày Sinh:");
         jPanel4.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 80, -1, -1));
-
-        jTextField3.setText("27/09/2004");
-        jPanel4.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 97, 137, -1));
+        jPanel4.add(jTextFieldBirthDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 97, 137, -1));
 
         jLabel31.setText("Ngày Vào Đảng:");
         jPanel4.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 126, -1, -1));
-
-        jTextField4.setText("22/12/2022");
-        jPanel4.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 143, 137, -1));
+        jPanel4.add(jTextFieldDateJoin, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 143, 137, -1));
 
         jLabel32.setText("Địa chỉ:");
         jPanel4.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 242, -1, -1));
-
-        jTextField5.setText("Nhân Quyền Bình Giang Hải Dương");
-        jPanel4.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 259, 313, -1));
+        jPanel4.add(jTextFieldAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 259, 313, -1));
 
         jLabel33.setText("Email:");
         jPanel4.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 184, -1, -1));
-
-        jTextField6.setText("22010065@gmail.com");
-        jPanel4.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 201, 167, -1));
+        jPanel4.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 201, 167, -1));
 
         jLabel34.setText("Số điện thoại:");
         jPanel4.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 184, -1, -1));
-
-        jTextField7.setText("0349643475");
-        jPanel4.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 201, 128, -1));
+        jPanel4.add(jTextFieldPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 201, 128, -1));
 
         jLabel35.setText("Chức Vụ:");
         jPanel4.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 126, -1, -1));
-
-        jTextField8.setText("Đội trưởng");
-        jPanel4.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 143, 128, -1));
+        jPanel4.add(jTextFieldPositon, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 143, 128, -1));
 
         jLabel36.setText("Quy trình công tác:");
         jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 300, -1, -1));
@@ -741,7 +740,29 @@ public class Member extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void view() {
+        PartyMember st = listPartyMember.get(pos);
+        
+        this.jTextFieldFullName.setText(st.getFullName());
+        this.jTextFieldIdMember.setText(st.getId());
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    
+        String birthDateString = formatter.format(st.getBirthDate());
+        String DateJoinString = formatter.format(st.getJoinDate());
+        this.jTextFieldBirthDay.setText(birthDateString);
+        this.jTextFieldDateJoin.setText(DateJoinString);
+        
+        this.jTextFieldEmail.setText(st.getEmail());
+        this.jTextFieldPositon.setText(st.getPosition());
+        this.jTextFieldPhoneNumber.setText(st.getPhoneNumber());
+        this.jTextFieldAddress.setText(st.getAddress());
+        this.jLabelAvatar.setIcon(st.getAvatar());
+        
+        //OnOff(true, false);
+    }
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //        jplSlideMenu.setSize(0, y);
 //        x = 0;
@@ -794,6 +815,10 @@ public class Member extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_lblDangXuatMouseClicked
+
+    private void jTextFieldIdMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdMemberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldIdMemberActionPerformed
 
     /**
      * @param args the command line arguments
@@ -854,7 +879,6 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -891,6 +915,7 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAvatar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
@@ -911,7 +936,6 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
@@ -919,14 +943,15 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldAddress;
+    private javax.swing.JTextField jTextFieldBirthDay;
+    private javax.swing.JTextField jTextFieldDateJoin;
+    private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldFullName;
+    private javax.swing.JTextField jTextFieldIdMember;
+    private javax.swing.JTextField jTextFieldPhoneNumber;
+    private javax.swing.JTextField jTextFieldPositon;
     private javax.swing.JPanel jplMain;
     private javax.swing.JPanel jplSlideMenu;
     private javax.swing.JPanel jplTitle;

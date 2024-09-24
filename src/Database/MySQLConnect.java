@@ -1,4 +1,4 @@
-package managedangvien;
+package Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +12,7 @@ public class MySQLConnect {
         String jdbcURL = "jdbc:mysql://127.0.0.1:3306/DangVien";
         String username = "root";
         String password = "duc12345678";
+        
         Connection connection = null;
         try {
             // Kết nối tới MySQL
@@ -27,7 +28,7 @@ public class MySQLConnect {
 
             // Xử lý kết quả
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("id"));
+                System.out.println(resultSet.getString("id") + " " + resultSet.getString("avatar"));
             }
 
         } catch (SQLException e) {
