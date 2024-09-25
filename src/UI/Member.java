@@ -6,6 +6,7 @@
 package UI;
 
 import Class.PartyMember;
+import Class.User;
 import Database.ListPartyMember;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -21,8 +22,12 @@ public class Member extends javax.swing.JFrame {
 
     private static int pos = 0;
     private static int state = 0;
-
-    public Member() {
+    
+    public Member(){
+        initComponents();
+    }
+    
+    public Member(User user) {
         initComponents();
         cardTrangChu.setVisible(true);
         cardSinhHoat.setVisible(false);

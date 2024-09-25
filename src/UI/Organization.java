@@ -4,6 +4,8 @@
  */
 package UI;
 
+import Class.User;
+
 /**
  *
  * @author buingocduc
@@ -13,7 +15,10 @@ public class Organization extends javax.swing.JFrame {
     /**
      * Creates new form Organization
      */
-    public Organization() {
+    public Organization(){
+        initComponents();
+    }
+    public Organization(User user) {
         initComponents();
         cardViewDetail.setVisible(false);
         cardSinhHoat.setVisible(false);
