@@ -65,7 +65,7 @@ public class Organization extends javax.swing.JFrame {
      */
     public Organization() {
         initComponents();
-        
+        ViewDangVien();
     }
     public Organization(User user) {
         initComponents();
@@ -77,7 +77,7 @@ public class Organization extends javax.swing.JFrame {
         cardKyLuat.setVisible(false);
         cardDangVien.setVisible(false);
         
-        ViewDangVien();
+        
     }
   
     //--------------------
