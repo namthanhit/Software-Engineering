@@ -4,6 +4,8 @@
  */
 package UI;
 
+import Class.User;
+
 import Class.PartyMember;
 import Class.User;
 import Database.ListPartyMember;
@@ -22,10 +24,6 @@ import java.util.List;
 public class Organization extends javax.swing.JFrame {
     //list DangVien
     List<PartyMember> listDV = ListPartyMember.getAllPartyMembers();
-
-    Organization(User userLogin) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
  
     
     /* set onoff cho card DangVien */
@@ -64,6 +62,10 @@ public class Organization extends javax.swing.JFrame {
      * Creates new form Organization
      */
     public Organization() {
+        initComponents();
+        
+    }
+    public Organization(User user) {
         initComponents();
         cardViewDetail.setVisible(false);
         cardSinhHoat.setVisible(false);
