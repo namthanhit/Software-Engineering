@@ -4,8 +4,12 @@
  */
 package UI;
 
+import Class.User;
+import Database.CheckOrg;
+import Database.CheckMember;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +22,8 @@ public class LogIn extends javax.swing.JFrame {
      */
     public LogIn() {
         initComponents();
+        setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -29,9 +35,10 @@ public class LogIn extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jRadioButton1 = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         comboBoxLoginVaiTro = new javax.swing.JComboBox<>();
-        textFieldLoginTK = new javax.swing.JTextField();
+        textFieldTK = new javax.swing.JTextField();
         passwordLoginMK = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -44,6 +51,8 @@ public class LogIn extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
+        jRadioButton1.setText("jRadioButton1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 51, 0));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -51,32 +60,37 @@ public class LogIn extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        comboBoxLoginVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đảng viên", "Tổ Chức", "Admin" }));
+        comboBoxLoginVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đảng Viên", "Tổ Chức", "Admin" }));
         comboBoxLoginVaiTro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxLoginVaiTroActionPerformed(evt);
             }
         });
-        jPanel3.add(comboBoxLoginVaiTro, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 220, 30));
+        jPanel3.add(comboBoxLoginVaiTro, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 220, 30));
 
-        textFieldLoginTK.addActionListener(new java.awt.event.ActionListener() {
+        textFieldTK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldLoginTKActionPerformed(evt);
+                textFieldTKActionPerformed(evt);
             }
         });
-        jPanel3.add(textFieldLoginTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 220, 30));
+        jPanel3.add(textFieldTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 220, 30));
 
         passwordLoginMK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordLoginMKActionPerformed(evt);
             }
         });
-        jPanel3.add(passwordLoginMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, 220, 30));
+        jPanel3.add(passwordLoginMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, 220, 30));
 
         jButton1.setBackground(new java.awt.Color(0, 153, 51));
         jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Đăng nhập");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -101,13 +115,13 @@ public class LogIn extends javax.swing.JFrame {
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 182, 42));
 
         jLabel8.setText("Tên Đăng Nhập:");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, -1, -1));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, -1));
 
         jLabel9.setText("Mật Khẩu:");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, -1, 16));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, -1, 16));
 
         jLabel10.setText("Vai Trò:");
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 80, -1));
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 80, -1));
 
         jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
         jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, 90, 10));
@@ -129,19 +143,58 @@ public class LogIn extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String role = (String) comboBoxLoginVaiTro.getSelectedItem();
-        String ID = textFieldLoginTK.getText();
+        String ID = textFieldTK.getText();
         char[] password = passwordLoginMK.getPassword();
         String passwordStr = new String(password);
+        if(ID.equals("") || passwordStr.equals("")){
+            JOptionPane.showMessageDialog(null, "Nhập tài khoản, mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            User userLogin = new User();
+            userLogin.setPartyMemberId(ID);
+            userLogin.setPassword(passwordStr);
         
-        
-        
-        
-    
+            if(role.equals("Đảng Viên")){
+                userLogin.setRole(false);
+                boolean kt = CheckMember.check(userLogin);
+                if(kt){
+                    this.dispose();
+                    new Member(userLogin).setVisible(true);
+                }
+            else{
+                JOptionPane.showMessageDialog(null, "Sai tài khoản, mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }   
+            else if(role.equals("Tổ Chức")){
+                userLogin.setRole(true);
+                boolean kt = CheckOrg.check(userLogin);
+                if(CheckOrg.check(userLogin)){
+                    this.dispose();
+                    new Organization(userLogin).setVisible(true);
+                }
+                else if(CheckMember.check(userLogin)){
+                    JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập vào tổ chức", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Sai Tài khoản, Mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else{
+                if(ID.equals("admin") && passwordStr.equals("admin")){
+                    this.dispose();
+                    new Admin().setVisible(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Sai tài khoản, mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void textFieldLoginTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldLoginTKActionPerformed
+    private void textFieldTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldTKActionPerformed
  
-    }//GEN-LAST:event_textFieldLoginTKActionPerformed
+    }//GEN-LAST:event_textFieldTKActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         System.exit(0);
@@ -154,6 +207,11 @@ public class LogIn extends javax.swing.JFrame {
     private void passwordLoginMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordLoginMKActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordLoginMKActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -201,9 +259,10 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPasswordField passwordLoginMK;
-    private javax.swing.JTextField textFieldLoginTK;
+    private javax.swing.JTextField textFieldTK;
     // End of variables declaration//GEN-END:variables
 }
