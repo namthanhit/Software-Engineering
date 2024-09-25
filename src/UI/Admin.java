@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package UI;
-
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 /**
  *
  * @author User
