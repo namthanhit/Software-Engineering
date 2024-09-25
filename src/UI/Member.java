@@ -6,6 +6,7 @@
 package UI;
 
 import Class.PartyMember;
+import Class.User;
 import Database.ListPartyMember;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -31,6 +32,10 @@ public class Member extends javax.swing.JFrame {
         cardThanhTich.setVisible(false);
         
         listPartyMember = ListPartyMember.getAllPartyMembers();
+    }
+
+    Member(User userLogin) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     
