@@ -37,6 +37,10 @@ public class Member extends javax.swing.JFrame {
         
         listPartyMember = ListPartyMember.getAllPartyMembers();
     }
+
+    Member(User userLogin) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
     public void view() {

@@ -20,7 +20,7 @@ public class CheckMember {
         // URL kết nối MySQL
         String jdbcURL = "jdbc:mysql://127.0.0.1:3306/PartyManagement";
         String username = "root";
-        String password = "Duong20012004";
+        String password = "08012004";
         
         Connection connection = null;
         PreparedStatement statement = null;
