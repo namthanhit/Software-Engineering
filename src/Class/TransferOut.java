@@ -16,18 +16,29 @@ public class TransferOut {
     private String orgId;
     private String status;
     private Date transferDate;
+    private String reason;
 
     public TransferOut() {
     }
 
-    public TransferOut(String id, String partyMemberId, String orgId, String status, Date transferDate) {
+    public TransferOut(String id, String partyMemberId, String orgId, String status, Date transferDate, String reason) {
         this.id = id;
         this.partyMemberId = partyMemberId;
         this.orgId = orgId;
         this.status = status;
         this.transferDate = transferDate;
+        this.reason = reason;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    
     public String getId() {
         return id;
     }

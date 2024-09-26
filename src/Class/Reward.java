@@ -29,7 +29,7 @@ public class Reward {
         this.decisionMaker = decisionMaker;
         this.description = description;
     }
-
+    
     public String getId() {
         return id;
     }

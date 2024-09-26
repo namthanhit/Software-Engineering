@@ -41,6 +41,10 @@ public class PartyMember {
         return avatar;
     }
 
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     
     public String getId() {
         return id;
