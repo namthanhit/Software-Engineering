@@ -841,7 +841,8 @@ public class Member extends javax.swing.JFrame {
 
     private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
         // TODO add your handling code here:
-        
+        this.dispose();
+        new LogIn().setVisible(true);
     }//GEN-LAST:event_lblDangXuatMouseClicked
 
     private void buttonYCChuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyenActionPerformed

@@ -169,22 +169,22 @@ public class Admin extends javax.swing.JFrame {
         cardAdmin.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, -1, 42));
 
         TextFieldHoTen.setText("bui ngoc duc");
-        cardAdmin.add(TextFieldHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 130, -1));
+        cardAdmin.add(TextFieldHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 130, -1));
 
         jLabel17.setText("ID:");
-        cardAdmin.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 90, -1));
+        cardAdmin.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 90, -1));
 
         jLabel29.setText("Mật Khẩu:");
-        cardAdmin.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 70, -1));
+        cardAdmin.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 70, -1));
 
         jTextField3.setText("22010065");
-        cardAdmin.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, 130, -1));
+        cardAdmin.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 130, -1));
 
         jLabel30.setText("Tên Tổ Chức:");
-        cardAdmin.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 100, 80, -1));
+        cardAdmin.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 80, -1));
 
         TextFieldTênTổChức.setText("DƯƠNGDZ");
-        cardAdmin.add(TextFieldTênTổChức, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 130, 137, -1));
+        cardAdmin.add(TextFieldTênTổChức, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 130, 137, -1));
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -264,7 +264,7 @@ public class Admin extends javax.swing.JFrame {
         cardAdmin.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 100, -1));
 
         jLabel18.setText("Ngày Thành Lập:");
-        cardAdmin.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 100, 90, 20));
+        cardAdmin.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 100, 20));
 
         jTextField2.setText("20/01/2004");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -272,7 +272,7 @@ public class Admin extends javax.swing.JFrame {
                 jTextField2ActionPerformed(evt);
             }
         });
-        cardAdmin.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 130, -1));
+        cardAdmin.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 130, -1));
 
         jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         cardAdmin.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));

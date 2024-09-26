@@ -69,6 +69,7 @@ public class Organization extends javax.swing.JFrame {
     }
     public Organization(User user) {
         initComponents();
+        
         cardViewDetail.setVisible(false);
         cardSinhHoat.setVisible(false);
         cardYeuCau.setVisible(false);
@@ -345,6 +346,11 @@ public class Organization extends javax.swing.JFrame {
         lblDangXuat.setForeground(new java.awt.Color(255, 0, 0));
         lblDangXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDangXuat.setText("Đăng Xuất");
+        lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseClicked(evt);
+            }
+        });
         jplSlideMenu.add(lblDangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 200, 30));
 
         jLabel10.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
@@ -1431,6 +1437,12 @@ public class Organization extends javax.swing.JFrame {
     private void TextFieldIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFieldIDActionPerformed
+
+    private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new LogIn().setVisible(true);
+    }//GEN-LAST:event_lblDangXuatMouseClicked
 
     /**
      * @param args the command line arguments
