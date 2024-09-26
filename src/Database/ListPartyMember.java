@@ -17,7 +17,7 @@ public class ListPartyMember {
         String password = "08012004"; // Password MySQL
         
         // Câu lệnh SQL để lấy dữ liệu từ bảng PartyMember
-        String sql = "SELECT id, fullName, birthDate, joinDate, address, email, phoneNumber, status, avatar FROM PartyMember";
+        String sql = "SELECT id, fullName, birthDate, joinDate, address, email, phoneNumber, position, avatar FROM PartyMember";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              Statement stmt = conn.createStatement();
@@ -32,7 +32,7 @@ public class ListPartyMember {
                 String address = rs.getString("address");
                 String email = rs.getString("email");
                 String phoneNumber = rs.getString("phoneNumber");
-                String status = rs.getString("status");
+                String position = rs.getString("position");
                 byte[] avatarBytes = rs.getBytes("avatar");
 
                 // Chuyển byte[] avatar thành Icon (ImageIcon)
@@ -42,7 +42,7 @@ public class ListPartyMember {
                 }
 
                 // Tạo một đối tượng PartyMember và thêm vào danh sách
-                PartyMember partyMember = new PartyMember(avatar, id, fullName, birthDate, joinDate, address, email, phoneNumber, status);
+                PartyMember partyMember = new PartyMember(avatar, id, fullName, birthDate, joinDate, address, email, phoneNumber, position);
                 partyMembers.add(partyMember);
             }
 
