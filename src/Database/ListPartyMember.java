@@ -14,7 +14,7 @@ public class ListPartyMember {
         List<PartyMember> partyMembers = new ArrayList<>();
         String url = "jdbc:mysql://localhost:3306/PartyManagement"; // URL cơ sở dữ liệu
         String user = "root"; // Username MySQL
-        String password = "12345678"; // Password MySQL
+        String password = "08012004"; // Password MySQL
         
         // Câu lệnh SQL để lấy dữ liệu từ bảng PartyMember
         String sql = "SELECT id, fullName, birthDate, joinDate, address, email, phoneNumber, status, avatar FROM PartyMember";

@@ -77,7 +77,7 @@ public class Organization extends javax.swing.JFrame {
         cardKyLuat.setVisible(false);
         cardDangVien.setVisible(false);
         
-        
+        ViewDangVien();
     }
   
     //--------------------
