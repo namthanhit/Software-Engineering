@@ -8,15 +8,22 @@ package UI;
 import Class.PartyMember;
 import Class.User;
 import Database.ListPartyMember;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 /**
  *
  * @author User
  */
 public class Member extends javax.swing.JFrame {
+    public User user;
     
     List<PartyMember> listPartyMember = new ArrayList<>();
 
@@ -29,6 +36,9 @@ public class Member extends javax.swing.JFrame {
     
     public Member(User user) {
         initComponents();
+        
+        this.user = user;
+        
         cardTrangChu.setVisible(true);
         cardSinhHoat.setVisible(false);
         cardYeuCau.setVisible(false);
@@ -36,30 +46,44 @@ public class Member extends javax.swing.JFrame {
         cardThanhTich.setVisible(false);
         
         listPartyMember = ListPartyMember.getAllPartyMembers();
+        view();
+        
+        
     }
-
-    
     
     public void view() {
-        PartyMember st = listPartyMember.get(pos);
+        // Tìm kiếm trong danh sách các PartyMember dựa trên user.getId()
+        PartyMember currentMember = null;
         
-        this.jTextFieldFullName.setText(st.getFullName());
-        this.jTextFieldIdMember.setText(st.getId());
+        for (PartyMember member : listPartyMember) {
+            if (member.getId().equals(user.getPartyMemberId())) { // So sánh ID của User và PartyMember
+                currentMember = member;
+                break;
+            }
+        }
         
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    
-        String birthDateString = formatter.format(st.getBirthDate());
-        String DateJoinString = formatter.format(st.getJoinDate());
-        this.jTextFieldBirthDay.setText(birthDateString);
-        this.jTextFieldDateJoin.setText(DateJoinString);
-        
-        this.jTextFieldEmail.setText(st.getEmail());
-        this.jTextFieldPositon.setText(st.getPosition());
-        this.jTextFieldPhoneNumber.setText(st.getPhoneNumber());
-        this.jTextFieldAddress.setText(st.getAddress());
-        this.jLabelAvatar.setIcon(st.getAvatar());
-        
-        //OnOff(true, false);
+        if (currentMember != null) {
+            // Gán các giá trị của currentMember vào các JTextField tương ứng
+            this.jTextFieldFullName.setText(currentMember.getFullName());
+            this.jTextFieldIdMember.setText(currentMember.getId());
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDateString = formatter.format(currentMember.getBirthDate());
+            String joinDateString = formatter.format(currentMember.getJoinDate());
+
+            this.jTextFieldBirthDay.setText(birthDateString);
+            this.jTextFieldDateJoin.setText(joinDateString);
+            this.jTextFieldEmail.setText(currentMember.getEmail());
+            this.jTextFieldPositon.setText(currentMember.getPosition());
+            this.jTextFieldPhoneNumber.setText(currentMember.getPhoneNumber());
+            this.jTextFieldAddress.setText(currentMember.getAddress());
+            
+            // Gán avatar nếu có (giả sử avatar là kiểu Icon hoặc ImageIcon)
+            this.jLabelAvatar.setIcon(currentMember.getAvatar());
+        } else {
+            // Nếu không tìm thấy thành viên trong listPartyMember
+            JOptionPane.showMessageDialog(null, "Không tìm thấy thành viên với ID: " + user.getPartyMemberId());
+        }
     }
     
     @SuppressWarnings("unchecked")

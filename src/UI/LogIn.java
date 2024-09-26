@@ -7,8 +7,6 @@ package UI;
 import Class.User;
 import Database.CheckOrg;
 import Database.CheckMember;
-import java.awt.Color;
-import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -146,6 +144,7 @@ public class LogIn extends javax.swing.JFrame {
         String ID = textFieldTK.getText();
         char[] password = passwordLoginMK.getPassword();
         String passwordStr = new String(password);
+        
         if(ID.equals("") || passwordStr.equals("")){
             JOptionPane.showMessageDialog(null, "Nhập tài khoản, mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }

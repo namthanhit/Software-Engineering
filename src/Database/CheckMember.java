@@ -18,9 +18,9 @@ import java.sql.SQLException;
 public class CheckMember {
     public static boolean check(User user) {
         // URL kết nối MySQL
-        String jdbcURL = "jdbc:mysql://127.0.0.1:3306/PartyManagement";
+        String jdbcURL = "jdbc:mysql://localhost:3306/PartyManagement";
         String username = "root";
-        String password = "08012004";
+        String password = "12345678";
         
         Connection connection = null;
         PreparedStatement statement = null;
