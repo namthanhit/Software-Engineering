@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ManageDangVIen">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/ManageDangVIen.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
