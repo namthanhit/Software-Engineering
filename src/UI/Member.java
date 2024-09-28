@@ -25,10 +25,6 @@ public class Member extends javax.swing.JFrame {
     List<PartyMember> listPartyMember = new ArrayList<>();
     List<BranchActivity> listBranchActivity = new ArrayList<>();
     
-
-    private static int posBranchActivity = 0;
-    private static int state = 0;
-    
     public Member(){
         initComponents();
     }
@@ -47,7 +43,6 @@ public class Member extends javax.swing.JFrame {
         listPartyMember = ListPartyMember.getAllPartyMembers();
         
         String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
-        System.out.println("Không tìm thấy tổ chức cho member ID: " + orgID);
         
         listBranchActivity = ListBranchActivity.getBranchActivitiesByOrgId(orgID);
        
@@ -89,6 +84,7 @@ public class Member extends javax.swing.JFrame {
         }
     }
     
+    
     public void ViewBranchActivity() {
         if (!listBranchActivity.isEmpty()) {
             BranchActivity currentActivity = listBranchActivity.get(0);
@@ -110,7 +106,6 @@ public class Member extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Không có hoạt động nào cho tổ chức này.");
         }
     }
-
     
     public void ViewTableBranchActivity() {
         DefaultTableModel model = (DefaultTableModel) this.jTableBranchActivity.getModel();
@@ -159,6 +154,7 @@ public class Member extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel17 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         cardSinhHoat = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -182,22 +178,24 @@ public class Member extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel44 = new javax.swing.JLabel();
         cardYeuCau = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        editorPaneYCLiDoNghi = new javax.swing.JEditorPane();
-        jLabel6 = new javax.swing.JLabel();
-        buttonYCNghi = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        textFieldYCMaChuyen = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        textFieldYCNgayChuyen = new javax.swing.JTextField();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        editorPaneYCLiDoChuyen = new javax.swing.JEditorPane();
-        jLabel20 = new javax.swing.JLabel();
-        buttonYCChuyen = new javax.swing.JButton();
-        jLabel45 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        editorPaneYCLiDoNghi1 = new javax.swing.JEditorPane();
+        jLabel22 = new javax.swing.JLabel();
+        buttonYCNghi1 = new javax.swing.JButton();
+        jLabel48 = new javax.swing.JLabel();
+        textFieldYCMaChuyen1 = new javax.swing.JTextField();
+        jLabel49 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
+        textFieldYCNgayChuyen1 = new javax.swing.JTextField();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        editorPaneYCLiDoChuyen1 = new javax.swing.JEditorPane();
+        jLabel51 = new javax.swing.JLabel();
+        buttonYCChuyen1 = new javax.swing.JButton();
+        jLabel52 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
         cardDangVien = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabelAvatar = new javax.swing.JLabel();
@@ -491,6 +489,9 @@ public class Member extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
 
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
+        jLabel4.setText("Xin Thôi Công tác:");
+
         javax.swing.GroupLayout cardTrangChuLayout = new javax.swing.GroupLayout(cardTrangChu);
         cardTrangChu.setLayout(cardTrangChuLayout);
         cardTrangChuLayout.setHorizontalGroup(
@@ -498,6 +499,11 @@ public class Member extends javax.swing.JFrame {
             .addGap(0, 950, Short.MAX_VALUE)
             .addGroup(cardTrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(cardTrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(cardTrangChuLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 949, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         cardTrangChuLayout.setVerticalGroup(
             cardTrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,6 +512,11 @@ public class Member extends javax.swing.JFrame {
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardTrangChuLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(cardTrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(cardTrangChuLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jplMain.add(cardTrangChu, "card2");
@@ -595,61 +606,86 @@ public class Member extends javax.swing.JFrame {
         jplMain.add(cardSinhHoat, "card3");
 
         cardYeuCau.setBackground(new java.awt.Color(255, 255, 255));
-        cardYeuCau.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
-        jLabel1.setText("Xin Thôi Công tác:");
-        cardYeuCau.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 325, 200, 30));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
-        jLabel2.setText("Xin Chuyển Công tác:");
-        cardYeuCau.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, 200, 30));
+        jLabel16.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
+        jLabel16.setText("Xin Chuyển Công tác:");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, 200, 30));
 
-        jScrollPane2.setViewportView(editorPaneYCLiDoNghi);
+        jScrollPane9.setViewportView(editorPaneYCLiDoNghi1);
 
-        cardYeuCau.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 396, 596, 162));
+        jPanel2.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 396, 596, 162));
 
-        jLabel6.setText("Lý Do:");
-        cardYeuCau.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 373, -1, -1));
+        jLabel22.setText("Lý Do:");
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 373, -1, -1));
 
-        buttonYCNghi.setBackground(new java.awt.Color(102, 204, 0));
-        buttonYCNghi.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        buttonYCNghi.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYCNghi.setText("Gửi Yêu Cầu");
-        cardYeuCau.add(buttonYCNghi, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 455, -1, -1));
+        buttonYCNghi1.setBackground(new java.awt.Color(102, 204, 0));
+        buttonYCNghi1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonYCNghi1.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYCNghi1.setText("Gửi Yêu Cầu");
+        jPanel2.add(buttonYCNghi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 455, -1, -1));
 
-        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel7.setText("Chuyển đơn vị công tác chính thức:");
-        cardYeuCau.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 55, -1, -1));
-        cardYeuCau.add(textFieldYCMaChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
+        jLabel48.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel48.setText("Chuyển đơn vị công tác chính thức:");
+        jPanel2.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 55, -1, -1));
+        jPanel2.add(textFieldYCMaChuyen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
 
-        jLabel18.setText("Mã Tổ Chức:");
-        cardYeuCau.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 93, -1, -1));
+        jLabel49.setText("Mã Tổ Chức:");
+        jPanel2.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 93, -1, -1));
 
-        jLabel19.setText("Ngày Chuyển:");
-        cardYeuCau.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 93, 84, -1));
-        cardYeuCau.add(textFieldYCNgayChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 90, 108, -1));
+        jLabel50.setText("Ngày Chuyển:");
+        jPanel2.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 93, 84, -1));
+        jPanel2.add(textFieldYCNgayChuyen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 90, 108, -1));
 
-        jScrollPane8.setViewportView(editorPaneYCLiDoChuyen);
+        jScrollPane11.setViewportView(editorPaneYCLiDoChuyen1);
 
-        cardYeuCau.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 148, 597, 159));
+        jPanel2.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 148, 597, 90));
 
-        jLabel20.setText("Chi tiết:");
-        cardYeuCau.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 125, -1, -1));
+        jLabel51.setText("Chi tiết:");
+        jPanel2.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 125, -1, -1));
 
-        buttonYCChuyen.setBackground(new java.awt.Color(102, 204, 0));
-        buttonYCChuyen.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        buttonYCChuyen.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYCChuyen.setText("Gửi Yêu Cầu");
-        buttonYCChuyen.addActionListener(new java.awt.event.ActionListener() {
+        buttonYCChuyen1.setBackground(new java.awt.Color(102, 204, 0));
+        buttonYCChuyen1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonYCChuyen1.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYCChuyen1.setText("Gửi Yêu Cầu");
+        buttonYCChuyen1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonYCChuyenActionPerformed(evt);
+                buttonYCChuyen1ActionPerformed(evt);
             }
         });
-        cardYeuCau.add(buttonYCChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 168, -1, -1));
+        jPanel2.add(buttonYCChuyen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 168, -1, -1));
 
-        jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
-        cardYeuCau.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
+        jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
+        jPanel2.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
+
+        jTabbedPane1.addTab("tab14", jPanel2);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 952, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 549, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("tab15", jPanel5);
+
+        javax.swing.GroupLayout cardYeuCauLayout = new javax.swing.GroupLayout(cardYeuCau);
+        cardYeuCau.setLayout(cardYeuCauLayout);
+        cardYeuCauLayout.setHorizontalGroup(
+            cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        cardYeuCauLayout.setVerticalGroup(
+            cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardYeuCauLayout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         jplMain.add(cardYeuCau, "card4");
 
@@ -881,18 +917,13 @@ public class Member extends javax.swing.JFrame {
         new LogIn().setVisible(true);
     }//GEN-LAST:event_lblDangXuatMouseClicked
 
-    private void buttonYCChuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyenActionPerformed
-        String ycMaToChuc, ycNgayChuyen, ycLiDoChuyen,ycLiDoNghi;
-        textFieldYCMaChuyen.getText();
-        textFieldYCNgayChuyen.getText();
-        editorPaneYCLiDoChuyen.getText();
-        
-        
-    }//GEN-LAST:event_buttonYCChuyenActionPerformed
-
     private void jTextFieldNameActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNameActivityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNameActivityActionPerformed
+
+    private void buttonYCChuyen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyen1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonYCChuyen1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -932,33 +963,30 @@ public class Member extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundMenu;
-    private javax.swing.JButton buttonYCChuyen;
-    private javax.swing.JButton buttonYCNghi;
+    private javax.swing.JButton buttonYCChuyen1;
+    private javax.swing.JButton buttonYCNghi1;
     private javax.swing.JPanel cardDangVien;
     private javax.swing.JPanel cardSinhHoat;
     private javax.swing.JPanel cardThanhTich;
     private javax.swing.JPanel cardTrangChu;
     private javax.swing.JPanel cardYeuCau;
-    private javax.swing.JEditorPane editorPaneYCLiDoChuyen;
-    private javax.swing.JEditorPane editorPaneYCLiDoNghi;
+    private javax.swing.JEditorPane editorPaneYCLiDoChuyen1;
+    private javax.swing.JEditorPane editorPaneYCLiDoNghi1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JEditorPane jEditorPaneDescpitActivity;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -977,17 +1005,20 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
-    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAvatar;
@@ -995,19 +1026,22 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTableBranchActivity;
@@ -1034,7 +1068,7 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel lblThanhTich;
     private javax.swing.JLabel lblTrangChu;
     private javax.swing.JLabel lblYeuCau;
-    private javax.swing.JTextField textFieldYCMaChuyen;
-    private javax.swing.JTextField textFieldYCNgayChuyen;
+    private javax.swing.JTextField textFieldYCMaChuyen1;
+    private javax.swing.JTextField textFieldYCNgayChuyen1;
     // End of variables declaration//GEN-END:variables
 }
