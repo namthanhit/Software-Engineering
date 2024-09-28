@@ -148,6 +148,7 @@ public class LogIn extends javax.swing.JFrame {
         if(ID.equals("") || passwordStr.equals("")){
             JOptionPane.showMessageDialog(null, "Nhập tài khoản, mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+        
         else{
             User userLogin = new User();
             userLogin.setPartyMemberId(ID);
@@ -165,6 +166,7 @@ public class LogIn extends javax.swing.JFrame {
 
                 }
             }   
+            
             else if(role.equals("Tổ Chức")){
                 userLogin.setRole(true);
                 boolean kt = CheckOrg.check(userLogin);
