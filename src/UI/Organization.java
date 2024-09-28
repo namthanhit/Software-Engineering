@@ -953,7 +953,6 @@ public class Organization extends javax.swing.JFrame {
         cardDangVien.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
 
         TextFieldOrgID.setMaximumSize(new java.awt.Dimension(64, 22));
-        TextFieldOrgID.setPreferredSize(new java.awt.Dimension(64, 27));
         TextFieldOrgID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextFieldOrgIDActionPerformed(evt);

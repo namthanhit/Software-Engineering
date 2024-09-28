@@ -20,7 +20,7 @@ public class ListBranchActivity {
         String orgId = null;
         String url = "jdbc:mysql://localhost:3306/PartyManagement"; 
         String username = "root";  
-        String password = "12345678";  
+        String password = "08012004";  
 
         String query = "SELECT partOrgId FROM User WHERE partyMemberId = ?";
 
@@ -44,7 +44,7 @@ public class ListBranchActivity {
         List<BranchActivity> activities = new ArrayList<>();
         String url = "jdbc:mysql://localhost:3306/PartyManagement"; 
         String username = "root";  
-        String password = "12345678";  
+        String password = "08012004";  
 
         String query = "SELECT id, activityName, startDate, endDate, status, description FROM BranchActivity WHERE orgId = ?";
 
