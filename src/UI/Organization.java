@@ -57,6 +57,7 @@ public class Organization extends javax.swing.JFrame {
         this.TextFieldPhoneNumber.setText(pm.getPhoneNumber());
         this.TextFieldEmail.setText(pm.getEmail());
         this.TextFieldAddress.setText(pm.getAddress());
+        this.TextFieldOrgID.setText(pm.getOrgId());
         
         OnOffDangVien(true, false);
     }
@@ -232,6 +233,8 @@ public class Organization extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         TextFieldPhoneNumber = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
+        TextFieldOrgID = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         TextFieldPosition = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -937,12 +940,30 @@ public class Organization extends javax.swing.JFrame {
         cardDangVien.add(TextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 246, 167, -1));
 
         jLabel34.setText("Số điện thoại:");
-        cardDangVien.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 171, -1, -1));
-        cardDangVien.add(TextFieldPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 188, 128, -1));
+        cardDangVien.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, -1, -1));
+
+        TextFieldPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextFieldPhoneNumberActionPerformed(evt);
+            }
+        });
+        cardDangVien.add(TextFieldPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 246, 128, -1));
 
         jLabel35.setText("Chức Vụ:");
-        cardDangVien.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 121, -1, -1));
-        cardDangVien.add(TextFieldPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 138, 128, -1));
+        cardDangVien.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
+
+        TextFieldOrgID.setMaximumSize(new java.awt.Dimension(64, 22));
+        TextFieldOrgID.setPreferredSize(new java.awt.Dimension(64, 27));
+        TextFieldOrgID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextFieldOrgIDActionPerformed(evt);
+            }
+        });
+        cardDangVien.add(TextFieldOrgID, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 138, 130, -1));
+
+        jLabel5.setText("Mã tổ chức");
+        cardDangVien.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 80, -1));
+        cardDangVien.add(TextFieldPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 188, 128, -1));
 
         jLabel36.setText("Quy trình công tác:");
         cardDangVien.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, -1, -1));
@@ -1527,6 +1548,14 @@ public class Organization extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField29ActionPerformed
 
+    private void TextFieldPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldPhoneNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldPhoneNumberActionPerformed
+
+    private void TextFieldOrgIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldOrgIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldOrgIDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1572,6 +1601,7 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldID;
     private javax.swing.JTextField TextFieldNgaySinh;
     private javax.swing.JTextField TextFieldNgayVao;
+    private javax.swing.JTextField TextFieldOrgID;
     private javax.swing.JTextField TextFieldPhoneNumber;
     private javax.swing.JTextField TextFieldPosition;
     private javax.swing.JTextField TextFieldSearchDV;
@@ -1666,6 +1696,7 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;

@@ -21,11 +21,11 @@ public class PartyMember {
     private String email;
     private String phoneNumber;
     private String position;
-
+    private String orgId;
     public PartyMember() {
     }
 
-    public PartyMember(Icon avatar, String id, String fullName, Date birthDate, Date joinDate, String address, String email, String phoneNumber, String position) {
+    public PartyMember(Icon avatar, String id, String fullName, Date birthDate, Date joinDate, String address, String email, String phoneNumber, String position, String orgId) {
         this.avatar = avatar;
         this.id = id;
         this.fullName = fullName;
@@ -35,7 +35,18 @@ public class PartyMember {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.position = position;
+        this.orgId = orgId;
     }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+
     
     public Icon getAvatar() {
         return avatar;
