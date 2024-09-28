@@ -20,7 +20,7 @@ public class CheckOrg {
         // URL kết nối MySQL
         String jdbcURL = "jdbc:mysql://localhost:3306/PartyManagement";
         String username = "root";
-        String password = "08012004";
+        String password = "Duong20012004";
         
         Connection connection = null;
         PreparedStatement statement = null;
