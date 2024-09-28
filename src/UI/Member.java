@@ -5,19 +5,16 @@
  */
 package UI;
 
+import Class.BranchActivity;
 import Class.PartyMember;
 import Class.User;
+import Database.ListBranchActivity;
 import Database.ListPartyMember;
 import java.util.List;
 import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author User
@@ -26,8 +23,10 @@ public class Member extends javax.swing.JFrame {
     public User user;
     
     List<PartyMember> listPartyMember = new ArrayList<>();
+    List<BranchActivity> listBranchActivity = new ArrayList<>();
+    
 
-    private static int pos = 0;
+    private static int posBranchActivity = 0;
     private static int state = 0;
     
     public Member(){
@@ -46,8 +45,12 @@ public class Member extends javax.swing.JFrame {
         cardThanhTich.setVisible(false);
         
         listPartyMember = ListPartyMember.getAllPartyMembers();
-        view();
         
+        String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
+        System.out.println("Không tìm thấy tổ chức cho member ID: " + orgID);
+        
+        listBranchActivity = ListBranchActivity.getBranchActivitiesByOrgId(orgID);
+       
         
     }
     
@@ -84,6 +87,40 @@ public class Member extends javax.swing.JFrame {
             // Nếu không tìm thấy thành viên trong listPartyMember
             JOptionPane.showMessageDialog(null, "Không tìm thấy thành viên với ID: " + user.getPartyMemberId());
         }
+    }
+    
+    public void ViewBranchActivity() {
+        if (!listBranchActivity.isEmpty()) {
+            BranchActivity currentActivity = listBranchActivity.get(0);
+
+            this.jTextFieldNameActivity.setText(currentActivity.getActivityName());
+            this.jTextFieldIDActivity.setText(currentActivity.getId());
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDateString = formatter.format(currentActivity.getStartDate());
+            String joinDateString = formatter.format(currentActivity.getEndDate());
+
+            this.jTextFieldStartDateActivity.setText(birthDateString);
+            this.jTextFieldEndDateActivity.setText(joinDateString);
+
+            this.jTextFieldStatusActivity.setText(currentActivity.getStatus());
+            this.jEditorPaneDescpitActivity.setText(currentActivity.getDescription());
+        } else {
+            // Xử lý khi không có hoạt động nào
+            JOptionPane.showMessageDialog(null, "Không có hoạt động nào cho tổ chức này.");
+        }
+    }
+
+    
+    public void ViewTableBranchActivity() {
+        DefaultTableModel model = (DefaultTableModel) this.jTableBranchActivity.getModel();
+        model.setNumRows(0);
+        for (BranchActivity ba : listBranchActivity) {
+            model.addRow(new Object[]{ba.getId(), ba.getActivityName() , ba.getStartDate(), ba.getEndDate(), ba.getStatus()});
+        }
+        
+        jTableBranchActivity.revalidate();
+        jTableBranchActivity.repaint();
     }
     
     @SuppressWarnings("unchecked")
@@ -125,21 +162,21 @@ public class Member extends javax.swing.JFrame {
         cardSinhHoat = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableBranchActivity = new javax.swing.JTable();
         jTextField12 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        jTextFieldNameActivity = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        jTextFieldIDActivity = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        jTextFieldStartDateActivity = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
+        jTextFieldEndDateActivity = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
-        jEditorPane5 = new javax.swing.JEditorPane();
-        jTextField17 = new javax.swing.JTextField();
+        jEditorPaneDescpitActivity = new javax.swing.JEditorPane();
+        jTextFieldStatusActivity = new javax.swing.JTextField();
         jLabel43 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -183,6 +220,7 @@ public class Member extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
+        jLabel3 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         cardThanhTich = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
@@ -477,29 +515,21 @@ public class Member extends javax.swing.JFrame {
 
         jLabel40.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel40.setText("Sinh Hoạt Chi Bộ:");
-        cardSinhHoat.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 21, -1, 30));
+        jLabel40.setText("Sinh Hoạt Chi Bộ");
+        cardSinhHoat.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableBranchActivity.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Số Lượng", "Mã Buổi Sinh Hoạt", "Tên Buổi Sinh Hoạt", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
+                "Mã Buổi Sinh Hoạt", "Tên Buổi Sinh Hoạt", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane5.setViewportView(jTable1);
+        ));
+        jScrollPane5.setViewportView(jTableBranchActivity);
 
         cardSinhHoat.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 365, 938, 209));
 
@@ -515,38 +545,34 @@ public class Member extends javax.swing.JFrame {
         jLabel5.setText("Tên Buổi Sinh Hoạt:");
         cardSinhHoat.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 69, -1, -1));
 
-        jTextField13.setText("Buổi Sinh Hoạt Tháng 9");
-        cardSinhHoat.add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 92, 268, -1));
+        jTextFieldNameActivity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNameActivityActionPerformed(evt);
+            }
+        });
+        cardSinhHoat.add(jTextFieldNameActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 92, 250, -1));
 
         jLabel8.setText("ID Buổi Sinh Hoạt:");
         cardSinhHoat.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 69, -1, -1));
-
-        jTextField14.setText("CS092024");
-        cardSinhHoat.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 92, 106, -1));
+        cardSinhHoat.add(jTextFieldIDActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 92, 106, -1));
 
         jLabel9.setText("Ngày bắt đầu:");
         cardSinhHoat.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 127, 106, -1));
-
-        jTextField15.setText("01/09/2004");
-        cardSinhHoat.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 150, 106, -1));
+        cardSinhHoat.add(jTextFieldStartDateActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 150, 106, -1));
 
         jLabel23.setText("Ngày kết thúc:");
         cardSinhHoat.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 127, 106, -1));
-
-        jTextField16.setText("30/09/2004");
-        cardSinhHoat.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 150, 106, -1));
+        cardSinhHoat.add(jTextFieldEndDateActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 150, 106, -1));
 
         jLabel42.setText("Mô tả:");
         cardSinhHoat.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 186, -1, -1));
 
-        jEditorPane5.setContentType("text/html"); // NOI18N
-        jEditorPane5.setText("<html>\n  <head>\n\n  </head>\n  <body>\n    <p style=\"margin-top: 0\">\n      10/1974 - 7/1979:<br>\n      Học viên Đại học An ninh nhân dân.<br><br>\n\n      7/1979 - 12/1988:<br>\n      Cán bộ, Cục Bảo vệ Chính trị I, Bộ Công an.<br><br>\n\n      12/1988 - 5/1990:<br>\n      Phó Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1990 - 6/1993:<br>\n      Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/1993 - 5/1997:<br>\n      Phó Cục trưởng Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1997 - 6/2006:<br>\n      Cục trưởng Cục Bảo vệ Chính trị III, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/2006 - 12/2009:<br>\n      Phó Tổng cục trưởng Tổng cục An ninh, Bộ Công an.\n    </p>\n  </body>\n</html>\n\n");
-        jScrollPane10.setViewportView(jEditorPane5);
+        jEditorPaneDescpitActivity.setContentType("text/html"); // NOI18N
+        jEditorPaneDescpitActivity.setText("\n\n");
+        jScrollPane10.setViewportView(jEditorPaneDescpitActivity);
 
         cardSinhHoat.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 209, 484, 124));
-
-        jTextField17.setText("Chưa đăng ký");
-        cardSinhHoat.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 151, 106, -1));
+        cardSinhHoat.add(jTextFieldStatusActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 151, 106, -1));
 
         jLabel43.setText("Trạng thái:");
         cardSinhHoat.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 127, -1, -1));
@@ -564,7 +590,7 @@ public class Member extends javax.swing.JFrame {
         cardSinhHoat.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 186, 124, -1));
 
         jLabel44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
-        cardSinhHoat.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
+        cardSinhHoat.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 590));
 
         jplMain.add(cardSinhHoat, "card3");
 
@@ -629,50 +655,56 @@ public class Member extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel4.add(jLabelAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 39, 160, 210));
-        jPanel4.add(jTextFieldFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 39, 167, -1));
+        jPanel4.add(jLabelAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 30, 40, 50));
+        jPanel4.add(jTextFieldFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 167, -1));
 
         jLabel17.setText("Họ và Tên:");
-        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 22, -1, -1));
+        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, -1));
 
         jLabel29.setText("Mã Đảng viên:");
-        jPanel4.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 22, -1, -1));
+        jPanel4.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, -1, -1));
 
         jTextFieldIdMember.setToolTipText("");
-        jPanel4.add(jTextFieldIdMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 39, 126, -1));
+        jPanel4.add(jTextFieldIdMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, 140, -1));
 
         jLabel30.setText("Ngày Sinh:");
-        jPanel4.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 80, -1, -1));
-        jPanel4.add(jTextFieldBirthDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 97, 137, -1));
+        jPanel4.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 80, -1));
+        jPanel4.add(jTextFieldBirthDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 160, -1));
 
         jLabel31.setText("Ngày Vào Đảng:");
-        jPanel4.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 126, -1, -1));
-        jPanel4.add(jTextFieldDateJoin, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 143, 137, -1));
+        jPanel4.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, -1, -1));
+        jPanel4.add(jTextFieldDateJoin, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 137, -1));
 
         jLabel32.setText("Địa chỉ:");
-        jPanel4.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 242, -1, -1));
-        jPanel4.add(jTextFieldAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 259, 313, -1));
+        jPanel4.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, -1, -1));
+        jPanel4.add(jTextFieldAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 230, 170, -1));
 
         jLabel33.setText("Email:");
-        jPanel4.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 184, -1, -1));
-        jPanel4.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 201, 167, -1));
+        jPanel4.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 140, -1, -1));
+        jPanel4.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 167, -1));
 
         jLabel34.setText("Số điện thoại:");
-        jPanel4.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 184, -1, -1));
-        jPanel4.add(jTextFieldPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 201, 128, -1));
+        jPanel4.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, -1, -1));
+        jPanel4.add(jTextFieldPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, 128, -1));
 
         jLabel35.setText("Chức Vụ:");
-        jPanel4.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 126, -1, -1));
-        jPanel4.add(jTextFieldPositon, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 143, 128, -1));
+        jPanel4.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, -1, -1));
+        jPanel4.add(jTextFieldPositon, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 128, -1));
 
         jLabel36.setText("Quy trình công tác:");
-        jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 300, -1, -1));
+        jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 290, -1));
 
         jEditorPane1.setContentType("text/html"); // NOI18N
         jEditorPane1.setText("<html>\n  <head>\n\n  </head>\n  <body>\n    <p style=\"margin-top: 0\">\n      10/1974 - 7/1979:<br>\n      Học viên Đại học An ninh nhân dân.<br><br>\n\n      7/1979 - 12/1988:<br>\n      Cán bộ, Cục Bảo vệ Chính trị I, Bộ Công an.<br><br>\n\n      12/1988 - 5/1990:<br>\n      Phó Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1990 - 6/1993:<br>\n      Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/1993 - 5/1997:<br>\n      Phó Cục trưởng Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1997 - 6/2006:<br>\n      Cục trưởng Cục Bảo vệ Chính trị III, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/2006 - 12/2009:<br>\n      Phó Tổng cục trưởng Tổng cục An ninh, Bộ Công an.\n    </p>\n  </body>\n</html>\n\n");
         jScrollPane6.setViewportView(jEditorPane1);
 
-        jPanel4.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 317, 467, 221));
+        jPanel4.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 730, 221));
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Thông Tin Đảng Viên");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 290, -1));
 
         jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         jPanel4.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
@@ -810,6 +842,9 @@ public class Member extends javax.swing.JFrame {
         cardYeuCau.setVisible(false);
         cardDangVien.setVisible(false);
         cardThanhTich.setVisible(false);
+        
+        ViewBranchActivity();
+        ViewTableBranchActivity();
     }//GEN-LAST:event_lblSinhHoatMouseClicked
 
     private void lblYeuCauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblYeuCauMouseClicked
@@ -828,6 +863,7 @@ public class Member extends javax.swing.JFrame {
         cardYeuCau.setVisible(false);
         cardDangVien.setVisible(true);
         cardThanhTich.setVisible(false);
+        view();
     }//GEN-LAST:event_lblDangVienMouseClicked
 
     private void lblThanhTichMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThanhTichMouseClicked
@@ -853,6 +889,10 @@ public class Member extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_buttonYCChuyenActionPerformed
+
+    private void jTextFieldNameActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNameActivityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNameActivityActionPerformed
 
     /**
      * @param args the command line arguments
@@ -905,7 +945,7 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JEditorPane jEditorPane5;
+    private javax.swing.JEditorPane jEditorPaneDescpitActivity;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -926,6 +966,7 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -967,23 +1008,23 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTableBranchActivity;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextFieldAddress;
     private javax.swing.JTextField jTextFieldBirthDay;
     private javax.swing.JTextField jTextFieldDateJoin;
     private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldEndDateActivity;
     private javax.swing.JTextField jTextFieldFullName;
+    private javax.swing.JTextField jTextFieldIDActivity;
     private javax.swing.JTextField jTextFieldIdMember;
+    private javax.swing.JTextField jTextFieldNameActivity;
     private javax.swing.JTextField jTextFieldPhoneNumber;
     private javax.swing.JTextField jTextFieldPositon;
+    private javax.swing.JTextField jTextFieldStartDateActivity;
+    private javax.swing.JTextField jTextFieldStatusActivity;
     private javax.swing.JPanel jplMain;
     private javax.swing.JPanel jplSlideMenu;
     private javax.swing.JPanel jplTitle;
