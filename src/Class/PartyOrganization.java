@@ -1,7 +1,7 @@
 package Class;
 
-import java.util.Date;
 
+import java.sql.Date;
 public class PartyOrganization {
     private String id;
     private String orgName;

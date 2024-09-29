@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package UI;
+import Class.PartyOrganization;
 import Class.User;
 import com.mysql.cj.xdevapi.Statement;
 import com.sun.jdi.connect.spi.Connection;
@@ -12,7 +13,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
@@ -28,9 +35,9 @@ public class Admin extends javax.swing.JFrame {
     private static final String password = "Duong20012004";
     public Admin() {
         initComponents();
-        cardQuanLi.setVisible(false);
-        cardPhanQuyen.setVisible(true);
-        cardCreateOrg.setVisible(false);
+        cardTaoTK.setVisible(false);
+        cardQLTK.setVisible(true);
+        cardQLOrg.setVisible(false);
         loadUserToTablePQ();
         jTextFieldPQID.setEditable(false);
         jTextFieldPQMK.setEditable(false);
@@ -49,7 +56,7 @@ public class Admin extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jplSlideMenu = new javax.swing.JPanel();
-        lblPhanQuyen = new javax.swing.JLabel();
+        lblQLTK = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblDangXuat = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -57,7 +64,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        lblQuanLiTK = new javax.swing.JLabel();
+        lblTaoTK = new javax.swing.JLabel();
         lblQuanLiTC = new javax.swing.JLabel();
         BackgroundMenu = new javax.swing.JLabel();
         jplTitle = new javax.swing.JPanel();
@@ -65,7 +72,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel39 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jplMain = new javax.swing.JPanel();
-        cardPhanQuyen = new javax.swing.JPanel();
+        cardQLTK = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jTextFieldPQID = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
@@ -80,9 +87,10 @@ public class Admin extends javax.swing.JFrame {
         jTextFieldPQSearchID = new javax.swing.JTextField();
         jComboBoxPQ = new javax.swing.JComboBox<>();
         jButton14 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButtonQLTKXoa = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        cardQuanLi = new javax.swing.JPanel();
+        cardTaoTK = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         TextFieldQLID = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
@@ -91,7 +99,6 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableQL = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jTextFieldQLorgID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPasswordFieldCr2 = new javax.swing.JPasswordField();
@@ -101,26 +108,26 @@ public class Admin extends javax.swing.JFrame {
         showPassword = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jComboBoxQLRole = new javax.swing.JComboBox<>();
+        jLabelWarning2 = new javax.swing.JLabel();
+        jLabelWarning1 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        cardCreateOrg = new javax.swing.JPanel();
+        cardQLOrg = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
-        TextFieldQLID1 = new javax.swing.JTextField();
+        TextFieldQLOrgId = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTableQL1 = new javax.swing.JTable();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jTextFieldQLorgID1 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jPasswordFieldCr3 = new javax.swing.JPasswordField();
+        jTableQLOrg = new javax.swing.JTable();
+        jButtonQLOrgThem = new javax.swing.JButton();
+        jButtonQLOrgXoa = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextFieldQLName1 = new javax.swing.JTextField();
-        jPasswordFieldCr4 = new javax.swing.JPasswordField();
-        showPassword1 = new javax.swing.JCheckBox();
+        jTextFieldQLOrgName = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBoxQLRole1 = new javax.swing.JComboBox<>();
+        jButtonQLOrgSua = new javax.swing.JButton();
+        jTextFieldIDSearch = new javax.swing.JTextField();
+        jButtonQLOrgTim = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jFormattedTextFieldDate = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -137,20 +144,20 @@ public class Admin extends javax.swing.JFrame {
         jplSlideMenu.setPreferredSize(new java.awt.Dimension(190, 590));
         jplSlideMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblPhanQuyen.setBackground(new java.awt.Color(255, 255, 255));
-        lblPhanQuyen.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblPhanQuyen.setForeground(new java.awt.Color(255, 255, 255));
-        lblPhanQuyen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPhanQuyen.setText("Phân Quyền");
-        lblPhanQuyen.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblQLTK.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLTK.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblQLTK.setForeground(new java.awt.Color(255, 255, 255));
+        lblQLTK.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLTK.setText("Quản Lí Tài Khoản");
+        lblQLTK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblPhanQuyenMouseClicked(evt);
+                lblQLTKMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblPhanQuyenMouseEntered(evt);
+                lblQLTKMouseEntered(evt);
             }
         });
-        jplSlideMenu.add(lblPhanQuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 200, 30));
+        jplSlideMenu.add(lblQLTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 200, 30));
         jplSlideMenu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 452, 210, 10));
 
         lblDangXuat.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
@@ -181,20 +188,20 @@ public class Admin extends javax.swing.JFrame {
         jplSlideMenu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
         jplSlideMenu.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 200, 20));
 
-        lblQuanLiTK.setBackground(new java.awt.Color(255, 255, 255));
-        lblQuanLiTK.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblQuanLiTK.setForeground(new java.awt.Color(255, 255, 255));
-        lblQuanLiTK.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblQuanLiTK.setText("Quản Lí Tài Khoản");
-        lblQuanLiTK.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblTaoTK.setBackground(new java.awt.Color(255, 255, 255));
+        lblTaoTK.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblTaoTK.setForeground(new java.awt.Color(255, 255, 255));
+        lblTaoTK.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTaoTK.setText("Tạo Tài Khoản");
+        lblTaoTK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblQuanLiTKMouseClicked(evt);
+                lblTaoTKMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblQuanLiTKMouseEntered(evt);
+                lblTaoTKMouseEntered(evt);
             }
         });
-        jplSlideMenu.add(lblQuanLiTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 190, 40));
+        jplSlideMenu.add(lblTaoTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 190, 40));
 
         lblQuanLiTC.setBackground(new java.awt.Color(255, 255, 255));
         lblQuanLiTC.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -262,36 +269,36 @@ public class Admin extends javax.swing.JFrame {
         jplMain.setBackground(new java.awt.Color(255, 255, 255));
         jplMain.setLayout(new java.awt.CardLayout());
 
-        cardPhanQuyen.setBackground(new java.awt.Color(255, 255, 255));
-        cardPhanQuyen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cardQLTK.setBackground(new java.awt.Color(255, 255, 255));
+        cardQLTK.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel16.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel16.setText("Phân Quyền Tài Khoản");
-        cardPhanQuyen.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, 42));
+        jLabel16.setText("Quản Lí Tài Khoản");
+        cardQLTK.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, -1, 42));
 
         jTextFieldPQID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPQIDActionPerformed(evt);
             }
         });
-        cardPhanQuyen.add(jTextFieldPQID, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 130, -1));
+        cardQLTK.add(jTextFieldPQID, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 130, -1));
 
         jLabel18.setText("ID:");
-        cardPhanQuyen.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 90, -1));
+        cardQLTK.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 90, -1));
 
         jLabel31.setText("Mật Khẩu:");
-        cardPhanQuyen.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 70, -1));
+        cardQLTK.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 70, -1));
 
         jTextFieldPQMK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPQMKActionPerformed(evt);
             }
         });
-        cardPhanQuyen.add(jTextFieldPQMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 130, -1));
+        cardQLTK.add(jTextFieldPQMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 130, -1));
 
         jLabel32.setText("ID Tổ Chức:");
-        cardPhanQuyen.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 80, -1));
+        cardQLTK.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 80, -1));
 
         jTableUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -326,28 +333,28 @@ public class Admin extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(jTableUser);
 
-        cardPhanQuyen.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 274, 940, 300));
+        cardQLTK.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 324, 940, 250));
 
         jButton12.setBackground(new java.awt.Color(0, 204, 51));
         jButton12.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
         jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Lưu");
+        jButton12.setText("Phân Quyền");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton12ActionPerformed(evt);
             }
         });
-        cardPhanQuyen.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 100, 30));
+        cardQLTK.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, 100, 30));
 
         jTextFieldPQorgID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPQorgIDActionPerformed(evt);
             }
         });
-        cardPhanQuyen.add(jTextFieldPQorgID, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 130, -1));
+        cardQLTK.add(jTextFieldPQorgID, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 130, -1));
 
         jLabel2.setText("Phân Quyền:");
-        cardPhanQuyen.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 120, 80, -1));
+        cardQLTK.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 80, -1));
 
         jTextFieldPQSearchID.setText("Nhập ID");
         jTextFieldPQSearchID.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -360,7 +367,7 @@ public class Admin extends javax.swing.JFrame {
                 jTextFieldPQSearchIDActionPerformed(evt);
             }
         });
-        cardPhanQuyen.add(jTextFieldPQSearchID, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 160, -1));
+        cardQLTK.add(jTextFieldPQSearchID, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, 160, -1));
 
         jComboBoxPQ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đảng Viên", "Tổ Chức" }));
         jComboBoxPQ.addActionListener(new java.awt.event.ActionListener() {
@@ -368,53 +375,62 @@ public class Admin extends javax.swing.JFrame {
                 jComboBoxPQActionPerformed(evt);
             }
         });
-        cardPhanQuyen.add(jComboBoxPQ, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 140, 130, -1));
+        cardQLTK.add(jComboBoxPQ, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 160, 130, -1));
 
         jButton14.setBackground(new java.awt.Color(255, 255, 102));
         jButton14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton14.setForeground(new java.awt.Color(255, 102, 102));
         jButton14.setText("Tìm Kiếm");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton14ActionPerformed(evt);
             }
         });
-        cardPhanQuyen.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 60, -1, -1));
+        cardQLTK.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 80, -1, -1));
 
-        jButton5.setBackground(new java.awt.Color(204, 255, 255));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton5.setText("Chỉnh Sửa");
-        cardPhanQuyen.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 100, 30));
+        jButtonQLTKXoa.setBackground(new java.awt.Color(255, 0, 51));
+        jButtonQLTKXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButtonQLTKXoa.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonQLTKXoa.setText("Xóa");
+        jButtonQLTKXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonQLTKXoaActionPerformed(evt);
+            }
+        });
+        cardQLTK.add(jButtonQLTKXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 100, 30));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        cardQLTK.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, 160, 20));
 
         jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
-        cardPhanQuyen.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
+        cardQLTK.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
 
-        jplMain.add(cardPhanQuyen, "card2");
+        jplMain.add(cardQLTK, "card2");
 
-        cardQuanLi.setBackground(new java.awt.Color(255, 255, 255));
-        cardQuanLi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cardTaoTK.setBackground(new java.awt.Color(255, 255, 255));
+        cardTaoTK.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel15.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 51, 51));
         jLabel15.setText("Tạo Tài Khoản");
-        cardQuanLi.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 120, 42));
+        cardTaoTK.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 120, 42));
 
-        TextFieldQLID.setText("ID");
         TextFieldQLID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextFieldQLIDActionPerformed(evt);
             }
         });
-        cardQuanLi.add(TextFieldQLID, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 130, -1));
+        cardTaoTK.add(TextFieldQLID, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 130, -1));
 
         jLabel17.setText("ID:");
-        cardQuanLi.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 90, -1));
+        cardTaoTK.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 90, -1));
 
         jLabel29.setText("Mật Khẩu:");
-        cardQuanLi.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 70, 20));
+        cardTaoTK.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 70, 20));
 
         jLabel30.setText("ID Tổ Chức");
-        cardQuanLi.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 80, -1));
+        cardTaoTK.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 80, -1));
 
         jTableQL.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -442,7 +458,7 @@ public class Admin extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTableQL);
 
-        cardQuanLi.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 324, 940, 250));
+        cardTaoTK.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 324, 940, 250));
 
         jButton6.setBackground(new java.awt.Color(0, 204, 51));
         jButton6.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
@@ -453,43 +469,29 @@ public class Admin extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        cardQuanLi.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 100, 30));
+        cardTaoTK.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, 100, 30));
 
-        jButton7.setBackground(new java.awt.Color(255, 0, 0));
-        jButton7.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Huỷ");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        cardQuanLi.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 270, 100, 30));
-
-        jTextFieldQLorgID.setText("ID Tổ Chức");
         jTextFieldQLorgID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldQLorgIDActionPerformed(evt);
             }
         });
-        cardQuanLi.add(jTextFieldQLorgID, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 130, -1));
+        cardTaoTK.add(jTextFieldQLorgID, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 130, -1));
 
         jLabel3.setText("Xác nhận mật khẩu:");
-        cardQuanLi.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 170, 110, -1));
+        cardTaoTK.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 170, 110, -1));
 
         jPasswordFieldCr2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordFieldCr2ActionPerformed(evt);
             }
         });
-        cardQuanLi.add(jPasswordFieldCr2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, 130, -1));
+        cardTaoTK.add(jPasswordFieldCr2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, 130, -1));
 
         jLabel4.setText("Họ và tên:");
-        cardQuanLi.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
-
-        jTextFieldQLName.setText("Họ Và Tên");
-        cardQuanLi.add(jTextFieldQLName, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 130, -1));
-        cardQuanLi.add(jPasswordFieldCr1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 110, 130, -1));
+        cardTaoTK.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
+        cardTaoTK.add(jTextFieldQLName, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 130, -1));
+        cardTaoTK.add(jPasswordFieldCr1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 110, 130, -1));
 
         showPassword.setText("Ẩn/Hiện Mật Khẩu");
         showPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -497,10 +499,10 @@ public class Admin extends javax.swing.JFrame {
                 showPasswordActionPerformed(evt);
             }
         });
-        cardQuanLi.add(showPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 240, -1, -1));
+        cardTaoTK.add(showPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 240, -1, -1));
 
         jLabel1.setText("Phân Quyền");
-        cardQuanLi.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 80, -1));
+        cardTaoTK.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 80, -1));
 
         jComboBoxQLRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đảng Viên", "Tổ Chức" }));
         jComboBoxQLRole.addActionListener(new java.awt.event.ActionListener() {
@@ -508,39 +510,45 @@ public class Admin extends javax.swing.JFrame {
                 jComboBoxQLRoleActionPerformed(evt);
             }
         });
-        cardQuanLi.add(jComboBoxQLRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 130, -1));
+        cardTaoTK.add(jComboBoxQLRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 130, -1));
+
+        jLabelWarning2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelWarning2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabelWarning2.setForeground(new java.awt.Color(255, 51, 51));
+        jLabelWarning2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelWarning2.setToolTipText("");
+        cardTaoTK.add(jLabelWarning2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 220, 130, 20));
+
+        jLabelWarning1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelWarning1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabelWarning1.setForeground(new java.awt.Color(255, 51, 51));
+        jLabelWarning1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        cardTaoTK.add(jLabelWarning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, 170, 20));
 
         jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
-        cardQuanLi.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
+        cardTaoTK.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
 
-        jplMain.add(cardQuanLi, "card2");
+        jplMain.add(cardTaoTK, "card2");
 
-        cardCreateOrg.setBackground(new java.awt.Color(255, 255, 255));
-        cardCreateOrg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cardQLOrg.setBackground(new java.awt.Color(255, 255, 255));
+        cardQLOrg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel19.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel19.setText("Tạo Tài Khoản");
-        cardCreateOrg.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 120, 42));
+        jLabel19.setText("Quản Lí Tổ Chức");
+        cardQLOrg.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 130, 42));
 
-        TextFieldQLID1.setText("ID");
-        TextFieldQLID1.addActionListener(new java.awt.event.ActionListener() {
+        TextFieldQLOrgId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldQLID1ActionPerformed(evt);
+                TextFieldQLOrgIdActionPerformed(evt);
             }
         });
-        cardCreateOrg.add(TextFieldQLID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 130, -1));
+        cardQLOrg.add(TextFieldQLOrgId, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 130, -1));
 
         jLabel20.setText("ID:");
-        cardCreateOrg.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 90, -1));
+        cardQLOrg.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 90, -1));
 
-        jLabel33.setText("Mật Khẩu:");
-        cardCreateOrg.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 70, 20));
-
-        jLabel35.setText("ID Tổ Chức");
-        cardCreateOrg.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 80, -1));
-
-        jTableQL1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableQLOrg.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -548,7 +556,7 @@ public class Admin extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "STT", "ID", "Họ Tên", "ID Tổ Chức"
+                "STT", "ID", "Tên Tổ Chức", "Ngày Thành Lập"
             }
         ) {
             Class[] types = new Class [] {
@@ -559,85 +567,86 @@ public class Admin extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTableQL1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableQLOrg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableQL1MouseClicked(evt);
+                jTableQLOrgMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(jTableQL1);
+        jScrollPane3.setViewportView(jTableQLOrg);
 
-        cardCreateOrg.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 324, 940, 250));
+        cardQLOrg.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 324, 940, 250));
 
-        jButton8.setBackground(new java.awt.Color(0, 204, 51));
-        jButton8.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Lưu");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        jButtonQLOrgThem.setBackground(new java.awt.Color(0, 204, 51));
+        jButtonQLOrgThem.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
+        jButtonQLOrgThem.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonQLOrgThem.setText("Thêm");
+        jButtonQLOrgThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jButtonQLOrgThemActionPerformed(evt);
             }
         });
-        cardCreateOrg.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 100, 30));
+        cardQLOrg.add(jButtonQLOrgThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 100, 30));
 
-        jButton9.setBackground(new java.awt.Color(255, 0, 0));
-        jButton9.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Huỷ");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        jButtonQLOrgXoa.setBackground(new java.awt.Color(255, 0, 0));
+        jButtonQLOrgXoa.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
+        jButtonQLOrgXoa.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonQLOrgXoa.setText("Xóa");
+        jButtonQLOrgXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                jButtonQLOrgXoaActionPerformed(evt);
             }
         });
-        cardCreateOrg.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 30));
+        cardQLOrg.add(jButtonQLOrgXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 250, 100, 30));
 
-        jTextFieldQLorgID1.setText("ID Tổ Chức");
-        jTextFieldQLorgID1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setText("Tên Tổ Chức");
+        cardQLOrg.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 70, -1));
+
+        jTextFieldQLOrgName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldQLorgID1ActionPerformed(evt);
+                jTextFieldQLOrgNameActionPerformed(evt);
             }
         });
-        cardCreateOrg.add(jTextFieldQLorgID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 130, -1));
+        cardQLOrg.add(jTextFieldQLOrgName, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 130, -1));
 
-        jLabel5.setText("Xác nhận mật khẩu:");
-        cardCreateOrg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 170, 110, -1));
+        jLabel7.setText("Ngày Thành Lập: ");
+        cardQLOrg.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 140, 100, -1));
 
-        jPasswordFieldCr3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonQLOrgSua.setText("Sửa");
+        cardQLOrg.add(jButtonQLOrgSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, 100, 30));
+
+        jTextFieldIDSearch.setText("Nhập ID:");
+        jTextFieldIDSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldIDSearchMouseClicked(evt);
+            }
+        });
+        cardQLOrg.add(jTextFieldIDSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, 130, -1));
+
+        jButtonQLOrgTim.setBackground(new java.awt.Color(255, 255, 51));
+        jButtonQLOrgTim.setText("Tìm Kiếm");
+        jButtonQLOrgTim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordFieldCr3ActionPerformed(evt);
+                jButtonQLOrgTimActionPerformed(evt);
             }
         });
-        cardCreateOrg.add(jPasswordFieldCr3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, 130, -1));
+        cardQLOrg.add(jButtonQLOrgTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, -1, -1));
 
-        jLabel6.setText("Họ và tên:");
-        cardCreateOrg.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        cardQLOrg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 100, 140, 20));
 
-        jTextFieldQLName1.setText("Họ Và Tên");
-        cardCreateOrg.add(jTextFieldQLName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 130, -1));
-        cardCreateOrg.add(jPasswordFieldCr4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 110, 130, -1));
-
-        showPassword1.setText("Ẩn/Hiện Mật Khẩu");
-        showPassword1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showPassword1ActionPerformed(evt);
-            }
-        });
-        cardCreateOrg.add(showPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 240, -1, -1));
-
-        jLabel7.setText("Phân Quyền");
-        cardCreateOrg.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 80, -1));
-
-        jComboBoxQLRole1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đảng Viên", "Tổ Chức" }));
-        jComboBoxQLRole1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxQLRole1ActionPerformed(evt);
-            }
-        });
-        cardCreateOrg.add(jComboBoxQLRole1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 130, -1));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel9.setText("Định dạng yyyy-MM-dd VD:2020-01-29");
+        cardQLOrg.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 190, 220, 20));
+        cardQLOrg.add(jFormattedTextFieldDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 130, -1));
 
         jLabel36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
-        cardCreateOrg.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
+        cardQLOrg.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
 
-        jplMain.add(cardCreateOrg, "card2");
+        jplMain.add(cardQLOrg, "card2");
 
         jPanel1.add(jplMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 950, 580));
 
@@ -659,8 +668,6 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadUserToTablePQ(){
-        
-        
         java.sql.Connection connection = null;
         try {
             // Kết nối tới MySQL
@@ -693,7 +700,16 @@ public class Admin extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
 
         // Nếu không có kết quả, trả về false
     }
@@ -729,21 +745,31 @@ public class Admin extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        } finally {
+            try {
+                
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
 
-        // Nếu không có kết quả, trả về false
     }
     private void updateUserToTable(User userLatest){
         
         
         java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
         try {
             // Kết nối tới MySQL
             connection = DriverManager.getConnection(jdbcURL, username, password);
 
             // Câu truy vấn SQL với tham số
             String sql = "UPDATE User SET partOrgId = ? , password = ? , role = ? WHERE partyMemberId = ?";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt = connection.prepareStatement(sql);
             
             pstmt.setString(1, userLatest.getPartOrgId());
             pstmt.setString(2, userLatest.getPassword());
@@ -754,19 +780,30 @@ public class Admin extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close(); // Đóng PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
     }
     private void insertUser(User userLatest){
-       
-        
         java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
         try {
             // Kết nối tới MySQL
             connection = DriverManager.getConnection(jdbcURL, username, password);
 
             // Câu truy vấn SQL với tham số
             String sql = "INSERT INTO User (partyMemberId, partOrgId, password, role) VALUE (?, ?, ?, ? )";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, userLatest.getPartyMemberId());
             pstmt.setString(2, userLatest.getPartOrgId());
             pstmt.setString(3, userLatest.getPassword());
@@ -777,12 +814,23 @@ public class Admin extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close(); // Đóng PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
     }
     private void searchUser(String ID){
-        
-        
         java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
         ResultSet result = null;
         try {
             // Kết nối tới MySQL
@@ -790,7 +838,7 @@ public class Admin extends javax.swing.JFrame {
 
             // Câu truy vấn SQL với tham số
             String sql = "SELECT *from User WHERE partyMemberId = ? ";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, ID);
             result = pstmt.executeQuery();
             DefaultTableModel modelUser = (DefaultTableModel) this.jTableUser.getModel();
@@ -807,11 +855,52 @@ public class Admin extends javax.swing.JFrame {
                 else 
                     modelUser.addRow(new Object[]{index, partyMemberId, Password,orgId, "Đảng Viên"});
             }
-            JOptionPane.showMessageDialog(rootPane, "Không Tìm Thấy");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close(); // Đóng PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
+    }
+    private void deleteUser(User user){
+        java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            // Kết nối tới MySQL
+            connection = DriverManager.getConnection(jdbcURL, username, password);
+
+            // Câu truy vấn SQL với tham số
+            String sql = "DELETE from User WHERE partyMemberId = ? ";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, user.getPartyMemberId());
             
+            pstmt.executeUpdate();
+            // Nếu có kết quả trả về, tức là người dùng hợp l
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        finally{
+            try {
+            if (pstmt != null) {
+                pstmt.close(); // Đóng PreparedStatement
+            }
+            if (connection != null) {
+                connection.close(); // Đóng Connection
+            }
+        } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+            e.printStackTrace();
+        }
         }
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -819,17 +908,13 @@ public class Admin extends javax.swing.JFrame {
 //        x = 0;
     }//GEN-LAST:event_formWindowOpened
 
-    private void lblPhanQuyenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPhanQuyenMouseClicked
-        cardQuanLi.setVisible(false);
-        cardPhanQuyen.setVisible(true);
-        cardCreateOrg.setVisible(false);
+    private void lblQLTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLTKMouseClicked
+        cardTaoTK.setVisible(false);
+        cardQLTK.setVisible(true);
+        cardQLOrg.setVisible(false);
         loadUserToTablePQ();
         
-    }//GEN-LAST:event_lblPhanQuyenMouseClicked
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_lblQLTKMouseClicked
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -839,40 +924,162 @@ public class Admin extends javax.swing.JFrame {
         if(jComboBoxQLRole.getSelectedItem().equals("Đảng Viên"))
             insertUser.setRole(false);
         else insertUser.setRole(false);
-        if(Arrays.equals(jPasswordFieldCr1.getPassword(), jPasswordFieldCr2.getPassword())){
-            char[] password = jPasswordFieldCr2.getPassword();
-            String passwordStr = new String(password);
-            insertUser.setPassword(passwordStr);
-            insertUser(insertUser);
-            
-            loadMemberNoUserToTable();
+        boolean check = true;
+        if(TextFieldQLID.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Chọn ID cần tạo ");
         }
-        else {
-            JOptionPane.showMessageDialog(rootPane, "Xác nhận lại mật khẩu");
+        else{
+            if(jPasswordFieldCr1.getPassword().length == 0){
+                jLabelWarning1.setText("Nhập mật khẩu !");
+            }
+            else if(jPasswordFieldCr1.getPassword().length < 6){
+                jLabelWarning1.setText("Mật khẩu phải có ít nhất 6 kí tự!");
+            }
+            else if(jPasswordFieldCr2.getPassword().length == 0 || !Arrays.equals(jPasswordFieldCr1.getPassword(), jPasswordFieldCr2.getPassword())){
+                jLabelWarning1.setText("");
+                jLabelWarning2.setText("Xác nhận lại mật khẩu !");
+            }
+            else {
+                char[] password = jPasswordFieldCr2.getPassword();
+                String passwordStr = new String(password);
+                insertUser.setPassword(passwordStr);
+                insertUser(insertUser);
+                loadMemberNoUserToTable();
+                TextFieldQLID.setText("");
+                jTextFieldQLName.setText("");
+                jTextFieldQLorgID.setText("");
+                jPasswordFieldCr1.setText("");
+                jPasswordFieldCr2.setText("");
+                JOptionPane.showMessageDialog(rootPane, "DONE!");
+            }
         }
-        
-        
     }//GEN-LAST:event_jButton6ActionPerformed
+private void searchOrg(String ID){
+        java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
+        ResultSet result = null;
+        try {
+            // Kết nối tới MySQL
+            connection = DriverManager.getConnection(jdbcURL, username, password);
 
+            // Câu truy vấn SQL với tham số
+            String sql = "SELECT *from PartyOrganization WHERE id = ? ";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, ID);
+            result = pstmt.executeQuery();
+            DefaultTableModel modelUser = (DefaultTableModel) this.jTableQLOrg.getModel();
+            modelUser.setNumRows(0);
+            int index = 0;
+            if(result.next()){
+                String id = result.getString("id");
+                String name = result.getString("orgName");
+                Date date = result.getDate("creationDate");
+                index++;
+                modelUser.addRow(new Object[]{index, id, name, date});
+            }
+            else
+                JOptionPane.showMessageDialog(rootPane, "Không Tìm Thấy");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close(); // Đóng PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
+    }
+    private void loadOrg(){
+        java.sql.Connection connection = null;
+        try {
+            // Kết nối tới MySQL
+            connection = DriverManager.getConnection(jdbcURL, username, password);
+
+            // Câu truy vấn SQL với tham số
+            String sql = "SELECT * from PartyOrganization";
+            
+            java.sql.Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            
+            DefaultTableModel modelUser = (DefaultTableModel) this.jTableQLOrg.getModel();
+            modelUser.setNumRows(0);
+            int index = 0;
+            while(resultSet.next()){
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("orgName");
+                Date date = resultSet.getDate("creationDate");
+                index++;
+                modelUser.addRow(new Object[]{index, id, name, date});       
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
+    }
+    private void insertOrg(String id, String name, String date ){
+        java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            // Kết nối tới MySQL
+            connection = DriverManager.getConnection(jdbcURL, username, password);
+
+            // Câu truy vấn SQL với tham số
+            String sql = "INSERT INTO PartyOrganization (id, orgName, creationDate) VALUE (?, ?, ?)";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, id);
+            pstmt.setString(2, name);
+            pstmt.setDate(3, java.sql.Date.valueOf(date));
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close(); // Đóng PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
+    }
+    
     private void jTextFieldQLorgIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQLorgIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldQLorgIDActionPerformed
 
-    private void lblQuanLiTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuanLiTKMouseClicked
+    private void lblTaoTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTaoTKMouseClicked
         // TODO add your handling code here:
-        cardQuanLi.setVisible(true);
-        cardPhanQuyen.setVisible(false);
-        cardCreateOrg.setVisible(false);
+        cardTaoTK.setVisible(true);
+        cardQLTK.setVisible(false);
+        cardQLOrg.setVisible(false);
         loadMemberNoUserToTable();
-    }//GEN-LAST:event_lblQuanLiTKMouseClicked
+    }//GEN-LAST:event_lblTaoTKMouseClicked
 
-    private void lblPhanQuyenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPhanQuyenMouseEntered
+    private void lblQLTKMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLTKMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblPhanQuyenMouseEntered
+    }//GEN-LAST:event_lblQLTKMouseEntered
 
-    private void lblQuanLiTKMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuanLiTKMouseEntered
+    private void lblTaoTKMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTaoTKMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblQuanLiTKMouseEntered
+    }//GEN-LAST:event_lblTaoTKMouseEntered
 
     private void TextFieldQLIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldQLIDActionPerformed
         // TODO add your handling code here:
@@ -884,17 +1091,25 @@ public class Admin extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
-        
-        User user = new User();
-        user.setPartyMemberId(jTextFieldPQID.getText());
-        user.setPartOrgId(jTextFieldPQorgID.getText());
-        user.setPassword(jTextFieldPQMK.getText());
-        if(jComboBoxPQ.getSelectedItem().equals("Đảng Viên"))
-            user.setRole(false);
-        else user.setRole(true);
-        updateUserToTable(user);
-        loadUserToTablePQ();
-        JOptionPane.showMessageDialog(rootPane, "CẬP NHẬT THÀNH CÔNG");
+        if(jTextFieldPQID.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "CHỌN TÀI KHOẢN CẦN PHÂN QUYỀN");
+        }
+        else{
+             User user = new User();
+            user.setPartyMemberId(jTextFieldPQID.getText());
+            user.setPartOrgId(jTextFieldPQorgID.getText());
+            user.setPassword(jTextFieldPQMK.getText());
+            if(jComboBoxPQ.getSelectedItem().equals("Đảng Viên"))
+                user.setRole(false);
+            else user.setRole(true);
+            updateUserToTable(user);
+            loadUserToTablePQ();
+            JOptionPane.showMessageDialog(rootPane, "CẬP NHẬT THÀNH CÔNG");
+            jTextFieldPQID.setText("");
+            jTextFieldPQorgID.setText("");
+            jTextFieldPQMK.setText("");
+        }
+       
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jTextFieldPQorgIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPQorgIDActionPerformed
@@ -934,7 +1149,7 @@ public class Admin extends javax.swing.JFrame {
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         String ID = jTextFieldPQSearchID.getText();
         if(ID.equals("Nhập ID") || ID.equals("")){
-            JOptionPane.showMessageDialog(rootPane, "Nhap ID can tim");
+            jLabel8.setText("Nhập ID cần tìm!");
         }
         else 
             searchUser(ID);
@@ -966,48 +1181,119 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxQLRoleActionPerformed
 
-    private void TextFieldQLID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldQLID1ActionPerformed
+    private void TextFieldQLOrgIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldQLOrgIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldQLID1ActionPerformed
+    }//GEN-LAST:event_TextFieldQLOrgIdActionPerformed
 
-    private void jTableQL1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableQL1MouseClicked
+    private void jTableQLOrgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableQLOrgMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTableQL1MouseClicked
+        
+        selectIdx= jTableQLOrg.getSelectedRow();
+        TextFieldQLOrgId.setText((String) jTableQLOrg.getValueAt(selectIdx, 1));
+        jTextFieldQLOrgName.setText((String) jTableQLOrg.getValueAt(selectIdx, 2));
+        //jFormattedTextFieldDate.setText((Date)jTableQLOrg.getValueAt(selectIdx, 3));
+        Date dateValue = (Date) jTableQLOrg.getValueAt(selectIdx, 3);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(dateValue);
+        jFormattedTextFieldDate.setText(formattedDate);
+ 
+    }//GEN-LAST:event_jTableQLOrgMouseClicked
+    private boolean checkDate(String dateString){
+         String dateFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        sdf.setLenient(false); // Thiết lập không cho phép các giá trị không hợp lệ
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+        try {
+            // Phân tích chuỗi thành java.util.Date
+            Date utilDate = sdf.parse(dateString);
+            
+            // Chuyển đổi sang java.sql.Date nếu cần thiết
+            //java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            
+            // Tiến hành xử lý với sqlDate nếu cần thiết
+            // ...
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+            return true; // Nếu phân tích thành công, trả về true
+        } catch (ParseException e) {
+            return false; // Nếu gặp lỗi, trả về false
+        }
+    }
+    private void jButtonQLOrgThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQLOrgThemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+        PartyOrganization x = new PartyOrganization();
+        if(TextFieldQLOrgId.getText().equals("")||jTextFieldQLOrgName.getText().equals("")||jFormattedTextFieldDate.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Nhập đầy đủ thông tin");
+        }
+        else if(checkDate(jFormattedTextFieldDate.getText()) == false){
+            JOptionPane.showMessageDialog(this, "Nhập đúng định dạng ngày");
+        }
+        else if(checkDate(jFormattedTextFieldDate.getText()) == true){
+            x.setId(TextFieldQLOrgId.getText());
+            x.setOrgName(jTextFieldQLOrgName.getText());
+            insertOrg(x.getId(), x.getOrgName(), jFormattedTextFieldDate.getText());
+        }
+        loadOrg();
+    }//GEN-LAST:event_jButtonQLOrgThemActionPerformed
 
-    private void jTextFieldQLorgID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQLorgID1ActionPerformed
+    private void jButtonQLOrgXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQLOrgXoaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldQLorgID1ActionPerformed
-
-    private void jPasswordFieldCr3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldCr3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordFieldCr3ActionPerformed
-
-    private void showPassword1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPassword1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_showPassword1ActionPerformed
-
-    private void jComboBoxQLRole1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxQLRole1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxQLRole1ActionPerformed
+    }//GEN-LAST:event_jButtonQLOrgXoaActionPerformed
 
     private void lblQuanLiTCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuanLiTCMouseClicked
         // TODO add your handling code here:
-        cardQuanLi.setVisible(false);
-        cardPhanQuyen.setVisible(false);
-        cardCreateOrg.setVisible(true);
+        cardTaoTK.setVisible(false);
+        cardQLTK.setVisible(false);
+        cardQLOrg.setVisible(true);
+        loadOrg();
     }//GEN-LAST:event_lblQuanLiTCMouseClicked
 
     private void lblQuanLiTCMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuanLiTCMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_lblQuanLiTCMouseEntered
+
+    private void jButtonQLTKXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQLTKXoaActionPerformed
+        // TODO add your handling code here:
+        if(jTextFieldPQID.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "CHỌN TÀI KHOẢN CẦN XÓA!");
+        }
+        else{
+            User user = new User();
+            user.setPartyMemberId(jTextFieldPQID.getText());
+            user.setPartOrgId(jTextFieldPQorgID.getText());
+            user.setPassword(jTextFieldPQMK.getText());
+            if(jComboBoxPQ.getSelectedItem().equals("Đảng Viên"))
+                user.setRole(false);
+            else user.setRole(true);
+            deleteUser(user);
+            loadUserToTablePQ();
+            JOptionPane.showMessageDialog(rootPane, "DONE!");
+            jTextFieldPQID.setText("");
+            jTextFieldPQorgID.setText("");
+            jTextFieldPQMK.setText("");
+        }
+    }//GEN-LAST:event_jButtonQLTKXoaActionPerformed
+
+    private void jTextFieldQLOrgNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQLOrgNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldQLOrgNameActionPerformed
+
+    private void jTextFieldIDSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldIDSearchMouseClicked
+        // TODO add your handling code here:
+        jTextFieldIDSearch.setText("");
+    }//GEN-LAST:event_jTextFieldIDSearchMouseClicked
+
+    private void jButtonQLOrgTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQLOrgTimActionPerformed
+        // TODO add your handling code here:
+        String idSearch = jTextFieldIDSearch.getText();
+        if(idSearch.equals("") || idSearch.equals("Nhập ID:")){
+            jLabel5.setText("Nhập ID cần tìm kiếm");
+        }
+        else{
+            searchOrg(idSearch);
+            jLabel5.setText("");
+        }
+        
+    }//GEN-LAST:event_jButtonQLOrgTimActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1050,20 +1336,21 @@ public class Admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundMenu;
     private javax.swing.JTextField TextFieldQLID;
-    private javax.swing.JTextField TextFieldQLID1;
-    private javax.swing.JPanel cardCreateOrg;
-    private javax.swing.JPanel cardPhanQuyen;
-    private javax.swing.JPanel cardQuanLi;
+    private javax.swing.JTextField TextFieldQLOrgId;
+    private javax.swing.JPanel cardQLOrg;
+    private javax.swing.JPanel cardQLTK;
+    private javax.swing.JPanel cardTaoTK;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButtonQLOrgSua;
+    private javax.swing.JButton jButtonQLOrgThem;
+    private javax.swing.JButton jButtonQLOrgTim;
+    private javax.swing.JButton jButtonQLOrgXoa;
+    private javax.swing.JButton jButtonQLTKXoa;
     private javax.swing.JComboBox<String> jComboBoxPQ;
     private javax.swing.JComboBox<String> jComboBoxQLRole;
-    private javax.swing.JComboBox<String> jComboBoxQLRole1;
+    private javax.swing.JTextField jFormattedTextFieldDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1084,44 +1371,43 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelWarning1;
+    private javax.swing.JLabel jLabelWarning2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordFieldCr1;
     private javax.swing.JPasswordField jPasswordFieldCr2;
-    private javax.swing.JPasswordField jPasswordFieldCr3;
-    private javax.swing.JPasswordField jPasswordFieldCr4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTableQL;
-    private javax.swing.JTable jTableQL1;
+    private javax.swing.JTable jTableQLOrg;
     private javax.swing.JTable jTableUser;
+    private javax.swing.JTextField jTextFieldIDSearch;
     private javax.swing.JTextField jTextFieldPQID;
     private javax.swing.JTextField jTextFieldPQMK;
     private javax.swing.JTextField jTextFieldPQSearchID;
     private javax.swing.JTextField jTextFieldPQorgID;
     private javax.swing.JTextField jTextFieldQLName;
-    private javax.swing.JTextField jTextFieldQLName1;
+    private javax.swing.JTextField jTextFieldQLOrgName;
     private javax.swing.JTextField jTextFieldQLorgID;
-    private javax.swing.JTextField jTextFieldQLorgID1;
     private javax.swing.JPanel jplMain;
     private javax.swing.JPanel jplSlideMenu;
     private javax.swing.JPanel jplTitle;
     private javax.swing.JLabel lblDangXuat;
-    private javax.swing.JLabel lblPhanQuyen;
+    private javax.swing.JLabel lblQLTK;
     private javax.swing.JLabel lblQuanLiTC;
-    private javax.swing.JLabel lblQuanLiTK;
+    private javax.swing.JLabel lblTaoTK;
     private javax.swing.JCheckBox showPassword;
-    private javax.swing.JCheckBox showPassword1;
     // End of variables declaration//GEN-END:variables
 }
