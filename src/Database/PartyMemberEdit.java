@@ -15,10 +15,7 @@ import java.sql.SQLException;
 
 public class PartyMemberEdit {
 
-    // Thông tin cơ sở dữ liệu
-    private final String DB_URL = "jdbc:mysql://localhost:3306/PartyManagement";
-    private final String USER = "root";
-    private final String PASS = "08012004";
+    private static DatabaseConfig dbconfig = new DatabaseConfig();
 
     public void updatePartyMember(String id, String fullName, String birthDate, String joinDate, 
                                   String address, String email, String phoneNumber, 
@@ -28,7 +25,7 @@ public class PartyMemberEdit {
 
         try {
             // 1. Kết nối đến cơ sở dữ liệu
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
 
             // 2. Tạo câu lệnh SQL UPDATE
             String sql = "UPDATE PartyMember SET fullName = ?, birthDate = ?, joinDate = ?, address = ?, " +

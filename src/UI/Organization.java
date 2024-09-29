@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import Database.SearchPM;
+import javax.swing.JOptionPane;
 /**
  *
  * @author buingocduc
@@ -30,12 +32,12 @@ public class Organization extends javax.swing.JFrame {
     private static int pos = 0;
     private static int stt = 0;
     /* set onoff cho card DangVien */
-    public void OnOffDangVien(boolean a, boolean b)
+    public void OnOffDangVien(boolean a, boolean b, boolean c)
     {
         this.btnEditDv.show(a);
         /*-----*/
-        this.btnCancelDV.show(b);
-        this.btnSaveDV.show(b);
+        this.btnCancelDV.show(c);
+        this.btnSaveDV.show(c);
         this.btnDeleteDV.show(b);
         this.btnEditDV2.show(b);
         this.btnAddDV.show(b);
@@ -59,7 +61,7 @@ public class Organization extends javax.swing.JFrame {
         this.TextFieldAddress.setText(pm.getAddress());
         this.TextFieldOrgID.setText(pm.getOrgId());
         
-        OnOffDangVien(true, false);
+        OnOffDangVien(true, false, false);
     }
 // set viewTable cho crad DangVien
     public void viewTableDv()
@@ -216,7 +218,7 @@ public class Organization extends javax.swing.JFrame {
         cardDangVien = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         TextFieldSearchDV = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        ButtonSearchDV = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         TextFieldHoTen = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
@@ -894,13 +896,18 @@ public class Organization extends javax.swing.JFrame {
         });
         cardDangVien.add(TextFieldSearchDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, 150, -1));
 
-        jButton1.setBackground(new java.awt.Color(0, 204, 255));
-        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Tìm");
-        jButton1.setBorder(null);
-        jButton1.setPreferredSize(new java.awt.Dimension(22, 30));
-        cardDangVien.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 30, 60, -1));
+        ButtonSearchDV.setBackground(new java.awt.Color(0, 204, 255));
+        ButtonSearchDV.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        ButtonSearchDV.setForeground(new java.awt.Color(255, 255, 255));
+        ButtonSearchDV.setText("Tìm");
+        ButtonSearchDV.setBorder(null);
+        ButtonSearchDV.setPreferredSize(new java.awt.Dimension(22, 30));
+        ButtonSearchDV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonSearchDVActionPerformed(evt);
+            }
+        });
+        cardDangVien.add(ButtonSearchDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 30, 60, -1));
         cardDangVien.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 63, 147, 183));
         cardDangVien.add(TextFieldHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 80, 167, -1));
 
@@ -992,6 +999,16 @@ public class Organization extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        TableDV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableDVMouseClicked(evt);
+            }
+        });
+        TableDV.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TableDVKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(TableDV);
         if (TableDV.getColumnModel().getColumnCount() > 0) {
             TableDV.getColumnModel().getColumn(0).setMinWidth(30);
@@ -1005,19 +1022,34 @@ public class Organization extends javax.swing.JFrame {
         btnAddDV.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         btnAddDV.setForeground(new java.awt.Color(255, 255, 255));
         btnAddDV.setText("Thêm");
+        btnAddDV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddDVActionPerformed(evt);
+            }
+        });
         cardDangVien.add(btnAddDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 70, -1));
 
         btnEditDV2.setBackground(new java.awt.Color(255, 204, 0));
         btnEditDV2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         btnEditDV2.setForeground(new java.awt.Color(255, 255, 255));
         btnEditDV2.setText("Sửa");
+        btnEditDV2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditDV2ActionPerformed(evt);
+            }
+        });
         cardDangVien.add(btnEditDV2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 350, 70, -1));
 
         btnDeleteDV.setBackground(new java.awt.Color(255, 51, 0));
         btnDeleteDV.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         btnDeleteDV.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteDV.setText("Xoá");
-        cardDangVien.add(btnDeleteDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, 70, -1));
+        btnDeleteDV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteDVActionPerformed(evt);
+            }
+        });
+        cardDangVien.add(btnDeleteDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 350, 70, -1));
 
         btnEditDv.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         btnEditDv.setText("Chỉnh sửa");
@@ -1038,7 +1070,7 @@ public class Organization extends javax.swing.JFrame {
                 btnSaveDVActionPerformed(evt);
             }
         });
-        cardDangVien.add(btnSaveDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 313, 80, 30));
+        cardDangVien.add(btnSaveDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 318, 80, -1));
 
         btnCancelDV.setBackground(new java.awt.Color(255, 0, 0));
         btnCancelDV.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
@@ -1477,7 +1509,7 @@ public class Organization extends javax.swing.JFrame {
 
     private void btnEditDvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDvActionPerformed
         // TODO add your handling code here:
-        OnOffDangVien(false, true);
+        OnOffDangVien(false, true,false);
     }//GEN-LAST:event_btnEditDvActionPerformed
 
     private void btnSaveDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDVActionPerformed
@@ -1555,6 +1587,56 @@ public class Organization extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFieldOrgIDActionPerformed
 
+    private void btnAddDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDVActionPerformed
+        // TODO add your handling code here:
+        OnOffDangVien(false, false, true);
+    }//GEN-LAST:event_btnAddDVActionPerformed
+
+    private void btnEditDV2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDV2ActionPerformed
+        // TODO add your handling code here:
+        OnOffDangVien(false, false, true);
+    }//GEN-LAST:event_btnEditDV2ActionPerformed
+
+    private void btnDeleteDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDVActionPerformed
+        // TODO add your handling code here:
+        ViewDangVien();
+    }//GEN-LAST:event_btnDeleteDVActionPerformed
+
+    private void TableDVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableDVMouseClicked
+        // TODO add your handling code here:
+        pos = this.TableDV.getSelectedRow();
+        ViewDangVien();
+    }//GEN-LAST:event_TableDVMouseClicked
+
+    private void TableDVKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TableDVKeyReleased
+        // TODO add your handling code here:
+        pos = this.TableDV.getSelectedRow();
+        ViewDangVien();
+    }//GEN-LAST:event_TableDVKeyReleased
+
+    private void ButtonSearchDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSearchDVActionPerformed
+        // TODO add your handling code here:
+        String searchInput = this.TextFieldSearchDV.getText();
+        if(SearchPM.checkIdInDatabase(searchInput))
+        {
+            JOptionPane.showMessageDialog(null, "Thành công!");
+            int count = 0;
+            for(PartyMember lpm: listDV)
+            {
+                if(lpm.getId().equals(searchInput))
+                {
+                    break;
+                }
+                count ++;
+            }
+            pos = count;
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Không tìm thấy Đảng Viên!");
+        }
+        ViewDangVien();
+    }//GEN-LAST:event_ButtonSearchDVActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1592,6 +1674,7 @@ public class Organization extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundMenu;
+    private javax.swing.JButton ButtonSearchDV;
     private javax.swing.JTable TableDV;
     private javax.swing.JTextField TextFieldAddress;
     private javax.swing.JTextField TextFieldEmail;
@@ -1620,7 +1703,6 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JPanel cardThanhTich;
     private javax.swing.JPanel cardViewDetail;
     private javax.swing.JPanel cardYeuCau;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;

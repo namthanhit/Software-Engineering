@@ -16,15 +16,13 @@ import java.sql.DriverManager;
  * @author buingocduc
  */
 public class ListBranchActivity {
+    private static DatabaseConfig dbconfig = new DatabaseConfig();
     public static String getPartOrgIdByMemberId(String partyMemberId) {
         String orgId = null;
-        String url = "jdbc:mysql://localhost:3306/PartyManagement"; 
-        String username = "root";  
-        String password = "08012004";  
 
         String query = "SELECT partOrgId FROM User WHERE partyMemberId = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             
             preparedStatement.setString(1, partyMemberId);
@@ -42,13 +40,11 @@ public class ListBranchActivity {
     
     public static List<BranchActivity> getBranchActivitiesByOrgId(String orgId) {
         List<BranchActivity> activities = new ArrayList<>();
-        String url = "jdbc:mysql://localhost:3306/PartyManagement"; 
-        String username = "root";  
-        String password = "08012004";  
+ 
 
         String query = "SELECT id, activityName, startDate, endDate, status, description FROM BranchActivity WHERE orgId = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
             Statement stmt = connection.createStatement();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 

@@ -16,10 +16,7 @@ import java.sql.SQLException;
 
 public class PartyMemberAdd {
 
-    // Thông tin cơ sở dữ liệu
-    private final String DB_URL = "jdbc:mysql://localhost:3306/PartyManagement";
-    private final String USER = "root";
-    private final String PASS = "08012004";
+    private static DatabaseConfig dbconfig = new DatabaseConfig();
 
     // Kiểm tra xem ID đã tồn tại hay chưa
     private boolean isIdExist(String id) {
@@ -28,7 +25,7 @@ public class PartyMemberAdd {
         ResultSet rs = null;
 
         try {
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
             String checkSql = "SELECT id FROM PartyMember WHERE id = ?";
             pstmt = conn.prepareStatement(checkSql);
             pstmt.setString(1, id);
@@ -64,7 +61,7 @@ public class PartyMemberAdd {
             }
 
             // 2. Kết nối đến cơ sở dữ liệu
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
 
             // 3. Tạo câu lệnh SQL INSERT
             String sql = "INSERT INTO PartyMember (avatar, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId) " +

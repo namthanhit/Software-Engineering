@@ -8,18 +8,16 @@ import javax.swing.ImageIcon;
 import java.sql.DriverManager;
 
 public class ListPartyMember {
-
+    private static DatabaseConfig dbconfig = new DatabaseConfig();
     // Phương thức lấy danh sách PartyMember từ CSDL
     public static List<PartyMember> getAllPartyMembers() {
         List<PartyMember> partyMembers = new ArrayList<>();
-        String url = "jdbc:mysql://localhost:3306/PartyManagement";
-        String user = "root";
-        String password = "08012004";
+
         
         // Câu lệnh SQL để lấy dữ liệu từ bảng PartyMember
         String sql = "SELECT id, fullName, birthDate, joinDate, address, email, phoneNumber, position, avatar,orgId FROM PartyMember";
 
-        try (Connection conn = DriverManager.getConnection(url, user, password);
+        try (Connection conn = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
