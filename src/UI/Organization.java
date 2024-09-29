@@ -11,6 +11,8 @@ import Class.User;
 import Class.PartyMember;
 import Class.User;
 import Database.ListPartyMember;
+import Database.PartyMemberAdd;
+import Database.PartyMemberDelete;
 import com.sun.jdi.connect.spi.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import Database.SearchPM;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JOptionPane;
 /**
  *
@@ -31,6 +36,7 @@ public class Organization extends javax.swing.JFrame {
     List<PartyMember> listDV = ListPartyMember.getAllPartyMembers();
     private static int pos = 0;
     private static int stt = 0;
+    private static int checkSaveDV = 0;
     /* set onoff cho card DangVien */
     public void OnOffDangVien(boolean a, boolean b, boolean c)
     {
@@ -1514,7 +1520,24 @@ public class Organization extends javax.swing.JFrame {
 
     private void btnSaveDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDVActionPerformed
         // TODO add your handling code here:
+        
+        
+        String fullName = this.TextFieldHoTen.getText();
+        String id = this.TextFieldID.getText();
+        String birthDate = this.TextFieldNgaySinh.getText();
+        String orgId = this.TextFieldOrgID.getText();
+        String joinDate = this.TextFieldNgayVao.getText();
+        String position = this.TextFieldPosition.getText();
+        String email = this.TextFieldEmail.getText();
+        String phoneNumber = this.TextFieldPhoneNumber.getText();
+        String address = this.TextFieldAddress.getText();
+        
+        PartyMemberAdd add = new PartyMemberAdd();
+        add.addPartyMember(null, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId);
+        
+        listDV = ListPartyMember.getAllPartyMembers();
         ViewDangVien();
+        viewTableDv();
     }//GEN-LAST:event_btnSaveDVActionPerformed
 
     private void btnCancelDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelDVActionPerformed
@@ -1589,6 +1612,18 @@ public class Organization extends javax.swing.JFrame {
 
     private void btnAddDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDVActionPerformed
         // TODO add your handling code here:
+        this.TextFieldID.setText("");
+        this.TextFieldNgaySinh.setText("");
+        this.TextFieldHoTen.setText("");
+        this.TextFieldOrgID.setText("");
+        this.TextFieldNgayVao.setText("");
+        this.TextFieldPosition.setText("");
+        this.TextFieldEmail.setText("");
+        this.TextFieldPhoneNumber.setText("");
+        this.TextFieldAddress.setText("");
+        
+        checkSaveDV = 1;
+        
         OnOffDangVien(false, false, true);
     }//GEN-LAST:event_btnAddDVActionPerformed
 
@@ -1599,7 +1634,14 @@ public class Organization extends javax.swing.JFrame {
 
     private void btnDeleteDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDVActionPerformed
         // TODO add your handling code here:
+        String id = this.TextFieldID.getText();
+        PartyMemberDelete dao = new PartyMemberDelete();
+        dao.deletePartyMember(id);
+        listDV = ListPartyMember.getAllPartyMembers();
+        
+        pos = 0;
         ViewDangVien();
+        viewTableDv();
     }//GEN-LAST:event_btnDeleteDVActionPerformed
 
     private void TableDVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableDVMouseClicked

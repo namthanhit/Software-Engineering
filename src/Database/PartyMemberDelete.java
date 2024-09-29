@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class PartyMemberDelete {
 
@@ -35,9 +36,9 @@ public class PartyMemberDelete {
             // 4. Thực thi câu lệnh
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Xóa thành công.");
+                JOptionPane.showMessageDialog(null, "Xoá thành công!");
             } else {
-                System.out.println("Không tìm thấy thành viên với ID: " + id);
+                JOptionPane.showMessageDialog(null, "Không tìm thấy thành viên với ID: " + id);
             }
 
         } catch (SQLException e) {

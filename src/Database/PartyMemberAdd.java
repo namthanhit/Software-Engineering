@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class PartyMemberAdd {
 
@@ -56,7 +57,7 @@ public class PartyMemberAdd {
         try {
             // 1. Kiểm tra nếu ID đã tồn tại
             if (isIdExist(id)) {
-                System.out.println("ID đã tồn tại, vui lòng nhập ID khác.");
+                JOptionPane.showMessageDialog(null, "ID đã tồn tại, vui lòng nhập ID khác.");
                 return;  // Dừng lại nếu ID đã tồn tại
             }
 
@@ -83,7 +84,7 @@ public class PartyMemberAdd {
             // 5. Thực thi câu lệnh
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Thêm thành công.");
+                JOptionPane.showMessageDialog(null, "Thêm thành công!");
             }
 
         } catch (SQLException e) {
