@@ -7,14 +7,18 @@ package UI;
 
 import Class.BranchActivity;
 import Class.PartyMember;
+import Class.Reward;
 import Class.User;
 import Database.ListBranchActivity;
 import Database.ListPartyMember;
+import Database.ListRewardPartyMember;
 import java.util.List;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Class.Discipline;
+import Database.ListDisciplinePartyMember;
 /**
  *
  * @author User
@@ -24,6 +28,8 @@ public class Member extends javax.swing.JFrame {
     
     List<PartyMember> listPartyMember = new ArrayList<>();
     List<BranchActivity> listBranchActivity = new ArrayList<>();
+    List<Reward> listReward =  new ArrayList<>();
+    List<Discipline> listDiscipline = new ArrayList<>();
     
     public Member(){
         initComponents();
@@ -45,7 +51,10 @@ public class Member extends javax.swing.JFrame {
         String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
         
         listBranchActivity = ListBranchActivity.getBranchActivitiesByOrgId(orgID);
-       
+        
+        listReward = ListRewardPartyMember.getBranchActivitiesByOrgId(user.getPartyMemberId());
+        
+        listDiscipline = ListDisciplinePartyMember.getBranchActivitiesByOrgId(user.getPartyMemberId());
         
     }
     
@@ -106,7 +115,6 @@ public class Member extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Không có hoạt động nào cho tổ chức này.");
         }
     }
-    
     public void ViewTableBranchActivity() {
         DefaultTableModel model = (DefaultTableModel) this.jTableBranchActivity.getModel();
         model.setNumRows(0);
@@ -116,6 +124,22 @@ public class Member extends javax.swing.JFrame {
         
         jTableBranchActivity.revalidate();
         jTableBranchActivity.repaint();
+    }
+    
+    public void ViewTableReward(){
+        DefaultTableModel model = (DefaultTableModel) this.jTableKhenThuong.getModel();
+        model.setNumRows(0);
+        for (Reward lr : listReward) {
+            model.addRow(new Object[]{lr.getId(),lr.getPartyMemberId() ,lr.getRewardDate() , lr.getOrgId(), lr.getDecisionMaker(), lr.getDescription()});
+        }
+    }
+    
+    public void ViewTableDiscipline(){
+        DefaultTableModel model = (DefaultTableModel) this.jTableKyLuat.getModel();
+        model.setNumRows(0);
+        for (Discipline lr : listDiscipline) {
+            model.addRow(new Object[]{lr.getId(),lr.getPartyMemberId() ,lr.getDisciplineDate() , lr.getOrgId(), lr.getDecisionMaker(), lr.getDescription()});
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -181,11 +205,6 @@ public class Member extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        editorPaneYCLiDoNghi1 = new javax.swing.JEditorPane();
-        jLabel22 = new javax.swing.JLabel();
-        buttonYCNghi1 = new javax.swing.JButton();
-        jLabel48 = new javax.swing.JLabel();
         textFieldYCMaChuyen1 = new javax.swing.JTextField();
         jLabel49 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
@@ -194,8 +213,25 @@ public class Member extends javax.swing.JFrame {
         editorPaneYCLiDoChuyen1 = new javax.swing.JEditorPane();
         jLabel51 = new javax.swing.JLabel();
         buttonYCChuyen1 = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTableBranchActivity1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jLabel52 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        textFieldYCNgayChuyen2 = new javax.swing.JTextField();
+        jLabel53 = new javax.swing.JLabel();
+        textFieldYCMaChuyen2 = new javax.swing.JTextField();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        editorPaneYCLiDoChuyen2 = new javax.swing.JEditorPane();
+        buttonYCChuyen2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel56 = new javax.swing.JLabel();
         cardDangVien = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabelAvatar = new javax.swing.JLabel();
@@ -224,10 +260,10 @@ public class Member extends javax.swing.JFrame {
         jPanel19 = new javax.swing.JPanel();
         jLabel37 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableKyLuat = new javax.swing.JTable();
         jLabel38 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        jTableKhenThuong = new javax.swing.JTable();
         jLabel41 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
 
@@ -609,26 +645,10 @@ public class Member extends javax.swing.JFrame {
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel16.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
-        jLabel16.setText("Xin Chuyển Công tác:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, 200, 30));
-
-        jScrollPane9.setViewportView(editorPaneYCLiDoNghi1);
-
-        jPanel2.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 396, 596, 162));
-
-        jLabel22.setText("Lý Do:");
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 373, -1, -1));
-
-        buttonYCNghi1.setBackground(new java.awt.Color(102, 204, 0));
-        buttonYCNghi1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        buttonYCNghi1.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYCNghi1.setText("Gửi Yêu Cầu");
-        jPanel2.add(buttonYCNghi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 455, -1, -1));
-
-        jLabel48.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel48.setText("Chuyển đơn vị công tác chính thức:");
-        jPanel2.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 55, -1, -1));
+        jLabel16.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel16.setText("Xin Chuyển Công Tác");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 190, 30));
         jPanel2.add(textFieldYCMaChuyen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
 
         jLabel49.setText("Mã Tổ Chức:");
@@ -640,7 +660,7 @@ public class Member extends javax.swing.JFrame {
 
         jScrollPane11.setViewportView(editorPaneYCLiDoChuyen1);
 
-        jPanel2.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 148, 597, 90));
+        jPanel2.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 148, 597, 130));
 
         jLabel51.setText("Chi tiết:");
         jPanel2.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 125, -1, -1));
@@ -656,23 +676,83 @@ public class Member extends javax.swing.JFrame {
         });
         jPanel2.add(buttonYCChuyen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 168, -1, -1));
 
+        jTableBranchActivity1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Mã Tổ Chức", "Ngày Chuyển", "Chi Tiet", "Trạng Thái"
+            }
+        ));
+        jScrollPane8.setViewportView(jTableBranchActivity1);
+
+        jPanel2.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 770, 190));
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel1.setText("Danh Sách Các Yêu Cầu:");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 170, -1));
+
+        jButton2.setBackground(new java.awt.Color(255, 51, 0));
+        jButton2.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Thu Hồi");
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 210, 110, -1));
+
         jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         jPanel2.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
 
-        jTabbedPane1.addTab("tab14", jPanel2);
+        jTabbedPane1.addTab("Xin chuyển Công tác", jPanel2);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 952, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 549, Short.MAX_VALUE)
-        );
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane1.addTab("tab15", jPanel5);
+        jLabel18.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel18.setText("Xin Rời Khỏi Đảng");
+        jPanel5.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 160, 30));
+        jPanel5.add(textFieldYCNgayChuyen2, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 90, 108, -1));
+
+        jLabel53.setText("Ngày Chuyển:");
+        jPanel5.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 93, 84, -1));
+        jPanel5.add(textFieldYCMaChuyen2, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
+
+        jLabel54.setText("Mã Tổ Chức:");
+        jPanel5.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 93, -1, -1));
+
+        jLabel55.setText("Lý Do:");
+        jPanel5.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, -1));
+
+        jScrollPane12.setViewportView(editorPaneYCLiDoChuyen2);
+
+        jPanel5.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 597, 130));
+
+        buttonYCChuyen2.setBackground(new java.awt.Color(102, 204, 0));
+        buttonYCChuyen2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonYCChuyen2.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYCChuyen2.setText("Gửi Yêu Cầu");
+        buttonYCChuyen2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonYCChuyen2ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(buttonYCChuyen2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 120, -1));
+
+        jLabel2.setText("Trạng Thái:");
+        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 70, 20));
+        jPanel5.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 110, -1));
+
+        jButton1.setBackground(new java.awt.Color(255, 51, 0));
+        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Thu Hồi");
+        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 380, 120, -1));
+
+        jLabel56.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
+        jPanel5.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
+
+        jTabbedPane1.addTab("Xin rời khỏi Đảng", jPanel5);
 
         javax.swing.GroupLayout cardYeuCauLayout = new javax.swing.GroupLayout(cardYeuCau);
         cardYeuCau.setLayout(cardYeuCauLayout);
@@ -769,7 +849,7 @@ public class Member extends javax.swing.JFrame {
         jLabel37.setText("Khen Thưởng Đảng VIên Đã Có Thành Tích Tốt:");
         jPanel19.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 86, -1, 31));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableKyLuat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -788,15 +868,15 @@ public class Member extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable2);
+        jScrollPane4.setViewportView(jTableKyLuat);
 
-        jPanel19.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 379, 802, 171));
+        jPanel19.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 360, 802, 190));
 
         jLabel38.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel38.setText("Kỷ Luật Đảng VIên Đã Có Những Sai Phạm:");
         jPanel19.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 330, -1, 31));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        jTableKhenThuong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -815,9 +895,9 @@ public class Member extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane7.setViewportView(jTable4);
+        jScrollPane7.setViewportView(jTableKhenThuong);
 
-        jPanel19.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 135, 802, 168));
+        jPanel19.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 802, 160));
 
         jLabel41.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(255, 51, 51));
@@ -909,6 +989,8 @@ public class Member extends javax.swing.JFrame {
         cardYeuCau.setVisible(false);
         cardDangVien.setVisible(false);
         cardThanhTich.setVisible(true);
+        ViewTableReward();
+        ViewTableDiscipline();
     }//GEN-LAST:event_lblThanhTichMouseClicked
 
     private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
@@ -924,6 +1006,10 @@ public class Member extends javax.swing.JFrame {
     private void buttonYCChuyen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyen1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonYCChuyen1ActionPerformed
+
+    private void buttonYCChuyen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyen2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonYCChuyen2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -964,19 +1050,22 @@ public class Member extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundMenu;
     private javax.swing.JButton buttonYCChuyen1;
-    private javax.swing.JButton buttonYCNghi1;
+    private javax.swing.JButton buttonYCChuyen2;
     private javax.swing.JPanel cardDangVien;
     private javax.swing.JPanel cardSinhHoat;
     private javax.swing.JPanel cardThanhTich;
     private javax.swing.JPanel cardTrangChu;
     private javax.swing.JPanel cardYeuCau;
     private javax.swing.JEditorPane editorPaneYCLiDoChuyen1;
-    private javax.swing.JEditorPane editorPaneYCLiDoNghi1;
+    private javax.swing.JEditorPane editorPaneYCLiDoChuyen2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JEditorPane jEditorPaneDescpitActivity;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -985,8 +1074,9 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -1013,12 +1103,15 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAvatar;
@@ -1033,18 +1126,21 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTable jTableBranchActivity;
+    private javax.swing.JTable jTableBranchActivity1;
+    private javax.swing.JTable jTableKhenThuong;
+    private javax.swing.JTable jTableKyLuat;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextFieldAddress;
     private javax.swing.JTextField jTextFieldBirthDay;
@@ -1069,6 +1165,8 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel lblTrangChu;
     private javax.swing.JLabel lblYeuCau;
     private javax.swing.JTextField textFieldYCMaChuyen1;
+    private javax.swing.JTextField textFieldYCMaChuyen2;
     private javax.swing.JTextField textFieldYCNgayChuyen1;
+    private javax.swing.JTextField textFieldYCNgayChuyen2;
     // End of variables declaration//GEN-END:variables
 }
