@@ -25,16 +25,12 @@ public class CheckMember {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-
         try {
             // Kết nối tới MySQL
             connection = DriverManager.getConnection(jdbcURL, username, password);
-
             // Câu truy vấn SQL với tham số
             String sql = "SELECT * FROM User WHERE partyMemberId = ? "
                     + "AND password = ?";
-            
-            
             // Tạo PreparedStatement để truyền tham số
             statement = connection.prepareStatement(sql);
             statement.setString(1, user.getPartyMemberId());  // Thiết lập giá trị cho partyMemberId
@@ -42,12 +38,10 @@ public class CheckMember {
 
             // Thực hiện truy vấn
             resultSet = statement.executeQuery();
-
             // Nếu có kết quả trả về, tức là người dùng hợp lệ
             if (resultSet.next()) {
                 return true;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -76,7 +70,6 @@ public class CheckMember {
                 }
             }
         }
-
         // Nếu không có kết quả, trả về false
         return false;
     }

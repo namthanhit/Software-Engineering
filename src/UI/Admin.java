@@ -6,6 +6,7 @@
 package UI;
 import Class.PartyOrganization;
 import Class.User;
+import Database.AdminDatabase;
 import com.mysql.cj.xdevapi.Statement;
 import com.sun.jdi.connect.spi.Connection;
 import java.awt.Color;
@@ -30,9 +31,9 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  */
 public class Admin extends javax.swing.JFrame {
     private int selectIdx;
-    private static final String jdbcURL = "jdbc:mysql://127.0.0.1:3306/PartyManagement";
-    private static final String username = "root";
-    private static final String password = "Duong20012004";
+    private static final String jdbcURL = AdminDatabase.DATABASE_URL;
+    private static final String username = AdminDatabase.DATABASE_USERNAME;
+    private static final String password = AdminDatabase.DATABASE_PASSWORD;
     public Admin() {
         initComponents();
         cardTaoTK.setVisible(false);
@@ -612,6 +613,11 @@ public class Admin extends javax.swing.JFrame {
         cardQLOrg.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 140, 100, -1));
 
         jButtonQLOrgSua.setText("Sửa");
+        jButtonQLOrgSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonQLOrgSuaActionPerformed(evt);
+            }
+        });
         cardQLOrg.add(jButtonQLOrgSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, 100, 30));
 
         jTextFieldIDSearch.setText("Nhập ID:");
@@ -759,8 +765,6 @@ public class Admin extends javax.swing.JFrame {
 
     }
     private void updateUserToTable(User userLatest){
-        
-        
         java.sql.Connection connection = null;
         PreparedStatement pstmt = null;
         try {
@@ -1060,7 +1064,102 @@ private void searchOrg(String ID){
             }
         }
     }
-    
+    private boolean checkValidOrg(String ID, String name, String date){
+        java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
+        ResultSet result = null;
+        try {
+            // Kết nối tới MySQL
+            connection = DriverManager.getConnection(jdbcURL, username, password);
+            // Câu truy vấn SQL với tham số
+            String sql = "SELECT * FROM PartyOrganization WHERE id = ? AND orgName = ? AND creationDate = ? ";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, ID);
+            pstmt.setString(2, name);
+            pstmt.setDate(3, java.sql.Date.valueOf(date));
+            result = pstmt.executeQuery();
+            if(result.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close(); // Đóng PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+    private void deleteOrg(String id, String name, String date){
+        java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            // Kết nối tới MySQL
+            connection = DriverManager.getConnection(jdbcURL, username, password);
+
+            // Câu truy vấn SQL với tham số
+            String sql = "DELETE from PartyOrganization WHERE id = ? AND orgName = ? AND creationDate = ? ";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, id);   
+            pstmt.setString(2, name);  
+            pstmt.setDate(3, java.sql.Date.valueOf(date));  
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        finally{
+            try {
+            if (pstmt != null) {
+                pstmt.close(); // Đóng PreparedStatement
+            }
+            if (connection != null) {
+                connection.close(); // Đóng Connection
+            }
+        } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+            e.printStackTrace();
+        }
+        }
+    }
+    private void updateOrg(String ID, String name, String date){
+        java.sql.Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            // Kết nối tới MySQL
+            connection = DriverManager.getConnection(jdbcURL, username, password);
+            // Câu truy vấn SQL với tham số
+            String sql = "UPDATE PartyOrganization SET orgName = ? , creationDate = ? WHERE id = ?";
+            pstmt = connection.prepareStatement(sql);
+            
+            pstmt.setString(1, name);
+            pstmt.setDate(2, java.sql.Date.valueOf(date));
+            pstmt.setString(3, ID);
+            pstmt.executeUpdate();
+            // Nếu có kết quả trả về, tức là người dùng hợp l
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close(); // Đóng PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException e) {
+            // Xử lý lỗi khi đóng tài nguyên
+                e.printStackTrace();
+            }
+        }
+    }
     private void jTextFieldQLorgIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQLorgIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldQLorgIDActionPerformed
@@ -1202,17 +1301,9 @@ private void searchOrg(String ID){
          String dateFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         sdf.setLenient(false); // Thiết lập không cho phép các giá trị không hợp lệ
-
         try {
             // Phân tích chuỗi thành java.util.Date
             Date utilDate = sdf.parse(dateString);
-            
-            // Chuyển đổi sang java.sql.Date nếu cần thiết
-            //java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            
-            // Tiến hành xử lý với sqlDate nếu cần thiết
-            // ...
-
             return true; // Nếu phân tích thành công, trả về true
         } catch (ParseException e) {
             return false; // Nếu gặp lỗi, trả về false
@@ -1228,15 +1319,38 @@ private void searchOrg(String ID){
             JOptionPane.showMessageDialog(this, "Nhập đúng định dạng ngày");
         }
         else if(checkDate(jFormattedTextFieldDate.getText()) == true){
-            x.setId(TextFieldQLOrgId.getText());
-            x.setOrgName(jTextFieldQLOrgName.getText());
-            insertOrg(x.getId(), x.getOrgName(), jFormattedTextFieldDate.getText());
+            if(checkValidOrg(TextFieldQLOrgId.getText(), jTextFieldQLOrgName.getText(), jFormattedTextFieldDate.getText())){
+                JOptionPane.showMessageDialog(this, "Id đã tồn tại!");
+            }
+            else{
+                x.setId(TextFieldQLOrgId.getText());
+                x.setOrgName(jTextFieldQLOrgName.getText());
+                insertOrg(x.getId(), x.getOrgName(), jFormattedTextFieldDate.getText());
+            }
         }
         loadOrg();
     }//GEN-LAST:event_jButtonQLOrgThemActionPerformed
 
     private void jButtonQLOrgXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQLOrgXoaActionPerformed
         // TODO add your handling code here:
+        if(TextFieldQLOrgId.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "CHỌN TỔ CHỨC CẦN XÓA!");
+        }
+        else{
+            if(checkValidOrg(TextFieldQLOrgId.getText(), jTextFieldQLOrgName.getText(), jFormattedTextFieldDate.getText()) == false){
+                JOptionPane.showMessageDialog(rootPane, "TỔ CHỨC KHÔNG TỒN TẠI!");
+            }
+            else{
+                deleteOrg(TextFieldQLOrgId.getText(), jTextFieldQLOrgName.getText(), jFormattedTextFieldDate.getText());
+                loadUserToTablePQ();
+                JOptionPane.showMessageDialog(rootPane, "DONE!");
+                TextFieldQLOrgId.setText("");
+                jTextFieldQLOrgName.setText("");
+                jFormattedTextFieldDate.setText("");
+            }
+            
+        }
+        loadOrg();
     }//GEN-LAST:event_jButtonQLOrgXoaActionPerformed
 
     private void lblQuanLiTCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuanLiTCMouseClicked
@@ -1294,6 +1408,17 @@ private void searchOrg(String ID){
         }
         
     }//GEN-LAST:event_jButtonQLOrgTimActionPerformed
+
+    private void jButtonQLOrgSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQLOrgSuaActionPerformed
+        // TODO add your handling code her
+        if(TextFieldQLOrgId.getText().equals("")|| jTextFieldQLOrgName.getText().equals("")|| jFormattedTextFieldDate.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "CHỌN DÒNG CẦN SỬA!");
+        }
+        else{
+             updateOrg(TextFieldQLOrgId.getText(), jTextFieldQLOrgName.getText(), jFormattedTextFieldDate.getText());
+             loadOrg();
+        }
+    }//GEN-LAST:event_jButtonQLOrgSuaActionPerformed
 
     /**
      * @param args the command line arguments
