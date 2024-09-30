@@ -7,15 +7,14 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 public class MySQLConnect {
+    private static DatabaseConfig dbconfig = new DatabaseConfig();
     public static void main(String[] args) {
         // URL kết nối MySQL
-        String jdbcURL = "jdbc:mysql://localhost:3306/PartyManagement";
-        String username = "root";
-        String password = "12345678";
+
         Connection connection = null;
         try {
             // Kết nối tới MySQL
-            connection = DriverManager.getConnection(jdbcURL, username, password);
+            connection = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
             System.out.println("Connected successfully");
 
             // Tạo statement để thực hiện truy vấn SQL
