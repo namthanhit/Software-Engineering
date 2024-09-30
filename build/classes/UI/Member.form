@@ -1022,7 +1022,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Component class="javax.swing.JTable" name="jTableBranchActivity1">
+                            <Component class="javax.swing.JTable" name="jTableTransferOut">
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                   <Table columnCount="4" rowCount="4">
@@ -1552,10 +1552,11 @@
                         <Component class="javax.swing.JTable" name="jTableKyLuat">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="4" rowCount="4">
+                              <Table columnCount="5" rowCount="4">
                                 <Column editable="false" title="M&#xe3; Quy&#x1ebf;t &#x110;&#x1ecb;nh" type="java.lang.Object"/>
                                 <Column editable="false" title="M&#xe3; &#x110;&#x1ea3;ng Vi&#xea;n" type="java.lang.Object"/>
                                 <Column editable="false" title="Ng&#xe0;y Quy&#x1ebf;t &#x110;&#x1ecb;nh" type="java.lang.Object"/>
+                                <Column editable="false" title="Ng&#x1b0;&#x1edd;i Quy&#x1ebf;t &#x110;&#x1ecb;nh" type="java.lang.Object"/>
                                 <Column editable="false" title="N&#x1ed9;i Dung" type="java.lang.Object"/>
                               </Table>
                             </Property>
@@ -1591,10 +1592,11 @@
                         <Component class="javax.swing.JTable" name="jTableKhenThuong">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="4" rowCount="4">
+                              <Table columnCount="5" rowCount="4">
                                 <Column editable="false" title="M&#xe3; Quy&#x1ebf;t &#x110;&#x1ecb;nh" type="java.lang.Object"/>
                                 <Column editable="false" title="M&#xe3; &#x110;&#x1ea3;ng Vi&#xea;n" type="java.lang.Object"/>
                                 <Column editable="false" title="Ng&#xe0;y Quy&#x1ebf;t &#x110;&#x1ecb;nh" type="java.lang.Object"/>
+                                <Column editable="false" title="Ng&#x1b0;&#x1edd;i Quy&#x1ebf;t &#x110;&#x1ecb;nh" type="java.lang.Object"/>
                                 <Column editable="false" title="N&#x1ed9;i Dung" type="java.lang.Object"/>
                               </Table>
                             </Property>

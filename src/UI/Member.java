@@ -54,9 +54,10 @@ public class Member extends javax.swing.JFrame {
         
         listReward = ListRewardPartyMember.getBranchActivitiesByOrgId(user.getPartyMemberId());
         
-        listDiscipline = ListDisciplinePartyMember.getBranchActivitiesByOrgId(user.getPartyMemberId());
+        listDiscipline = ListDisciplinePartyMember.getDisciplineByOrgId(user.getPartyMemberId());
         
     }
+    
     
     public void view() {
         // Tìm kiếm trong danh sách các PartyMember dựa trên user.getId()
@@ -130,15 +131,15 @@ public class Member extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) this.jTableKhenThuong.getModel();
         model.setNumRows(0);
         for (Reward lr : listReward) {
-            model.addRow(new Object[]{lr.getId(),lr.getPartyMemberId() ,lr.getRewardDate() , lr.getOrgId(), lr.getDecisionMaker(), lr.getDescription()});
+            model.addRow(new Object[]{lr.getId(),lr.getPartyMemberId() ,lr.getRewardDate() , lr.getDecisionMaker(), lr.getDescription()});
         }
     }
     
     public void ViewTableDiscipline(){
         DefaultTableModel model = (DefaultTableModel) this.jTableKyLuat.getModel();
         model.setNumRows(0);
-        for (Discipline lr : listDiscipline) {
-            model.addRow(new Object[]{lr.getId(),lr.getPartyMemberId() ,lr.getDisciplineDate() , lr.getOrgId(), lr.getDecisionMaker(), lr.getDescription()});
+        for (Discipline ld : listDiscipline) {
+            model.addRow(new Object[]{ld.getId(),ld.getPartyMemberId() ,ld.getDisciplineDate() , ld.getDecisionMaker(), ld.getDescription()});
         }
     }
     
@@ -214,7 +215,7 @@ public class Member extends javax.swing.JFrame {
         jLabel51 = new javax.swing.JLabel();
         buttonYCChuyen1 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTableBranchActivity1 = new javax.swing.JTable();
+        jTableTransferOut = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel52 = new javax.swing.JLabel();
@@ -676,7 +677,7 @@ public class Member extends javax.swing.JFrame {
         });
         jPanel2.add(buttonYCChuyen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 168, -1, -1));
 
-        jTableBranchActivity1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTransferOut.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -687,7 +688,7 @@ public class Member extends javax.swing.JFrame {
                 "Mã Tổ Chức", "Ngày Chuyển", "Chi Tiet", "Trạng Thái"
             }
         ));
-        jScrollPane8.setViewportView(jTableBranchActivity1);
+        jScrollPane8.setViewportView(jTableTransferOut);
 
         jPanel2.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 770, 190));
 
@@ -851,17 +852,17 @@ public class Member extends javax.swing.JFrame {
 
         jTableKyLuat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã Quyết Định", "Mã Đảng Viên", "Ngày Quyết Định", "Nội Dung"
+                "Mã Quyết Định", "Mã Đảng Viên", "Ngày Quyết Định", "Người Quyết Định", "Nội Dung"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -878,17 +879,17 @@ public class Member extends javax.swing.JFrame {
 
         jTableKhenThuong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã Quyết Định", "Mã Đảng Viên", "Ngày Quyết Định", "Nội Dung"
+                "Mã Quyết Định", "Mã Đảng Viên", "Ngày Quyết Định", "Người Quyết Định", "Nội Dung"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -989,6 +990,7 @@ public class Member extends javax.swing.JFrame {
         cardYeuCau.setVisible(false);
         cardDangVien.setVisible(false);
         cardThanhTich.setVisible(true);
+        
         ViewTableReward();
         ViewTableDiscipline();
     }//GEN-LAST:event_lblThanhTichMouseClicked
@@ -1137,9 +1139,9 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableBranchActivity;
-    private javax.swing.JTable jTableBranchActivity1;
     private javax.swing.JTable jTableKhenThuong;
     private javax.swing.JTable jTableKyLuat;
+    private javax.swing.JTable jTableTransferOut;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextFieldAddress;
