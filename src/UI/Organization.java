@@ -1239,7 +1239,7 @@ public class Organization extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable1);
 
-        cardSinhHoat.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 365, 938, 209));
+        cardSinhHoat.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 365, 920, 200));
 
         jTextField16.setText("Tìm kiếm ");
         jTextField16.setPreferredSize(new java.awt.Dimension(67, 30));
@@ -1255,38 +1255,26 @@ public class Organization extends javax.swing.JFrame {
 
         jLabel15.setText("Tên Buổi Sinh Hoạt:");
         cardSinhHoat.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 61, -1, -1));
-
-        jTextField17.setText("Buổi Sinh Hoạt Tháng 9");
         cardSinhHoat.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 84, 268, -1));
 
         jLabel16.setText("ID Buổi Sinh Hoạt:");
         cardSinhHoat.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 61, -1, -1));
-
-        jTextField18.setText("CS092024");
         cardSinhHoat.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 84, 106, -1));
 
         jLabel18.setText("Ngày bắt đầu:");
         cardSinhHoat.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 119, 106, -1));
-
-        jTextField19.setText("01/09/2004");
         cardSinhHoat.add(jTextField19, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 142, 106, -1));
 
         jLabel23.setText("Ngày kết thúc:");
         cardSinhHoat.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 119, 106, -1));
-
-        jTextField20.setText("30/09/2004");
         cardSinhHoat.add(jTextField20, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 142, 106, -1));
 
         jLabel42.setText("Mô tả:");
         cardSinhHoat.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 177, -1, -1));
 
-        jEditorPane5.setContentType("text/html"); // NOI18N
-        jEditorPane5.setText("<html>\n  <head>\n\n  </head>\n  <body>\n    <p style=\"margin-top: 0\">\n      10/1974 - 7/1979:<br>\n      Học viên Đại học An ninh nhân dân.<br><br>\n\n      7/1979 - 12/1988:<br>\n      Cán bộ, Cục Bảo vệ Chính trị I, Bộ Công an.<br><br>\n\n      12/1988 - 5/1990:<br>\n      Phó Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1990 - 6/1993:<br>\n      Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/1993 - 5/1997:<br>\n      Phó Cục trưởng Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1997 - 6/2006:<br>\n      Cục trưởng Cục Bảo vệ Chính trị III, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/2006 - 12/2009:<br>\n      Phó Tổng cục trưởng Tổng cục An ninh, Bộ Công an.\n    </p>\n  </body>\n</html>\n\n");
         jScrollPane10.setViewportView(jEditorPane5);
 
         cardSinhHoat.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 200, 484, 124));
-
-        jTextField21.setText("Chưa đăng ký");
         cardSinhHoat.add(jTextField21, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 142, 106, -1));
 
         jLabel43.setText("Trạng thái:");
@@ -1308,13 +1296,13 @@ public class Organization extends javax.swing.JFrame {
         jButton21.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton21.setForeground(new java.awt.Color(255, 255, 255));
         jButton21.setText("Chỉnh Sửa");
-        cardSinhHoat.add(jButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(624, 178, 110, -1));
+        cardSinhHoat.add(jButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, 110, -1));
 
         jButton22.setBackground(new java.awt.Color(51, 204, 0));
         jButton22.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton22.setForeground(new java.awt.Color(255, 255, 255));
         jButton22.setText("Thêm");
-        cardSinhHoat.add(jButton22, new org.netbeans.lib.awtextra.AbsoluteConstraints(624, 220, 110, -1));
+        cardSinhHoat.add(jButton22, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 260, 110, -1));
 
         jButton23.setBackground(new java.awt.Color(255, 0, 51));
         jButton23.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
@@ -1325,7 +1313,7 @@ public class Organization extends javax.swing.JFrame {
                 jButton23ActionPerformed(evt);
             }
         });
-        cardSinhHoat.add(jButton23, new org.netbeans.lib.awtextra.AbsoluteConstraints(624, 262, 110, -1));
+        cardSinhHoat.add(jButton23, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 300, 110, -1));
 
         jButton24.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton24.setText("Xem chi tiết");
@@ -1334,7 +1322,7 @@ public class Organization extends javax.swing.JFrame {
                 jButton24MouseClicked(evt);
             }
         });
-        cardSinhHoat.add(jButton24, new org.netbeans.lib.awtextra.AbsoluteConstraints(624, 142, -1, -1));
+        cardSinhHoat.add(jButton24, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 180, -1, -1));
 
         jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         cardSinhHoat.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 580));
@@ -1350,17 +1338,17 @@ public class Organization extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Số Lượng", "Mã Buổi Sinh Hoạt", "Tên Buổi Sinh Hoạt", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
+                "Mã Buổi Sinh Hoạt", "Tên Buổi Sinh Hoạt", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1400,37 +1388,37 @@ public class Organization extends javax.swing.JFrame {
         cardViewDetail.add(buttonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 530, 100, -1));
 
         jLabel22.setText("Họ và Tên:");
-        cardViewDetail.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 366, -1, -1));
+        cardViewDetail.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
 
         TextFieldHoTen1.setText("bui ngoc duc");
-        cardViewDetail.add(TextFieldHoTen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 383, 167, -1));
+        cardViewDetail.add(TextFieldHoTen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 167, -1));
 
         jLabel37.setText("Mã Đảng viên:");
-        cardViewDetail.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 366, -1, -1));
+        cardViewDetail.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, -1, -1));
 
         jTextField28.setText("22010065");
-        cardViewDetail.add(jTextField28, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 383, 126, -1));
+        cardViewDetail.add(jTextField28, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 126, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã Hoàn Thành", "Chưa Hoàn Thành", " " }));
-        cardViewDetail.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 440, 167, -1));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã Hoàn Thành", "Chưa Hoàn Thành", "Đã Đăng Ký" }));
+        cardViewDetail.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, 167, -1));
 
         jLabel27.setText("Trạng thái");
-        cardViewDetail.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 418, -1, -1));
+        cardViewDetail.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 380, -1, -1));
 
         jButton28.setBackground(new java.awt.Color(51, 204, 0));
         jButton28.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton28.setForeground(new java.awt.Color(255, 255, 255));
         jButton28.setText("Lưu");
-        cardViewDetail.add(jButton28, new org.netbeans.lib.awtextra.AbsoluteConstraints(531, 403, -1, -1));
+        cardViewDetail.add(jButton28, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, -1, -1));
 
         jButton29.setBackground(new java.awt.Color(255, 51, 0));
         jButton29.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton29.setForeground(new java.awt.Color(255, 255, 255));
         jButton29.setText("Huỷ");
-        cardViewDetail.add(jButton29, new org.netbeans.lib.awtextra.AbsoluteConstraints(531, 439, -1, -1));
+        cardViewDetail.add(jButton29, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, -1, -1));
 
-        jButton30.setText("Chỉnh Sửa");
-        cardViewDetail.add(jButton30, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 508, -1, -1));
+        jButton30.setText("Đánh Giá");
+        cardViewDetail.add(jButton30, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, -1, -1));
 
         jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         cardViewDetail.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 580));
