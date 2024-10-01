@@ -16,7 +16,9 @@ import java.sql.SQLException;
  * @author THANH DUONG
  */
 public class CheckMember {
-    private static DatabaseConfig dbconfig = new DatabaseConfig();
+    private static final String jdbcURL = AdminDatabase.DATABASE_URL;
+    private static final String username = AdminDatabase.DATABASE_USERNAME;
+    private static final String password = AdminDatabase.DATABASE_PASSWORD;
     public static boolean check(User user) {
 
       
@@ -26,7 +28,7 @@ public class CheckMember {
 
         try {
             // Kết nối tới MySQL
-            connection = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
+            connection = DriverManager.getConnection(jdbcURL, username, password);
 
             // Câu truy vấn SQL với tham số
             String sql = "SELECT * FROM User WHERE partyMemberId = ? "
