@@ -6,8 +6,6 @@ package UI;
 
 import Class.User;
 
-import Class.User;
-
 import Class.PartyMember;
 import Class.User;
 import Database.ListPartyMember;
@@ -1508,7 +1506,6 @@ public class Organization extends javax.swing.JFrame {
 
     private void btnSaveDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDVActionPerformed
         // TODO add your handling code here:
-        
         
         String fullName = this.TextFieldHoTen.getText();
         String id = this.TextFieldID.getText();

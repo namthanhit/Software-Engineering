@@ -827,6 +827,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Hu&#x1ef7;"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton_Cancel_BranchActivityMouseClicked"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="630" y="260" width="124" height="-1"/>
@@ -993,7 +996,7 @@
                         <Component class="javax.swing.JButton" name="buttonCreateNewTransferOut">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="0" green="cc" red="66" type="rgb"/>
+                              <Color blue="0" green="99" red="0" type="rgb"/>
                             </Property>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Helvetica Neue" size="13" style="1"/>
@@ -1080,7 +1083,7 @@
                         <Component class="javax.swing.JButton" name="buttonSentTransferOut">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="0" green="cc" red="66" type="rgb"/>
+                              <Color blue="0" green="99" red="0" type="rgb"/>
                             </Property>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Helvetica Neue" size="13" style="1"/>

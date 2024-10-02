@@ -19,6 +19,7 @@ public class CheckMember {
     private static final String jdbcURL = AdminDatabase.DATABASE_URL;
     private static final String username = AdminDatabase.DATABASE_USERNAME;
     private static final String password = AdminDatabase.DATABASE_PASSWORD;
+    
     public static boolean check(User user) {
 
       

@@ -64,7 +64,7 @@ public class Member extends javax.swing.JFrame {
         
         String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
         
-        listBranchActivity = ListBranchActivity.getBranchActivitiesByOrgId(orgID);
+        listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(user.getPartyMemberId());
         
         listReward = ListRewardPartyMember.getBranchActivitiesByOrgId(user.getPartyMemberId());
         
@@ -114,7 +114,7 @@ public class Member extends javax.swing.JFrame {
     
     public void ViewBranchActivity() {
         if (!listBranchActivity.isEmpty()) {
-            BranchActivity currentActivity = listBranchActivity.get(0);
+            BranchActivity currentActivity = listBranchActivity.get(posBranchActy);
 
             this.jTextFieldNameActivity.setText(currentActivity.getActivityName());
             this.jTextFieldIDActivity.setText(currentActivity.getId());
@@ -128,6 +128,7 @@ public class Member extends javax.swing.JFrame {
 
             this.jTextFieldStatusActivity.setText(currentActivity.getStatus());
             this.jEditorPaneDescpitActivity.setText(currentActivity.getDescription());
+            
         } else {
             // Xử lý khi không có hoạt động nào
             JOptionPane.showMessageDialog(null, "Không có hoạt động nào cho tổ chức này.");
@@ -139,9 +140,6 @@ public class Member extends javax.swing.JFrame {
         for (BranchActivity ba : listBranchActivity) {
             model.addRow(new Object[]{ba.getId(), ba.getActivityName() , ba.getStartDate(), ba.getEndDate(), ba.getStatus()});
         }
-        
-        jTableBranchActivity.revalidate();
-        jTableBranchActivity.repaint();
     }
     
     public void ViewTableReward(){
@@ -682,6 +680,11 @@ public class Member extends javax.swing.JFrame {
         jButton_Cancel_BranchActivity.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton_Cancel_BranchActivity.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Cancel_BranchActivity.setText("Huỷ");
+        jButton_Cancel_BranchActivity.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_Cancel_BranchActivityMouseClicked(evt);
+            }
+        });
         cardSinhHoat.add(jButton_Cancel_BranchActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 124, -1));
 
         jButton_SignIn_BranchActivity.setBackground(new java.awt.Color(51, 204, 0));
@@ -724,7 +727,7 @@ public class Member extends javax.swing.JFrame {
         jLabel51.setText("Chi tiết:");
         jPanel2.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
 
-        buttonCreateNewTransferOut.setBackground(new java.awt.Color(102, 204, 0));
+        buttonCreateNewTransferOut.setBackground(new java.awt.Color(0, 153, 0));
         buttonCreateNewTransferOut.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         buttonCreateNewTransferOut.setForeground(new java.awt.Color(255, 255, 255));
         buttonCreateNewTransferOut.setText("Yêu Cầu Mới");
@@ -770,7 +773,7 @@ public class Member extends javax.swing.JFrame {
         });
         jPanel2.add(jButtonCancelTranferOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, -1, -1));
 
-        buttonSentTransferOut.setBackground(new java.awt.Color(102, 204, 0));
+        buttonSentTransferOut.setBackground(new java.awt.Color(0, 153, 0));
         buttonSentTransferOut.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         buttonSentTransferOut.setForeground(new java.awt.Color(255, 255, 255));
         buttonSentTransferOut.setText("Gửi Yêu Cầu");
@@ -1168,7 +1171,7 @@ public class Member extends javax.swing.JFrame {
         addTransferOut.addTransferOutRecord(idMember, idOrg, status, date, reason);
         
         listTransferOut = List_TransferOut_By_PartymemberID.getTransferOutByPartymemberID(user.getPartyMemberId());
-        
+        JOptionPane.showMessageDialog(null, "Thành công!");
         ViewTransferOut();
         ViewTableTransferOut();
         
@@ -1197,13 +1200,34 @@ public class Member extends javax.swing.JFrame {
     
     private void jButton_SignIn_BranchActivityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_SignIn_BranchActivityMouseClicked
         // TODO add your handling code here:
+        String idMember = user.getPartyMemberId();
+        String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
+        String nameBA = this.jTextFieldNameActivity.getText();
+        String idBA = this.jTextFieldIDActivity.getText();
+        String startDate = this.jTextFieldStartDateActivity.getText();
+        String endDate = this.jTextFieldEndDateActivity.getText();
+        String status = this.jTextFieldStatusActivity.getText();
+        String detail = this.jEditorPaneDescpitActivity.getText();
         
-        this.jTextFieldNameActivity.setText("");
-        this.jTextFieldIDActivity.setText("");
-        this.jTextFieldStartDateActivity.setText("");
-        this.jTextFieldEndDateActivity.setText("");
-        this.jTextFieldStatusActivity.setText("");
-        this.jEditorPaneDescpitActivity.setText("");
+        
+        if ("Chưa Đăng Ký".equals(status)){
+            ListBranchActivity editBA = new ListBranchActivity();
+            //String id, String partyMemberId, String activityName, String startDate, String endDate, String status, String description, String orgId
+            String updateStatus = "Chưa Hoàn Thành";
+            editBA.updateBranchActivity(idBA, idMember, nameBA, startDate, endDate, updateStatus, detail, orgID);
+            
+            listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(idMember);
+            
+            JOptionPane.showMessageDialog(null, "Bạn đã đăng ký sinh hoạt thành công!");
+            
+            ViewBranchActivity();
+            ViewTableBranchActivity();
+        }else{
+            ViewBranchActivity();
+            ViewTableBranchActivity();
+            JOptionPane.showMessageDialog(null, "Bạn đã đăng ký sinh hoạt rồi!");
+        }
+        
     }//GEN-LAST:event_jButton_SignIn_BranchActivityMouseClicked
 
     private void buttonYCChuyen2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYCChuyen2MouseClicked
@@ -1214,7 +1238,7 @@ public class Member extends javax.swing.JFrame {
         String idMember = user.getPartyMemberId();
         String orgID = this.textIdOut.getText();
         
-        if (date != "" && reason != "" && orgID != ""){
+        if (!"".equals(date) && !"".equals(reason) && !"".equals(orgID)){
             Insert_OutGroup og = new Insert_OutGroup();
             og.addEvalRequestRecord(idMember, orgID, date, status, reason);
 
@@ -1238,6 +1262,48 @@ public class Member extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_buttonSentTransferOutMouseClicked
+
+    private void jButton_Cancel_BranchActivityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_Cancel_BranchActivityMouseClicked
+        // Get the necessary values
+        String idMember = user.getPartyMemberId();
+        String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
+        String nameBA = this.jTextFieldNameActivity.getText();
+        String idBA = this.jTextFieldIDActivity.getText();
+        String startDate = this.jTextFieldStartDateActivity.getText();
+        String endDate = this.jTextFieldEndDateActivity.getText();
+        String status = this.jTextFieldStatusActivity.getText();
+        String detail = this.jEditorPaneDescpitActivity.getText();
+
+        // Check if the current status is not "Chưa Đăng Ký"
+        if (!"Chưa Đăng Ký".equals(status)) {
+            // Show a confirmation dialog
+            int confirm = JOptionPane.showConfirmDialog(null, 
+                "Bạn có chắc chắn muốn huỷ đăng ký sinh hoạt không?", 
+                "Xác nhận huỷ", 
+                JOptionPane.YES_NO_OPTION);
+
+            // If the user clicks "Yes", proceed with the cancellation
+            if (confirm == JOptionPane.YES_OPTION) {
+                ListBranchActivity editBA = new ListBranchActivity();
+                // Update status to "Chưa Đăng Ký"
+                String updateStatus = "Chưa Đăng Ký";
+                editBA.updateBranchActivity(idBA, idMember, nameBA, startDate, endDate, updateStatus, detail, orgID);
+
+                listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(idMember);
+                JOptionPane.showMessageDialog(null, "Bạn đã huỷ đăng ký sinh hoạt thành công!");
+
+                ViewBranchActivity();
+                ViewTableBranchActivity();
+            } else {
+                // If the user clicks "No", simply return
+                JOptionPane.showMessageDialog(null, "Huỷ bỏ huỷ đăng ký.");
+            }
+        } else {
+            ViewBranchActivity();
+            ViewTableBranchActivity();
+            JOptionPane.showMessageDialog(null, "Lỗi! Bạn chưa đăng ký!");
+        }
+    }//GEN-LAST:event_jButton_Cancel_BranchActivityMouseClicked
 
     /**
      * @param args the command line arguments

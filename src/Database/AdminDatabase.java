@@ -9,7 +9,7 @@ package Database;
  * @author THANH DUONG
  */
 public class AdminDatabase {
-    public static final String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/PartyManagement";
+    public static final String DATABASE_URL = "jdbc:mysql://localhost:3306/PartyManagement";
     public static final String DATABASE_USERNAME = "root";
-    public static final String DATABASE_PASSWORD = "Duong20012004";
+    public static final String DATABASE_PASSWORD = "12345678";
 }
