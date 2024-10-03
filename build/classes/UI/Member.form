@@ -1535,10 +1535,9 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JEditorPane" name="jEditorPane1">
+                        <Component class="javax.swing.JEditorPane" name="jEditorPane_DetailMember">
                           <Properties>
-                            <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
-                            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;  &lt;head&gt;&#xa;&#xa;  &lt;/head&gt;&#xa;  &lt;body&gt;&#xa;    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xa;      10/1974 - 7/1979:&lt;br&gt;&#xa;      H&#x1ecd;c vi&#xea;n &#x110;&#x1ea1;i h&#x1ecd;c An ninh nh&#xe2;n d&#xe2;n.&lt;br&gt;&lt;br&gt;&#xa;&#xa;      7/1979 - 12/1988:&lt;br&gt;&#xa;      C&#xe1;n b&#x1ed9;, C&#x1ee5;c B&#x1ea3;o v&#x1ec7; Ch&#xed;nh tr&#x1ecb; I, B&#x1ed9; C&#xf4;ng an.&lt;br&gt;&lt;br&gt;&#xa;&#xa;      12/1988 - 5/1990:&lt;br&gt;&#xa;      Ph&#xf3; Tr&#x1b0;&#x1edf;ng ph&#xf2;ng, C&#x1ee5;c B&#x1ea3;o v&#x1ec7; Ch&#xed;nh tr&#x1ecb; I, T&#x1ed5;ng c&#x1ee5;c An ninh, B&#x1ed9; C&#xf4;ng an.&lt;br&gt;&lt;br&gt;&#xa;&#xa;      5/1990 - 6/1993:&lt;br&gt;&#xa;      Tr&#x1b0;&#x1edf;ng ph&#xf2;ng, C&#x1ee5;c B&#x1ea3;o v&#x1ec7; Ch&#xed;nh tr&#x1ecb; I, T&#x1ed5;ng c&#x1ee5;c An ninh, B&#x1ed9; C&#xf4;ng an.&lt;br&gt;&lt;br&gt;&#xa;&#xa;      6/1993 - 5/1997:&lt;br&gt;&#xa;      Ph&#xf3; C&#x1ee5;c tr&#x1b0;&#x1edf;ng C&#x1ee5;c B&#x1ea3;o v&#x1ec7; Ch&#xed;nh tr&#x1ecb; I, T&#x1ed5;ng c&#x1ee5;c An ninh, B&#x1ed9; C&#xf4;ng an.&lt;br&gt;&lt;br&gt;&#xa;&#xa;      5/1997 - 6/2006:&lt;br&gt;&#xa;      C&#x1ee5;c tr&#x1b0;&#x1edf;ng C&#x1ee5;c B&#x1ea3;o v&#x1ec7; Ch&#xed;nh tr&#x1ecb; III, T&#x1ed5;ng c&#x1ee5;c An ninh, B&#x1ed9; C&#xf4;ng an.&lt;br&gt;&lt;br&gt;&#xa;&#xa;      6/2006 - 12/2009:&lt;br&gt;&#xa;      Ph&#xf3; T&#x1ed5;ng c&#x1ee5;c tr&#x1b0;&#x1edf;ng T&#x1ed5;ng c&#x1ee5;c An ninh, B&#x1ed9; C&#xf4;ng an.&#xa;    &lt;/p&gt;&#xa;  &lt;/body&gt;&#xa;&lt;/html&gt;&#xa;&#xa;"/>
+                            <Property name="text" type="java.lang.String" value=""/>
                           </Properties>
                         </Component>
                       </SubComponents>

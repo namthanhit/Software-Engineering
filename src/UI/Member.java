@@ -73,6 +73,9 @@ public class Member extends javax.swing.JFrame {
         listTransferOut = List_TransferOut_By_PartymemberID.getTransferOutByPartymemberID(user.getPartyMemberId());
         
         listEvalRequest = ListEvalRequest.getEvalRequestsByMemberId(user.getPartyMemberId());
+        
+        jTextFieldFullName.setEditable(false);
+        
     }
     
     
@@ -105,6 +108,7 @@ public class Member extends javax.swing.JFrame {
             
             // Gán avatar nếu có (giả sử avatar là kiểu Icon hoặc ImageIcon)
             this.jLabelAvatar.setIcon(currentMember.getAvatar());
+            this.jEditorPane_DetailMember.setText(currentMember.getDetail());
         } else {
             // Nếu không tìm thấy thành viên trong listPartyMember
             JOptionPane.showMessageDialog(null, "Không tìm thấy thành viên với ID: " + user.getPartyMemberId());
@@ -302,7 +306,7 @@ public class Member extends javax.swing.JFrame {
         jTextFieldPositon = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
+        jEditorPane_DetailMember = new javax.swing.JEditorPane();
         jLabel3 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         cardThanhTich = new javax.swing.JPanel();
@@ -934,9 +938,8 @@ public class Member extends javax.swing.JFrame {
         jLabel36.setText("Quy trình công tác:");
         jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 290, -1));
 
-        jEditorPane1.setContentType("text/html"); // NOI18N
-        jEditorPane1.setText("<html>\n  <head>\n\n  </head>\n  <body>\n    <p style=\"margin-top: 0\">\n      10/1974 - 7/1979:<br>\n      Học viên Đại học An ninh nhân dân.<br><br>\n\n      7/1979 - 12/1988:<br>\n      Cán bộ, Cục Bảo vệ Chính trị I, Bộ Công an.<br><br>\n\n      12/1988 - 5/1990:<br>\n      Phó Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1990 - 6/1993:<br>\n      Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/1993 - 5/1997:<br>\n      Phó Cục trưởng Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1997 - 6/2006:<br>\n      Cục trưởng Cục Bảo vệ Chính trị III, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/2006 - 12/2009:<br>\n      Phó Tổng cục trưởng Tổng cục An ninh, Bộ Công an.\n    </p>\n  </body>\n</html>\n\n");
-        jScrollPane6.setViewportView(jEditorPane1);
+        jEditorPane_DetailMember.setText("");
+        jScrollPane6.setViewportView(jEditorPane_DetailMember);
 
         jPanel4.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 730, 221));
 
@@ -1359,8 +1362,8 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCancelTranferOut;
     private javax.swing.JButton jButton_Cancel_BranchActivity;
     private javax.swing.JButton jButton_SignIn_BranchActivity;
-    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JEditorPane jEditorPaneDescpitActivity;
+    private javax.swing.JEditorPane jEditorPane_DetailMember;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
