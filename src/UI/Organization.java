@@ -1629,6 +1629,7 @@ public class Organization extends javax.swing.JFrame {
 
     private void btnEditDV2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDV2ActionPerformed
         // TODO add your handling code here:
+        
         OnOffDangVien(false, false, true);
     }//GEN-LAST:event_btnEditDV2ActionPerformed
 
