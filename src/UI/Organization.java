@@ -978,8 +978,6 @@ public class Organization extends javax.swing.JFrame {
         jLabel36.setText("Quy trình công tác:");
         cardDangVien.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 140, -1));
 
-        jEditorPane1.setContentType("text/html"); // NOI18N
-        jEditorPane1.setText("<html>\n  <head>\n\n  </head>\n  <body>\n    <p style=\"margin-top: 0\">\n      10/1974 - 7/1979:<br>\n      Học viên Đại học An ninh nhân dân.<br><br>\n\n      7/1979 - 12/1988:<br>\n      Cán bộ, Cục Bảo vệ Chính trị I, Bộ Công an.<br><br>\n\n      12/1988 - 5/1990:<br>\n      Phó Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1990 - 6/1993:<br>\n      Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/1993 - 5/1997:<br>\n      Phó Cục trưởng Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1997 - 6/2006:<br>\n      Cục trưởng Cục Bảo vệ Chính trị III, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/2006 - 12/2009:<br>\n      Phó Tổng cục trưởng Tổng cục An ninh, Bộ Công an.\n    </p>\n  </body>\n</html>\n\n");
         jScrollPane6.setViewportView(jEditorPane1);
 
         cardDangVien.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 480, 160));

@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 
 public class SearchPM {
     private static DatabaseConfig dbconfig = new DatabaseConfig();
+    
     public static boolean checkIdInDatabase(String id) {
         try {
             // Kết nối đến cơ sở dữ liệu
