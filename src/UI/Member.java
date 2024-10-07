@@ -135,7 +135,6 @@ public class Member extends javax.swing.JFrame {
             this.jTextFieldStartDateActivity.setText(birthDateString);
             this.jTextFieldEndDateActivity.setText(joinDateString);
 
-            this.jTextFieldStatusActivity.setText(currentActivity.getStatus());
             this.jEditorPaneDescpitActivity.setText(currentActivity.getDescription());
             
         } else {
@@ -147,7 +146,7 @@ public class Member extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) this.jTableBranchActivity.getModel();
         model.setNumRows(0);
         for (BranchActivity ba : listBranchActivity) {
-            model.addRow(new Object[]{ba.getId(), ba.getActivityName() , ba.getStartDate(), ba.getEndDate(), ba.getStatus()});
+            model.addRow(new Object[]{ba.getId(), ba.getActivityName() , ba.getStartDate(), ba.getEndDate()});
         }
     }
     
@@ -838,6 +837,11 @@ public class Member extends javax.swing.JFrame {
                 jButton_SignIn_BranchActivityMouseClicked(evt);
             }
         });
+        jButton_SignIn_BranchActivity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_SignIn_BranchActivityActionPerformed(evt);
+            }
+        });
         cardSinhHoat.add(jButton_SignIn_BranchActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 124, -1));
 
         jLabel44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
@@ -1076,7 +1080,6 @@ public class Member extends javax.swing.JFrame {
         jLabel36.setText("Quy trình công tác:");
         jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 290, -1));
 
-        jEditorPane_DetailMember.setText("");
         jScrollPane6.setViewportView(jEditorPane_DetailMember);
 
         jPanel4.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 730, 221));
@@ -1462,8 +1465,7 @@ public class Member extends javax.swing.JFrame {
 
             this.jTextFieldStartDateActivity.setText(birthDateString);
             this.jTextFieldEndDateActivity.setText(joinDateString);
-
-            this.jTextFieldStatusActivity.setText(activity.getStatus());
+            
             this.jEditorPaneDescpitActivity.setText(activity.getDescription());
             
         } else {
@@ -1472,6 +1474,10 @@ public class Member extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton_SearchBAActionPerformed
+
+    private void jButton_SignIn_BranchActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SignIn_BranchActivityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_SignIn_BranchActivityActionPerformed
     public BranchActivity findActivityById(String id) {
         for (BranchActivity activity : listBranchActivity) {
             if (activity.getId().equals(id)) {

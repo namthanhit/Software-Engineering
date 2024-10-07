@@ -41,7 +41,7 @@ public class ListBranchActivity {
     public static List<BranchActivity> getBranchActivitiesByIdMember(String idMember) {
         List<BranchActivity> activities = new ArrayList<>();
  
-        String query = "SELECT id, activityName, startDate, endDate, status, description FROM BranchActivity WHERE partyMemberId = ?";
+        String query = "SELECT id, activityName, startDate, endDate, description, orgId FROM BranchActivity WHERE partyMemberId = ?";
 
         try (Connection connection = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
             Statement stmt = connection.createStatement();
@@ -55,10 +55,10 @@ public class ListBranchActivity {
                 String activityName = resultSet.getString("activityName");
                 Date startDate = resultSet.getDate("startDate");
                 Date endDate = resultSet.getDate("endDate");
-                String status = resultSet.getString("status");
                 String description = resultSet.getString("description");
-
-                BranchActivity activity = new BranchActivity(id, activityName, startDate, endDate, status, idMember, description);
+                String orgId = resultSet.getString("orgId");
+                
+                BranchActivity activity = new BranchActivity(id, activityName, startDate, endDate, description, orgId);
                 activities.add(activity);
                 
             }

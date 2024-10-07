@@ -15,18 +15,19 @@ public class BranchActivity {
     private String activityName;
     private Date startDate;
     private Date endDate;
-    private String status;
-    private String idMember;
     private String description;
+    private String idOrg;
 
-    public BranchActivity(String id, String activityName, Date startDate, Date endDate, String status, String idMember, String description) {
+    public BranchActivity() {
+    }
+
+    public BranchActivity(String id, String activityName, Date startDate, Date endDate, String description, String idOrg) {
         this.id = id;
         this.activityName = activityName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = status;
-        this.idMember = idMember;
         this.description = description;
+        this.idOrg = idOrg;
     }
 
     public String getId() {
@@ -61,28 +62,20 @@ public class BranchActivity {
         this.endDate = endDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getIdMember() {
-        return idMember;
-    }
-
-    public void setIdMember(String idMember) {
-        this.idMember = idMember;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIdOrg() {
+        return idOrg;
+    }
+
+    public void setIdOrg(String idOrg) {
+        this.idOrg = idOrg;
     }
 
     

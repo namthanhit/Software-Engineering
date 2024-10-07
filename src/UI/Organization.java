@@ -4,38 +4,42 @@
  */
 package UI;
 
-import Class.User;
+import Class.BranchActivity;
 
 import Class.PartyMember;
 import Class.User;
+import Database.BranchActivityAdd;
+import Database.BranchActivityDelete;
+import Database.BranchActivityEdit;
 import Database.ListPartyMember;
+import Database.List_BranchActivity_Org;
 import Database.PartyMemberAdd;
 import Database.PartyMemberDelete;
-import com.sun.jdi.connect.spi.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import Database.SearchPM;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import javax.swing.JOptionPane;
 /**
  *
  * @author buingocduc
  */
 public class Organization extends javax.swing.JFrame {
+    public User user;
+    
     //list DangVien
     List<PartyMember> listDV = ListPartyMember.getAllPartyMembers();
+    List<BranchActivity> listBA = List_BranchActivity_Org.getBranchActivities();
+    
+    
     private static int pos = 0;
     private static int stt = 0;
+    private int checkPointSaveBranchActivity = 0;
     private static int checkSaveDV = 0;
+    
+    private static int posBA = 0;
     /* set onoff cho card DangVien */
+    
     public void OnOffDangVien(boolean a, boolean b, boolean c)
     {
         this.btnEditDv.show(a);
@@ -47,7 +51,17 @@ public class Organization extends javax.swing.JFrame {
         this.btnAddDV.show(b);
     }
     
-//set view cho card DangVien
+    public void OnOff_BranchActivity(boolean a, boolean b, boolean c, boolean d)
+    {
+        this.jButton_AddBA_Org.show(a);
+        this.jButton_DeleteBA.show(b);
+        this.jButton_EditBA.show(c);
+        
+        this.jButton_SaveBA.show(d);
+        this.jButton_CancelBA.show(d);
+    }
+    
+    //set view cho card DangVien
     public void ViewDangVien()
     { 
         PartyMember pm = listDV.get(pos);
@@ -67,6 +81,7 @@ public class Organization extends javax.swing.JFrame {
         
         OnOffDangVien(true, false, false);
     }
+    
 // set viewTable cho crad DangVien
     public void viewTableDv()
     {
@@ -80,24 +95,44 @@ public class Organization extends javax.swing.JFrame {
         }
     }
     
+    public void ViewTableBranchActivityORG(){       
+        DefaultTableModel model = (DefaultTableModel) this.jTable_BranchActivity_Org.getModel();
+        model.setNumRows(0);
+        for (BranchActivity ba : listBA) {
+            model.addRow(new Object[]{ba.getId(), ba.getActivityName(), ba.getStartDate(), ba.getEndDate(), ba.getDescription()});
+        }
+
+    }
+    
+    public void ViewBranchActivityOrg(){
+        BranchActivity ba = listBA.get(posBA);
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  // Định dạng: Năm-Tháng-Ngày
+        String starDate = dateFormat.format(ba.getStartDate());
+        String endDate = dateFormat.format(ba.getEndDate());
+        
+        this.jTextField_StartDate_Org.setText(starDate);
+        this.jTextField_EndDate_Org.setText(endDate);
+        this.jTextField_IDBA_Org.setText(ba.getId());
+        this.jTextField_NameBA_Org.setText(ba.getActivityName());
+        this.jEditorPane_DetailBA_Org.setText(ba.getDescription());
+        
+        OnOff_BranchActivity(true, true, true, false);
+    }
+    
     /**
      * Creates new form Organization
      */
+    public String IDorg;
+    
     public Organization() {
         initComponents();
-        cardViewDetail.setVisible(false);
-        cardSinhHoat.setVisible(false);
-        cardYeuCau.setVisible(false);
-        cardDangBo.setVisible(true);
-        cardThanhTich.setVisible(false);
-        cardKyLuat.setVisible(false);
-        cardDangVien.setVisible(false);
-        ViewDangVien();
-        viewTableDv();
     }
     public Organization(User user) {
         initComponents();
         
+        this.user = user;
+        
         cardViewDetail.setVisible(false);
         cardSinhHoat.setVisible(false);
         cardYeuCau.setVisible(false);
@@ -106,10 +141,20 @@ public class Organization extends javax.swing.JFrame {
         cardKyLuat.setVisible(false);
         cardDangVien.setVisible(false);
         
+        String idOrg = List_BranchActivity_Org.getPartOrgIdByMemberId(user.getPartyMemberId());
+        System.out.println(idOrg);
+        IDorg = idOrg;
+        
         ViewDangVien();
         viewTableDv();
     }
-  
+    
+    
+    public void ViewDetail(){
+        
+    }
+    
+    
     //--------------------
     /**
      * This method is called from within the constructor to initialize the form.
@@ -279,45 +324,44 @@ public class Organization extends javax.swing.JFrame {
         cardSinhHoat = new javax.swing.JPanel();
         jLabel41 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField16 = new javax.swing.JTextField();
-        jButton18 = new javax.swing.JButton();
+        jTable_BranchActivity_Org = new javax.swing.JTable();
+        jTextField_SearchBA_org = new javax.swing.JTextField();
+        jButton_SearchBA_org = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
+        jTextField_NameBA_Org = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextField18 = new javax.swing.JTextField();
+        jTextField_IDBA_Org = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jTextField19 = new javax.swing.JTextField();
+        jTextField_StartDate_Org = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        jTextField20 = new javax.swing.JTextField();
+        jTextField_EndDate_Org = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
-        jEditorPane5 = new javax.swing.JEditorPane();
-        jTextField21 = new javax.swing.JTextField();
-        jLabel43 = new javax.swing.JLabel();
-        jButton19 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
+        jEditorPane_DetailBA_Org = new javax.swing.JEditorPane();
+        jButton_SaveBA = new javax.swing.JButton();
+        jButton_CancelBA = new javax.swing.JButton();
+        jButton_EditBA = new javax.swing.JButton();
+        jButton_AddBA_Org = new javax.swing.JButton();
+        jButton_DeleteBA = new javax.swing.JButton();
+        jButton_ViewDetail = new javax.swing.JButton();
         jLabel45 = new javax.swing.JLabel();
         cardViewDetail = new javax.swing.JPanel();
         jLabel44 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jTextField22 = new javax.swing.JTextField();
-        jButton25 = new javax.swing.JButton();
+        jTable_ViewDetail = new javax.swing.JTable();
+        jTextField_SearchVD = new javax.swing.JTextField();
+        jButton_SearchVD = new javax.swing.JButton();
         buttonBack = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
-        TextFieldHoTen1 = new javax.swing.JTextField();
+        TextFieldHoTen_VD = new javax.swing.JTextField();
         jLabel37 = new javax.swing.JLabel();
-        jTextField28 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jTextField_IDmemberVD = new javax.swing.JTextField();
+        jComboBox_VD = new javax.swing.JComboBox<>();
         jLabel27 = new javax.swing.JLabel();
-        jButton28 = new javax.swing.JButton();
-        jButton29 = new javax.swing.JButton();
-        jButton30 = new javax.swing.JButton();
+        jButton_SaveVD = new javax.swing.JButton();
+        jButton_CancelVD = new javax.swing.JButton();
+        jButton_DanhGiaVD = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1213,113 +1257,141 @@ public class Organization extends javax.swing.JFrame {
         jLabel41.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(255, 51, 51));
         jLabel41.setText("Sinh Hoạt Chi Bộ");
-        cardSinhHoat.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, 30));
+        cardSinhHoat.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, -1, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_BranchActivity_Org.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Số Lượng", "Mã Buổi Sinh Hoạt", "Tên Buổi Sinh Hoạt", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
+                "Mã Buổi Sinh Hoạt", "Tên Buổi Sinh Hoạt", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Mô tả"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(jTable1);
+        jTable_BranchActivity_Org.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_BranchActivity_OrgMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(jTable_BranchActivity_Org);
 
-        cardSinhHoat.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 365, 920, 200));
+        cardSinhHoat.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 385, 920, 180));
 
-        jTextField16.setText("Tìm kiếm ");
-        jTextField16.setPreferredSize(new java.awt.Dimension(67, 30));
-        cardSinhHoat.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 128, -1));
+        jTextField_SearchBA_org.setText("Tìm kiếm ");
+        jTextField_SearchBA_org.setPreferredSize(new java.awt.Dimension(67, 30));
+        cardSinhHoat.add(jTextField_SearchBA_org, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 130, -1));
 
-        jButton18.setBackground(new java.awt.Color(0, 204, 255));
-        jButton18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton18.setForeground(new java.awt.Color(255, 255, 255));
-        jButton18.setText("Tìm");
-        jButton18.setBorder(null);
-        jButton18.setPreferredSize(new java.awt.Dimension(72, 30));
-        cardSinhHoat.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, 61, -1));
+        jButton_SearchBA_org.setBackground(new java.awt.Color(0, 204, 255));
+        jButton_SearchBA_org.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_SearchBA_org.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_SearchBA_org.setText("Tìm");
+        jButton_SearchBA_org.setBorder(null);
+        jButton_SearchBA_org.setPreferredSize(new java.awt.Dimension(72, 30));
+        jButton_SearchBA_org.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_SearchBA_orgActionPerformed(evt);
+            }
+        });
+        cardSinhHoat.add(jButton_SearchBA_org, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, 61, -1));
 
         jLabel15.setText("Tên Buổi Sinh Hoạt:");
-        cardSinhHoat.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 61, -1, -1));
-        cardSinhHoat.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 84, 268, -1));
+        cardSinhHoat.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+        cardSinhHoat.add(jTextField_NameBA_Org, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 200, -1));
 
         jLabel16.setText("ID Buổi Sinh Hoạt:");
-        cardSinhHoat.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 61, -1, -1));
-        cardSinhHoat.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 84, 106, -1));
+        cardSinhHoat.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, 20));
+        cardSinhHoat.add(jTextField_IDBA_Org, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 200, -1));
 
         jLabel18.setText("Ngày bắt đầu:");
-        cardSinhHoat.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 119, 106, -1));
-        cardSinhHoat.add(jTextField19, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 142, 106, -1));
+        cardSinhHoat.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 106, -1));
+        cardSinhHoat.add(jTextField_StartDate_Org, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 106, -1));
 
         jLabel23.setText("Ngày kết thúc:");
-        cardSinhHoat.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 119, 106, -1));
-        cardSinhHoat.add(jTextField20, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 142, 106, -1));
+        cardSinhHoat.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 106, -1));
+        cardSinhHoat.add(jTextField_EndDate_Org, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 106, -1));
 
         jLabel42.setText("Mô tả:");
-        cardSinhHoat.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 177, -1, -1));
+        cardSinhHoat.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
 
-        jScrollPane10.setViewportView(jEditorPane5);
+        jScrollPane10.setViewportView(jEditorPane_DetailBA_Org);
 
-        cardSinhHoat.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 200, 484, 124));
-        cardSinhHoat.add(jTextField21, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 142, 106, -1));
+        cardSinhHoat.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 380, 80));
 
-        jLabel43.setText("Trạng thái:");
-        cardSinhHoat.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 119, -1, -1));
-
-        jButton19.setBackground(new java.awt.Color(51, 204, 0));
-        jButton19.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton19.setForeground(new java.awt.Color(255, 255, 255));
-        jButton19.setText("Lưu");
-        cardSinhHoat.add(jButton19, new org.netbeans.lib.awtextra.AbsoluteConstraints(775, 184, -1, -1));
-
-        jButton20.setBackground(new java.awt.Color(255, 51, 0));
-        jButton20.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton20.setForeground(new java.awt.Color(255, 255, 255));
-        jButton20.setText("Huỷ");
-        cardSinhHoat.add(jButton20, new org.netbeans.lib.awtextra.AbsoluteConstraints(775, 220, -1, -1));
-
-        jButton21.setBackground(new java.awt.Color(255, 153, 0));
-        jButton21.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton21.setForeground(new java.awt.Color(255, 255, 255));
-        jButton21.setText("Chỉnh Sửa");
-        cardSinhHoat.add(jButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, 110, -1));
-
-        jButton22.setBackground(new java.awt.Color(51, 204, 0));
-        jButton22.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton22.setForeground(new java.awt.Color(255, 255, 255));
-        jButton22.setText("Thêm");
-        cardSinhHoat.add(jButton22, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 260, 110, -1));
-
-        jButton23.setBackground(new java.awt.Color(255, 0, 51));
-        jButton23.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton23.setForeground(new java.awt.Color(255, 255, 255));
-        jButton23.setText("Xoá");
-        jButton23.addActionListener(new java.awt.event.ActionListener() {
+        jButton_SaveBA.setBackground(new java.awt.Color(51, 153, 0));
+        jButton_SaveBA.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_SaveBA.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_SaveBA.setText("Lưu");
+        jButton_SaveBA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton23ActionPerformed(evt);
+                jButton_SaveBAActionPerformed(evt);
             }
         });
-        cardSinhHoat.add(jButton23, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 300, 110, -1));
+        cardSinhHoat.add(jButton_SaveBA, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, -1, -1));
 
-        jButton24.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton24.setText("Xem chi tiết");
-        jButton24.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton24MouseClicked(evt);
+        jButton_CancelBA.setBackground(new java.awt.Color(255, 51, 0));
+        jButton_CancelBA.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_CancelBA.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_CancelBA.setText("Huỷ");
+        jButton_CancelBA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_CancelBAActionPerformed(evt);
             }
         });
-        cardSinhHoat.add(jButton24, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 180, -1, -1));
+        cardSinhHoat.add(jButton_CancelBA, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, -1, -1));
+
+        jButton_EditBA.setBackground(new java.awt.Color(255, 153, 0));
+        jButton_EditBA.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_EditBA.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_EditBA.setText("Sửa");
+        jButton_EditBA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EditBAActionPerformed(evt);
+            }
+        });
+        cardSinhHoat.add(jButton_EditBA, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 70, -1));
+
+        jButton_AddBA_Org.setBackground(new java.awt.Color(51, 153, 0));
+        jButton_AddBA_Org.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_AddBA_Org.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_AddBA_Org.setText("Thêm");
+        jButton_AddBA_Org.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_AddBA_OrgActionPerformed(evt);
+            }
+        });
+        cardSinhHoat.add(jButton_AddBA_Org, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 70, -1));
+
+        jButton_DeleteBA.setBackground(new java.awt.Color(255, 0, 51));
+        jButton_DeleteBA.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_DeleteBA.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_DeleteBA.setText("Xoá");
+        jButton_DeleteBA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_DeleteBAActionPerformed(evt);
+            }
+        });
+        cardSinhHoat.add(jButton_DeleteBA, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 280, 70, -1));
+
+        jButton_ViewDetail.setBackground(new java.awt.Color(0, 153, 204));
+        jButton_ViewDetail.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_ViewDetail.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_ViewDetail.setText("Xem chi tiết");
+        jButton_ViewDetail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_ViewDetailMouseClicked(evt);
+            }
+        });
+        cardSinhHoat.add(jButton_ViewDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
         jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         cardSinhHoat.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 580));
@@ -1331,42 +1403,41 @@ public class Organization extends javax.swing.JFrame {
         jLabel44.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel44.setForeground(new java.awt.Color(255, 51, 51));
         jLabel44.setText("Danh Sách Đảng Viên Tham Gia");
-        cardViewDetail.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 290, 30));
+        cardViewDetail.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 290, 30));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_ViewDetail.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Buổi Sinh Hoạt", "Tên Buổi Sinh Hoạt", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
+                "Tên Buổi Sinh Hoạt", "Mã Đảng viên", "Họ và Tên", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, true, true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane7.setViewportView(jTable2);
+        jScrollPane7.setViewportView(jTable_ViewDetail);
 
-        cardViewDetail.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 90, 920, 258));
+        cardViewDetail.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 90, 920, 180));
 
-        jTextField22.setText("Tìm kiếm ");
-        jTextField22.setPreferredSize(new java.awt.Dimension(67, 30));
-        cardViewDetail.add(jTextField22, new org.netbeans.lib.awtextra.AbsoluteConstraints(729, 49, 128, -1));
+        jTextField_SearchVD.setPreferredSize(new java.awt.Dimension(67, 30));
+        cardViewDetail.add(jTextField_SearchVD, new org.netbeans.lib.awtextra.AbsoluteConstraints(729, 49, 128, -1));
 
-        jButton25.setBackground(new java.awt.Color(0, 204, 255));
-        jButton25.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jButton25.setForeground(new java.awt.Color(255, 255, 255));
-        jButton25.setText("Tìm");
-        jButton25.setBorder(null);
-        jButton25.setPreferredSize(new java.awt.Dimension(22, 30));
-        cardViewDetail.add(jButton25, new org.netbeans.lib.awtextra.AbsoluteConstraints(863, 49, 61, -1));
+        jButton_SearchVD.setBackground(new java.awt.Color(0, 204, 255));
+        jButton_SearchVD.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_SearchVD.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_SearchVD.setText("Tìm");
+        jButton_SearchVD.setBorder(null);
+        jButton_SearchVD.setPreferredSize(new java.awt.Dimension(22, 30));
+        cardViewDetail.add(jButton_SearchVD, new org.netbeans.lib.awtextra.AbsoluteConstraints(863, 49, 61, -1));
 
         buttonBack.setBackground(new java.awt.Color(102, 204, 0));
         buttonBack.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
@@ -1385,37 +1456,40 @@ public class Organization extends javax.swing.JFrame {
         cardViewDetail.add(buttonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 530, 100, -1));
 
         jLabel22.setText("Họ và Tên:");
-        cardViewDetail.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
-
-        TextFieldHoTen1.setText("bui ngoc duc");
-        cardViewDetail.add(TextFieldHoTen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 167, -1));
+        cardViewDetail.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        cardViewDetail.add(TextFieldHoTen_VD, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 167, -1));
 
         jLabel37.setText("Mã Đảng viên:");
-        cardViewDetail.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, -1, -1));
+        cardViewDetail.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, -1, -1));
+        cardViewDetail.add(jTextField_IDmemberVD, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 126, -1));
 
-        jTextField28.setText("22010065");
-        cardViewDetail.add(jTextField28, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 126, -1));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã Hoàn Thành", "Chưa Hoàn Thành", "Đã Đăng Ký" }));
-        cardViewDetail.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, 167, -1));
+        jComboBox_VD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã Hoàn Thành", "Chưa Hoàn Thành", "Đã Đăng Ký" }));
+        cardViewDetail.add(jComboBox_VD, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, 167, -1));
 
         jLabel27.setText("Trạng thái");
-        cardViewDetail.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 380, -1, -1));
+        cardViewDetail.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, -1));
 
-        jButton28.setBackground(new java.awt.Color(51, 204, 0));
-        jButton28.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton28.setForeground(new java.awt.Color(255, 255, 255));
-        jButton28.setText("Lưu");
-        cardViewDetail.add(jButton28, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, -1, -1));
+        jButton_SaveVD.setBackground(new java.awt.Color(51, 204, 0));
+        jButton_SaveVD.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_SaveVD.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_SaveVD.setText("Lưu");
+        cardViewDetail.add(jButton_SaveVD, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 450, -1, -1));
 
-        jButton29.setBackground(new java.awt.Color(255, 51, 0));
-        jButton29.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton29.setForeground(new java.awt.Color(255, 255, 255));
-        jButton29.setText("Huỷ");
-        cardViewDetail.add(jButton29, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, -1, -1));
+        jButton_CancelVD.setBackground(new java.awt.Color(255, 51, 0));
+        jButton_CancelVD.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_CancelVD.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_CancelVD.setText("Huỷ");
+        cardViewDetail.add(jButton_CancelVD, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, -1, -1));
 
-        jButton30.setText("Đánh Giá");
-        cardViewDetail.add(jButton30, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, -1, -1));
+        jButton_DanhGiaVD.setBackground(new java.awt.Color(0, 153, 204));
+        jButton_DanhGiaVD.setFont(new java.awt.Font("Helvetica Neue", 1, 15)); // NOI18N
+        jButton_DanhGiaVD.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_DanhGiaVD.setText("Đánh Giá");
+        cardViewDetail.add(jButton_DanhGiaVD, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel6.setText("Đánh Giá Đảng Viên:");
+        cardViewDetail.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 220, -1));
 
         jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         cardViewDetail.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 580));
@@ -1459,6 +1533,9 @@ public class Organization extends javax.swing.JFrame {
         cardKyLuat.setVisible(false);
         cardSinhHoat.setVisible(true);
         cardViewDetail.setVisible(false);
+        
+        ViewBranchActivityOrg();
+        ViewTableBranchActivityORG();
     }//GEN-LAST:event_lblSinhHoatMouseClicked
 
     private void lblKyLuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKyLuatMouseClicked
@@ -1522,6 +1599,7 @@ public class Organization extends javax.swing.JFrame {
         listDV = ListPartyMember.getAllPartyMembers();
         ViewDangVien();
         viewTableDv();
+        
     }//GEN-LAST:event_btnSaveDVActionPerformed
 
     private void btnCancelDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelDVActionPerformed
@@ -1540,9 +1618,26 @@ public class Organization extends javax.swing.JFrame {
         cardKyLuat.setVisible(false);
     }//GEN-LAST:event_lblYeuCauMouseClicked
 
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+    private void jButton_DeleteBAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteBAActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton23ActionPerformed
+        String idBA = this.jTextField_IDBA_Org.getText();
+        
+        int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xoá buổi sinh hoạt này không?", "Xác nhận xoá", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            BranchActivityDelete delete = new BranchActivityDelete();
+            delete.deleteBranchActivity(idBA);
+            
+            listBA = List_BranchActivity_Org.getBranchActivities();
+            
+            ViewBranchActivityOrg();
+            ViewTableBranchActivityORG();
+        } else {
+            // If the user clicks "No", simply return
+            JOptionPane.showMessageDialog(null, "Huỷ bỏ huỷ đăng ký.");
+        }
+        
+    }//GEN-LAST:event_jButton_DeleteBAActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
         // TODO add your handling code here:
@@ -1554,11 +1649,11 @@ public class Organization extends javax.swing.JFrame {
         cardViewDetail.setVisible(false);
     }//GEN-LAST:event_buttonBackMouseClicked
 
-    private void jButton24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton24MouseClicked
+    private void jButton_ViewDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ViewDetailMouseClicked
         // TODO add your handling code here:
         cardSinhHoat.setVisible(false);
         cardViewDetail.setVisible(true);
-    }//GEN-LAST:event_jButton24MouseClicked
+    }//GEN-LAST:event_jButton_ViewDetailMouseClicked
 
     private void jTextField31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField31ActionPerformed
         // TODO add your handling code here:
@@ -1663,6 +1758,115 @@ public class Organization extends javax.swing.JFrame {
         ViewDangVien();
     }//GEN-LAST:event_ButtonSearchDVActionPerformed
 
+    private void jTable_BranchActivity_OrgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_BranchActivity_OrgMouseClicked
+        // TODO add your handling code here:
+        posBA = this.jTable_BranchActivity_Org.getSelectedRow();
+        ViewBranchActivityOrg();
+    }//GEN-LAST:event_jTable_BranchActivity_OrgMouseClicked
+    
+    public void OnOff_BranchActivity_Feature(boolean a, boolean b, boolean c, boolean d)
+    {
+        this.jButton_AddBA_Org.show(a);
+        this.jButton_DeleteBA.show(b);
+        this.jButton_EditBA.show(c);
+        
+        this.jButton_SaveBA.show(d);
+        this.jButton_CancelBA.show(d);
+    }
+    private void jButton_AddBA_OrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AddBA_OrgActionPerformed
+        // TODO add your handling code here:
+        this.jTextField_StartDate_Org.setText("");
+        this.jTextField_EndDate_Org.setText("");
+        this.jTextField_IDBA_Org.setText("");
+        this.jTextField_NameBA_Org.setText("");
+        this.jEditorPane_DetailBA_Org.setText("");
+        
+        checkPointSaveBranchActivity = 1; 
+        
+        OnOff_BranchActivity_Feature(false, false, false, true);
+    }//GEN-LAST:event_jButton_AddBA_OrgActionPerformed
+
+    private void jButton_EditBAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EditBAActionPerformed
+        // TODO add your handling code here:
+        checkPointSaveBranchActivity = 2;
+        OnOff_BranchActivity_Feature(false, false, false, true);
+    }//GEN-LAST:event_jButton_EditBAActionPerformed
+    
+    
+    private void jButton_SaveBAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveBAActionPerformed
+        // TODO add your handling code here:
+        String idBA = this.jTextField_IDBA_Org.getText();
+        String nameBA = this.jTextField_NameBA_Org.getText();
+        String startDate = this.jTextField_StartDate_Org.getText();
+        String endDate = this.jTextField_EndDate_Org.getText();
+        String detail = this.jEditorPane_DetailBA_Org.getText();
+        String orgId = IDorg;
+        
+        if(checkPointSaveBranchActivity == 1){
+            BranchActivityAdd add = new BranchActivityAdd();
+            add.addBranchActivity(idBA, nameBA, startDate, endDate, detail, orgId);
+            listBA = List_BranchActivity_Org.getBranchActivities();
+            
+            checkPointSaveBranchActivity = 0;
+            
+            JOptionPane.showMessageDialog(null, "Đã thêm thành công!");
+            
+            ViewBranchActivityOrg();
+            ViewTableBranchActivityORG();
+        }else if (checkPointSaveBranchActivity == 2){
+            BranchActivityEdit edit = new BranchActivityEdit();
+            edit.updateBranchActivity(idBA, nameBA, startDate, endDate, detail, orgId);
+            listBA = List_BranchActivity_Org.getBranchActivities();
+            
+            checkPointSaveBranchActivity = 0;
+            JOptionPane.showMessageDialog(null, "Đã sửa thành công!");
+            ViewBranchActivityOrg();
+            ViewTableBranchActivityORG();
+        }
+         
+        
+    }//GEN-LAST:event_jButton_SaveBAActionPerformed
+
+    private void jButton_CancelBAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CancelBAActionPerformed
+        // TODO add your handling code here:
+        ViewBranchActivityOrg();
+        ViewTableBranchActivityORG();
+    }//GEN-LAST:event_jButton_CancelBAActionPerformed
+    
+    public BranchActivity findActivityById(String id) {
+        for (BranchActivity activity : listBA) {
+            if (activity.getId().equals(id)) {
+                return activity;  // Trả về đối tượng nếu tìm thấy
+            }
+        }
+        return null;  // Trả về null nếu không tìm thấy
+    }
+    private void jButton_SearchBA_orgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SearchBA_orgActionPerformed
+        // TODO add your handling code here:
+        String id = this.jTextField_SearchBA_org.getText();
+        
+        BranchActivity activity = findActivityById(id);
+        if (activity != null) {
+            
+            this.jTextField_NameBA_Org.setText(activity.getActivityName());
+            this.jTextField_IDBA_Org.setText(activity.getId());
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDateString = formatter.format(activity.getStartDate());
+            String joinDateString = formatter.format(activity.getEndDate());
+
+            this.jTextField_StartDate_Org.setText(birthDateString);
+            this.jTextField_EndDate_Org.setText(joinDateString);
+            
+            this.jEditorPane_DetailBA_Org.setText(activity.getDescription());
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Không tìm thấy buổi sinh hoạt với ID này.");
+            System.out.println("Không tìm thấy buổi sinh hoạt với ID này.");
+        }
+        
+    }//GEN-LAST:event_jButton_SearchBA_orgActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1705,7 +1909,7 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldAddress;
     private javax.swing.JTextField TextFieldEmail;
     private javax.swing.JTextField TextFieldHoTen;
-    private javax.swing.JTextField TextFieldHoTen1;
+    private javax.swing.JTextField TextFieldHoTen_VD;
     private javax.swing.JTextField TextFieldID;
     private javax.swing.JTextField TextFieldNgaySinh;
     private javax.swing.JTextField TextFieldNgayVao;
@@ -1734,19 +1938,8 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton29;
-    private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton32;
     private javax.swing.JButton jButton33;
@@ -1755,13 +1948,24 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JButton jButton36;
     private javax.swing.JButton jButton37;
     private javax.swing.JButton jButton38;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton jButton_AddBA_Org;
+    private javax.swing.JButton jButton_CancelBA;
+    private javax.swing.JButton jButton_CancelVD;
+    private javax.swing.JButton jButton_DanhGiaVD;
+    private javax.swing.JButton jButton_DeleteBA;
+    private javax.swing.JButton jButton_EditBA;
+    private javax.swing.JButton jButton_SaveBA;
+    private javax.swing.JButton jButton_SaveVD;
+    private javax.swing.JButton jButton_SearchBA_org;
+    private javax.swing.JButton jButton_SearchVD;
+    private javax.swing.JButton jButton_ViewDetail;
+    private javax.swing.JComboBox<String> jComboBox_VD;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JEditorPane jEditorPane3;
     private javax.swing.JEditorPane jEditorPane4;
-    private javax.swing.JEditorPane jEditorPane5;
     private javax.swing.JEditorPane jEditorPane6;
     private javax.swing.JEditorPane jEditorPane7;
+    private javax.swing.JEditorPane jEditorPane_DetailBA_Org;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1797,7 +2001,6 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
@@ -1810,6 +2013,7 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
@@ -1855,29 +2059,21 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable12;
     private javax.swing.JTable jTable13;
     private javax.swing.JTable jTable14;
     private javax.swing.JTable jTable15;
     private javax.swing.JTable jTable16;
     private javax.swing.JTable jTable17;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable_BranchActivity_Org;
+    private javax.swing.JTable jTable_ViewDetail;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField24;
     private javax.swing.JTextField jTextField25;
     private javax.swing.JTextField jTextField27;
-    private javax.swing.JTextField jTextField28;
     private javax.swing.JTextField jTextField29;
     private javax.swing.JTextField jTextField30;
     private javax.swing.JTextField jTextField31;
@@ -1888,6 +2084,13 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField36;
     private javax.swing.JTextField jTextField37;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField_EndDate_Org;
+    private javax.swing.JTextField jTextField_IDBA_Org;
+    private javax.swing.JTextField jTextField_IDmemberVD;
+    private javax.swing.JTextField jTextField_NameBA_Org;
+    private javax.swing.JTextField jTextField_SearchBA_org;
+    private javax.swing.JTextField jTextField_SearchVD;
+    private javax.swing.JTextField jTextField_StartDate_Org;
     private javax.swing.JPanel jplMain;
     private javax.swing.JPanel jplSlideMenu;
     private javax.swing.JPanel jplTitle;
