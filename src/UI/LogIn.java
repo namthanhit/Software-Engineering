@@ -155,6 +155,7 @@ public class LogIn extends javax.swing.JFrame {
         
             if(role.equals("Đảng Viên")){
                 userLogin.setRole(false);
+                
                 boolean kt = CheckMember.check(userLogin);
                 if(kt){
                     this.dispose();
@@ -168,6 +169,7 @@ public class LogIn extends javax.swing.JFrame {
             
             else if(role.equals("Tổ Chức")){
                 userLogin.setRole(true);
+                
                 boolean kt = CheckOrg.check(userLogin);
                 if(CheckOrg.check(userLogin)){
                     this.dispose();

@@ -3,24 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Database;
-
-/**
- *
- * @author Thanh Nam
- */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-public class SearchPM {
+/**
+ *
+ * @author buingocduc
+ */
+public class BranchActivitySearch {
     private static DatabaseConfig dbconfig = new DatabaseConfig();
-    
+
     public static boolean checkIdInDatabase(String id) {
         try {
             // Kết nối đến cơ sở dữ liệu
-            Connection connection = DriverManager.getConnection(dbconfig.getUrl(),dbconfig.getUsername(), dbconfig.getPassword());
-            String query = "SELECT COUNT(*) FROM PartyMember WHERE id = ?";
+            Connection connection = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
+
+            // Truy vấn kiểm tra ID trong bảng BranchActivity
+            String query = "SELECT COUNT(*) FROM BranchActivity WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -33,4 +33,5 @@ public class SearchPM {
         }
         return false; // Trả về false nếu có lỗi hoặc ID không tồn tại
     }
+
 }
