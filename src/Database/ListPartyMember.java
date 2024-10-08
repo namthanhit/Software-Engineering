@@ -9,13 +9,10 @@ import java.sql.DriverManager;
 
 public class ListPartyMember {
     private static DatabaseConfig dbconfig = new DatabaseConfig();
-    // Phương thức lấy danh sách PartyMember từ CSDL
+    
     public static List<PartyMember> getAllPartyMembers() {
         List<PartyMember> partyMembers = new ArrayList<>();
-
-        
-        // Câu lệnh SQL để lấy dữ liệu từ bảng PartyMember
-        String sql = "SELECT id, fullName, birthDate, joinDate, address, email, phoneNumber, position, avatar,orgId FROM PartyMember";
+        String sql = "SELECT id, fullName, birthDate, joinDate, address, email, phoneNumber, position, avatar, orgId, detail FROM PartyMember";
 
         try (Connection conn = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
              Statement stmt = conn.createStatement();
@@ -33,7 +30,7 @@ public class ListPartyMember {
                 String position = rs.getString("position");
                 String orgId = rs.getString("orgId");
                 byte[] avatarBytes = rs.getBytes("avatar");
-
+                String detail = rs.getString("detail");
                 // Chuyển byte[] avatar thành Icon (ImageIcon)
                 ImageIcon avatar = null;
                 if (avatarBytes != null) {
@@ -41,7 +38,7 @@ public class ListPartyMember {
                 }
 
                 // Tạo một đối tượng PartyMember và thêm vào danh sách
-                PartyMember partyMember = new PartyMember(avatar, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId);
+                PartyMember partyMember = new PartyMember(avatar, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId, detail);
                 partyMembers.add(partyMember);
             }
 
@@ -50,6 +47,32 @@ public class ListPartyMember {
         }
         return partyMembers;
     }
+    
+    public static String getMemberNameById(String memberId) {
+        String fullName = null;
+        // Câu lệnh SQL để lấy fullName từ bảng PartyMember theo id
+        String sql = "SELECT fullName FROM PartyMember WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Đặt giá trị cho tham số id trong câu lệnh SQL
+            stmt.setString(1, memberId);
+
+            // Thực thi truy vấn và nhận kết quả
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Nếu tồn tại kết quả, lấy fullName
+                if (rs.next()) {
+                    fullName = rs.getString("fullName");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Bắt lỗi SQL
+        }
+        return fullName;
+    }
+
     
     
 }

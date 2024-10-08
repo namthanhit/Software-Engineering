@@ -16,79 +16,74 @@ public class BranchActivity {
     private Date startDate;
     private Date endDate;
     private String status;
+    private String idMember;
     private String description;
 
-    public BranchActivity(String id, String activityName, Date startDate, Date endDate, String status, String description) {
+    public BranchActivity(String id, String activityName, Date startDate, Date endDate, String status, String idMember, String description) {
         this.id = id;
         this.activityName = activityName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.idMember = idMember;
         this.description = description;
-    }
-
-    public BranchActivity() {
     }
 
     public String getId() {
         return id;
     }
 
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getActivityName() {
+        return activityName;
     }
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getIdMember() {
+        return idMember;
+    }
+
+    public void setIdMember(String idMember) {
+        this.idMember = idMember;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    public void addBranchActivity(){
-        
-    }
-    public void updateBranchActivity(){
-        
-    }
-    public void searchBranchActivity(){
-        
-    }
 
-    public String getFullName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 }

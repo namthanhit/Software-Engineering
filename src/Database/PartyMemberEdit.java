@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class PartyMemberEdit {
 
@@ -19,7 +20,7 @@ public class PartyMemberEdit {
 
     public void updatePartyMember(String id, String fullName, String birthDate, String joinDate, 
                                   String address, String email, String phoneNumber, 
-                                  String position, String orgId) {
+                                  String position, String orgId, String detail) {
         Connection conn = null;
         PreparedStatement pstmt = null;
 
@@ -29,7 +30,7 @@ public class PartyMemberEdit {
 
             // 2. Tạo câu lệnh SQL UPDATE
             String sql = "UPDATE PartyMember SET fullName = ?, birthDate = ?, joinDate = ?, address = ?, " +
-                         "email = ?, phoneNumber = ?, position = ?, orgId = ? WHERE id = ?";
+                         "email = ?, phoneNumber = ?, position = ?, orgId = ?, detail = ? WHERE id = ?";
 
             // 3. Chuẩn bị câu lệnh
             pstmt = conn.prepareStatement(sql);
@@ -41,12 +42,13 @@ public class PartyMemberEdit {
             pstmt.setString(6, phoneNumber);
             pstmt.setString(7, position);
             pstmt.setString(8, orgId);
-            pstmt.setString(9, id);
+            pstmt.setString(10, id);
+            pstmt.setString(9, detail);
 
             // 4. Thực thi câu lệnh
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Cập nhật thành công.");
+                JOptionPane.showMessageDialog(null, "Sửa thành công!");
             } else {
                 System.out.println("Không tìm thấy thành viên với ID: " + id);
             }
@@ -67,8 +69,8 @@ public class PartyMemberEdit {
     public static void main(String[] args) {
         // Ví dụ sử dụng
         PartyMemberEdit dao = new PartyMemberEdit();
-        dao.updatePartyMember("PM004", "Hoàng Thị Thảo Nhi", "1985-05-15", "2022-08-01", 
-                              "456 Đường XYZ", "nguyenvanb@example.com", "0987654321", "Yêu", "ORG02");
+        dao.updatePartyMember("PM006", "Hoàng Thị Thảo Nhi", "1985-05-15", "2022-08-01", 
+                              "456 Đường XYZ", "nguyenvanb@example.com", "0987654321", "Yêu", "ORG02", "123");
     }
 }
 

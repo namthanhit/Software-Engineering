@@ -7,14 +7,25 @@ package UI;
 
 import Class.BranchActivity;
 import Class.PartyMember;
+import Class.Reward;
 import Class.User;
 import Database.ListBranchActivity;
 import Database.ListPartyMember;
+import Database.ListRewardPartyMember;
 import java.util.List;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Class.Discipline;
+import Class.EvalRequest;
+import Class.TransferOut;
+import Database.Insert_OutGroup;
+import Database.Insert_TransferOut_InDatabase;
+import Database.ListDisciplinePartyMember;
+import Database.ListEvalRequest;
+import Database.List_TransferOut_By_PartymemberID;
+import java.util.Date;
 /**
  *
  * @author User
@@ -24,10 +35,13 @@ public class Member extends javax.swing.JFrame {
     
     List<PartyMember> listPartyMember = new ArrayList<>();
     List<BranchActivity> listBranchActivity = new ArrayList<>();
+    List<Reward> listReward =  new ArrayList<>();
+    List<Discipline> listDiscipline = new ArrayList<>();
+    List<TransferOut> listTransferOut = new ArrayList<>();
+    List<EvalRequest> listEvalRequest = new ArrayList<>();
     
-
-    private static int posBranchActivity = 0;
-    private static int state = 0;
+    private static int posTransferOut = 0;
+    private static int posBranchActy = 0;
     
     public Member(){
         initComponents();
@@ -44,15 +58,26 @@ public class Member extends javax.swing.JFrame {
         cardDangVien.setVisible(false);
         cardThanhTich.setVisible(false);
         
+        this.jLabelNameAcc.setText(ListPartyMember.getMemberNameById(user.getPartyMemberId()));
+        
         listPartyMember = ListPartyMember.getAllPartyMembers();
         
         String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
-        System.out.println("Không tìm thấy tổ chức cho member ID: " + orgID);
         
-        listBranchActivity = ListBranchActivity.getBranchActivitiesByOrgId(orgID);
-       
+        listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(user.getPartyMemberId());
+        
+        listReward = ListRewardPartyMember.getBranchActivitiesByOrgId(user.getPartyMemberId());
+        
+        listDiscipline = ListDisciplinePartyMember.getDisciplineByOrgId(user.getPartyMemberId());
+        
+        listTransferOut = List_TransferOut_By_PartymemberID.getTransferOutByPartymemberID(user.getPartyMemberId());
+        
+        listEvalRequest = ListEvalRequest.getEvalRequestsByMemberId(user.getPartyMemberId());
+        
+        jTextFieldFullName.setEditable(false);
         
     }
+    
     
     public void view() {
         // Tìm kiếm trong danh sách các PartyMember dựa trên user.getId()
@@ -83,15 +108,17 @@ public class Member extends javax.swing.JFrame {
             
             // Gán avatar nếu có (giả sử avatar là kiểu Icon hoặc ImageIcon)
             this.jLabelAvatar.setIcon(currentMember.getAvatar());
+            this.jEditorPane_DetailMember.setText(currentMember.getDetail());
         } else {
             // Nếu không tìm thấy thành viên trong listPartyMember
             JOptionPane.showMessageDialog(null, "Không tìm thấy thành viên với ID: " + user.getPartyMemberId());
         }
     }
     
+    
     public void ViewBranchActivity() {
         if (!listBranchActivity.isEmpty()) {
-            BranchActivity currentActivity = listBranchActivity.get(0);
+            BranchActivity currentActivity = listBranchActivity.get(posBranchActy);
 
             this.jTextFieldNameActivity.setText(currentActivity.getActivityName());
             this.jTextFieldIDActivity.setText(currentActivity.getId());
@@ -105,22 +132,64 @@ public class Member extends javax.swing.JFrame {
 
             this.jTextFieldStatusActivity.setText(currentActivity.getStatus());
             this.jEditorPaneDescpitActivity.setText(currentActivity.getDescription());
+            
         } else {
             // Xử lý khi không có hoạt động nào
             JOptionPane.showMessageDialog(null, "Không có hoạt động nào cho tổ chức này.");
         }
     }
-
-    
     public void ViewTableBranchActivity() {
         DefaultTableModel model = (DefaultTableModel) this.jTableBranchActivity.getModel();
         model.setNumRows(0);
         for (BranchActivity ba : listBranchActivity) {
             model.addRow(new Object[]{ba.getId(), ba.getActivityName() , ba.getStartDate(), ba.getEndDate(), ba.getStatus()});
         }
+    }
+    
+    public void ViewTableReward(){
+        DefaultTableModel model = (DefaultTableModel) this.jTableKhenThuong.getModel();
+        model.setNumRows(0);
+        for (Reward lr : listReward) {
+            model.addRow(new Object[]{lr.getId(),lr.getPartyMemberId() ,lr.getRewardDate() , lr.getDecisionMaker(), lr.getDescription()});
+        }
+    }
+    
+    public void ViewTableDiscipline(){
+        DefaultTableModel model = (DefaultTableModel) this.jTableKyLuat.getModel();
+        model.setNumRows(0);
+        for (Discipline ld : listDiscipline) {
+            model.addRow(new Object[]{ld.getId(),ld.getPartyMemberId() ,ld.getDisciplineDate() , ld.getDecisionMaker(), ld.getDescription()});
+        }
+    }
+    
+    
+    public void ViewTransferOut(){
+        TransferOut to = listTransferOut.get(posTransferOut);
         
-        jTableBranchActivity.revalidate();
-        jTableBranchActivity.repaint();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  // Định dạng: Năm-Tháng-Ngày
+        String dateTransferOut = dateFormat.format(to.getTransferDate());
+        this.textFieldDateTransfer.setText(dateTransferOut);
+        this.textFieldIdOrgTransfer.setText(to.getOrgId());
+        this.editorPaneReasonTranfer.setText(to.getReason());
+        //this.textFieldStatusTransferOut.setText(to.getStatus());
+        
+        OnOffTransferOut(true, false, false);
+    }
+    public void ViewTableTransferOut(){
+        DefaultTableModel model = (DefaultTableModel) this.jTableTransferOut.getModel();
+        model.setNumRows(0);
+        for (TransferOut ld : listTransferOut) {
+            model.addRow(new Object[]{ld.getOrgId(), ld.getPartyMemberId(), ld.getTransferDate(), ld.getReason(), ld.getStatus()});
+        }
+    }
+    
+    
+    public void ViewTableER(){
+        DefaultTableModel model = (DefaultTableModel) this.jTableOut.getModel();
+        model.setNumRows(0);
+        for (EvalRequest ld : listEvalRequest) {
+            model.addRow(new Object[]{ld.getOrgId(), ld.getDate(), ld.getReason(), ld.getStatus()});
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -138,7 +207,7 @@ public class Member extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         lblDangVien = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        jLabelNameAcc = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         BackgroundMenu = new javax.swing.JLabel();
@@ -159,6 +228,7 @@ public class Member extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel17 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         cardSinhHoat = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -178,26 +248,43 @@ public class Member extends javax.swing.JFrame {
         jEditorPaneDescpitActivity = new javax.swing.JEditorPane();
         jTextFieldStatusActivity = new javax.swing.JTextField();
         jLabel43 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jButton_Cancel_BranchActivity = new javax.swing.JButton();
+        jButton_SignIn_BranchActivity = new javax.swing.JButton();
         jLabel44 = new javax.swing.JLabel();
         cardYeuCau = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        editorPaneYCLiDoNghi = new javax.swing.JEditorPane();
-        jLabel6 = new javax.swing.JLabel();
-        buttonYCNghi = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        textFieldYCMaChuyen = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        textFieldYCNgayChuyen = new javax.swing.JTextField();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        textFieldIdOrgTransfer = new javax.swing.JTextField();
+        jLabel49 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
+        textFieldDateTransfer = new javax.swing.JTextField();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        editorPaneReasonTranfer = new javax.swing.JEditorPane();
+        jLabel51 = new javax.swing.JLabel();
+        buttonCreateNewTransferOut = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
-        editorPaneYCLiDoChuyen = new javax.swing.JEditorPane();
-        jLabel20 = new javax.swing.JLabel();
-        buttonYCChuyen = new javax.swing.JButton();
-        jLabel45 = new javax.swing.JLabel();
+        jTableTransferOut = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jButtonCancelTranferOut = new javax.swing.JButton();
+        buttonSentTransferOut = new javax.swing.JButton();
+        jLabel52 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        textDateOut = new javax.swing.JTextField();
+        jLabel53 = new javax.swing.JLabel();
+        textIdOut = new javax.swing.JTextField();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        editorPaneOut = new javax.swing.JEditorPane();
+        buttonYCChuyen2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jTableOut = new javax.swing.JTable();
+        jLabel56 = new javax.swing.JLabel();
+        buttonYCChuyen3 = new javax.swing.JButton();
         cardDangVien = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabelAvatar = new javax.swing.JLabel();
@@ -219,17 +306,17 @@ public class Member extends javax.swing.JFrame {
         jTextFieldPositon = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
+        jEditorPane_DetailMember = new javax.swing.JEditorPane();
         jLabel3 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         cardThanhTich = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
         jLabel37 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableKyLuat = new javax.swing.JTable();
         jLabel38 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        jTableKhenThuong = new javax.swing.JTable();
         jLabel41 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
 
@@ -327,11 +414,11 @@ public class Member extends javax.swing.JFrame {
         });
         jplSlideMenu.add(lblDangVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 200, 30));
 
-        jLabel21.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("Bui Ngoc Duc");
-        jplSlideMenu.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 200, -1));
+        jLabelNameAcc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabelNameAcc.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNameAcc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelNameAcc.setText("Bui Ngoc Duc");
+        jplSlideMenu.add(jLabelNameAcc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 200, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-user.png"))); // NOI18N
         jplSlideMenu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
@@ -491,6 +578,9 @@ public class Member extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
 
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
+        jLabel4.setText("Xin Thôi Công tác:");
+
         javax.swing.GroupLayout cardTrangChuLayout = new javax.swing.GroupLayout(cardTrangChu);
         cardTrangChu.setLayout(cardTrangChuLayout);
         cardTrangChuLayout.setHorizontalGroup(
@@ -498,6 +588,11 @@ public class Member extends javax.swing.JFrame {
             .addGap(0, 950, Short.MAX_VALUE)
             .addGroup(cardTrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(cardTrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(cardTrangChuLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 949, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         cardTrangChuLayout.setVerticalGroup(
             cardTrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,6 +601,11 @@ public class Member extends javax.swing.JFrame {
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardTrangChuLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(cardTrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(cardTrangChuLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jplMain.add(cardTrangChu, "card2");
@@ -529,18 +629,23 @@ public class Member extends javax.swing.JFrame {
                 "Mã Buổi Sinh Hoạt", "Tên Buổi Sinh Hoạt", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
             }
         ));
+        jTableBranchActivity.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableBranchActivityMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(jTableBranchActivity);
 
-        cardSinhHoat.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 365, 938, 209));
+        cardSinhHoat.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 365, 860, 180));
 
         jTextField12.setText("Tìm kiếm ");
-        cardSinhHoat.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(734, 27, 128, -1));
+        cardSinhHoat.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 150, -1));
 
         jButton4.setBackground(new java.awt.Color(0, 204, 255));
         jButton4.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Tìm");
-        cardSinhHoat.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(868, 27, 61, -1));
+        cardSinhHoat.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 40, 61, -1));
 
         jLabel5.setText("Tên Buổi Sinh Hoạt:");
         cardSinhHoat.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 69, -1, -1));
@@ -554,7 +659,7 @@ public class Member extends javax.swing.JFrame {
 
         jLabel8.setText("ID Buổi Sinh Hoạt:");
         cardSinhHoat.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 69, -1, -1));
-        cardSinhHoat.add(jTextFieldIDActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 92, 106, -1));
+        cardSinhHoat.add(jTextFieldIDActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 92, 120, -1));
 
         jLabel9.setText("Ngày bắt đầu:");
         cardSinhHoat.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 127, 106, -1));
@@ -567,27 +672,35 @@ public class Member extends javax.swing.JFrame {
         jLabel42.setText("Mô tả:");
         cardSinhHoat.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 186, -1, -1));
 
-        jEditorPaneDescpitActivity.setContentType("text/html"); // NOI18N
-        jEditorPaneDescpitActivity.setText("\n\n");
         jScrollPane10.setViewportView(jEditorPaneDescpitActivity);
 
         cardSinhHoat.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 209, 484, 124));
-        cardSinhHoat.add(jTextFieldStatusActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 151, 106, -1));
+        cardSinhHoat.add(jTextFieldStatusActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 151, 120, -1));
 
         jLabel43.setText("Trạng thái:");
         cardSinhHoat.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 127, -1, -1));
 
-        jButton5.setBackground(new java.awt.Color(51, 204, 0));
-        jButton5.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Đăng Ký ");
-        cardSinhHoat.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 150, 124, -1));
+        jButton_Cancel_BranchActivity.setBackground(new java.awt.Color(255, 51, 0));
+        jButton_Cancel_BranchActivity.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_Cancel_BranchActivity.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Cancel_BranchActivity.setText("Huỷ");
+        jButton_Cancel_BranchActivity.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_Cancel_BranchActivityMouseClicked(evt);
+            }
+        });
+        cardSinhHoat.add(jButton_Cancel_BranchActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 124, -1));
 
-        jButton6.setBackground(new java.awt.Color(255, 51, 0));
-        jButton6.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Huỷ");
-        cardSinhHoat.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 186, 124, -1));
+        jButton_SignIn_BranchActivity.setBackground(new java.awt.Color(51, 204, 0));
+        jButton_SignIn_BranchActivity.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton_SignIn_BranchActivity.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_SignIn_BranchActivity.setText("Đăng Ký ");
+        jButton_SignIn_BranchActivity.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_SignIn_BranchActivityMouseClicked(evt);
+            }
+        });
+        cardSinhHoat.add(jButton_SignIn_BranchActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 124, -1));
 
         jLabel44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         cardSinhHoat.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 590));
@@ -595,61 +708,192 @@ public class Member extends javax.swing.JFrame {
         jplMain.add(cardSinhHoat, "card3");
 
         cardYeuCau.setBackground(new java.awt.Color(255, 255, 255));
-        cardYeuCau.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
-        jLabel1.setText("Xin Thôi Công tác:");
-        cardYeuCau.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 325, 200, 30));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
-        jLabel2.setText("Xin Chuyển Công tác:");
-        cardYeuCau.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, 200, 30));
+        jLabel16.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel16.setText("Xin Chuyển Công Tác");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 190, 30));
+        jPanel2.add(textFieldIdOrgTransfer, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
 
-        jScrollPane2.setViewportView(editorPaneYCLiDoNghi);
+        jLabel49.setText("Mã Tổ Chức:");
+        jPanel2.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 93, -1, -1));
 
-        cardYeuCau.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 396, 596, 162));
+        jLabel50.setText("Ngày Chuyển:");
+        jPanel2.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 84, -1));
+        jPanel2.add(textFieldDateTransfer, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 108, -1));
 
-        jLabel6.setText("Lý Do:");
-        cardYeuCau.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 373, -1, -1));
+        jScrollPane11.setViewportView(editorPaneReasonTranfer);
 
-        buttonYCNghi.setBackground(new java.awt.Color(102, 204, 0));
-        buttonYCNghi.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        buttonYCNghi.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYCNghi.setText("Gửi Yêu Cầu");
-        cardYeuCau.add(buttonYCNghi, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 455, -1, -1));
+        jPanel2.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 597, 130));
 
-        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel7.setText("Chuyển đơn vị công tác chính thức:");
-        cardYeuCau.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 55, -1, -1));
-        cardYeuCau.add(textFieldYCMaChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
+        jLabel51.setText("Chi tiết:");
+        jPanel2.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
 
-        jLabel18.setText("Mã Tổ Chức:");
-        cardYeuCau.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 93, -1, -1));
-
-        jLabel19.setText("Ngày Chuyển:");
-        cardYeuCau.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 93, 84, -1));
-        cardYeuCau.add(textFieldYCNgayChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 90, 108, -1));
-
-        jScrollPane8.setViewportView(editorPaneYCLiDoChuyen);
-
-        cardYeuCau.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 148, 597, 159));
-
-        jLabel20.setText("Chi tiết:");
-        cardYeuCau.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 125, -1, -1));
-
-        buttonYCChuyen.setBackground(new java.awt.Color(102, 204, 0));
-        buttonYCChuyen.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        buttonYCChuyen.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYCChuyen.setText("Gửi Yêu Cầu");
-        buttonYCChuyen.addActionListener(new java.awt.event.ActionListener() {
+        buttonCreateNewTransferOut.setBackground(new java.awt.Color(0, 153, 0));
+        buttonCreateNewTransferOut.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonCreateNewTransferOut.setForeground(new java.awt.Color(255, 255, 255));
+        buttonCreateNewTransferOut.setText("Yêu Cầu Mới");
+        buttonCreateNewTransferOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonYCChuyenActionPerformed(evt);
+                buttonCreateNewTransferOutActionPerformed(evt);
             }
         });
-        cardYeuCau.add(buttonYCChuyen, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 168, -1, -1));
+        jPanel2.add(buttonCreateNewTransferOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, -1, -1));
 
-        jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
-        cardYeuCau.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
+        jTableTransferOut.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Mã Đảng Viên", "Mã Tổ Chức", "Ngày Chuyển", "Lý Do", "Trạng Thái"
+            }
+        ));
+        jTableTransferOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTransferOutMouseClicked(evt);
+            }
+        });
+        jScrollPane8.setViewportView(jTableTransferOut);
+
+        jPanel2.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 770, 100));
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel1.setText("Yêu Cầu Đã Gửi:");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 120, -1));
+
+        jButtonCancelTranferOut.setBackground(new java.awt.Color(255, 51, 0));
+        jButtonCancelTranferOut.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButtonCancelTranferOut.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCancelTranferOut.setText("Huỷ Yêu Cầu");
+        jButtonCancelTranferOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonCancelTranferOutMouseClicked(evt);
+            }
+        });
+        jPanel2.add(jButtonCancelTranferOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, -1, -1));
+
+        buttonSentTransferOut.setBackground(new java.awt.Color(0, 153, 0));
+        buttonSentTransferOut.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonSentTransferOut.setForeground(new java.awt.Color(255, 255, 255));
+        buttonSentTransferOut.setText("Gửi Yêu Cầu");
+        buttonSentTransferOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonSentTransferOutMouseClicked(evt);
+            }
+        });
+        buttonSentTransferOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSentTransferOutActionPerformed(evt);
+            }
+        });
+        jPanel2.add(buttonSentTransferOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, -1, -1));
+
+        jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
+        jPanel2.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
+
+        jTabbedPane1.addTab("Xin chuyển công tác", jPanel2);
+
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel18.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel18.setText("Xin Rời Khỏi Đảng");
+        jPanel5.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 160, 30));
+        jPanel5.add(textDateOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 90, 108, -1));
+
+        jLabel53.setText("Ngày Chuyển:");
+        jPanel5.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 93, 84, -1));
+        jPanel5.add(textIdOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 90, 108, -1));
+
+        jLabel54.setText("Mã Tổ Chức:");
+        jPanel5.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 93, -1, -1));
+
+        jLabel55.setText("Lý Do:");
+        jPanel5.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
+
+        jScrollPane12.setViewportView(editorPaneOut);
+
+        jPanel5.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 597, 110));
+
+        buttonYCChuyen2.setBackground(new java.awt.Color(102, 204, 0));
+        buttonYCChuyen2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonYCChuyen2.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYCChuyen2.setText("Gửi Yêu Cầu");
+        buttonYCChuyen2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonYCChuyen2MouseClicked(evt);
+            }
+        });
+        buttonYCChuyen2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonYCChuyen2ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(buttonYCChuyen2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 120, -1));
+
+        jButton1.setBackground(new java.awt.Color(255, 51, 0));
+        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Huỷ");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 120, -1));
+
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel6.setText("Yêu Cầu Đã Gửi:");
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 170, -1));
+
+        jTableOut.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Mã Tổ Chức", "Ngày Chuyển", "Chi Tiet", "Trạng Thái"
+            }
+        ));
+        jScrollPane9.setViewportView(jTableOut);
+
+        jPanel5.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 770, 70));
+
+        jLabel56.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
+        jPanel5.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 550));
+
+        buttonYCChuyen3.setBackground(new java.awt.Color(102, 204, 0));
+        buttonYCChuyen3.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        buttonYCChuyen3.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYCChuyen3.setText("Gửi Yêu Cầu");
+        buttonYCChuyen3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonYCChuyen3ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(buttonYCChuyen3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 120, -1));
+
+        jTabbedPane1.addTab("Xin rời khỏi Đảng", jPanel5);
+
+        javax.swing.GroupLayout cardYeuCauLayout = new javax.swing.GroupLayout(cardYeuCau);
+        cardYeuCau.setLayout(cardYeuCauLayout);
+        cardYeuCauLayout.setHorizontalGroup(
+            cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        cardYeuCauLayout.setVerticalGroup(
+            cardYeuCauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardYeuCauLayout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         jplMain.add(cardYeuCau, "card4");
 
@@ -694,9 +938,8 @@ public class Member extends javax.swing.JFrame {
         jLabel36.setText("Quy trình công tác:");
         jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 290, -1));
 
-        jEditorPane1.setContentType("text/html"); // NOI18N
-        jEditorPane1.setText("<html>\n  <head>\n\n  </head>\n  <body>\n    <p style=\"margin-top: 0\">\n      10/1974 - 7/1979:<br>\n      Học viên Đại học An ninh nhân dân.<br><br>\n\n      7/1979 - 12/1988:<br>\n      Cán bộ, Cục Bảo vệ Chính trị I, Bộ Công an.<br><br>\n\n      12/1988 - 5/1990:<br>\n      Phó Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1990 - 6/1993:<br>\n      Trưởng phòng, Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/1993 - 5/1997:<br>\n      Phó Cục trưởng Cục Bảo vệ Chính trị I, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      5/1997 - 6/2006:<br>\n      Cục trưởng Cục Bảo vệ Chính trị III, Tổng cục An ninh, Bộ Công an.<br><br>\n\n      6/2006 - 12/2009:<br>\n      Phó Tổng cục trưởng Tổng cục An ninh, Bộ Công an.\n    </p>\n  </body>\n</html>\n\n");
-        jScrollPane6.setViewportView(jEditorPane1);
+        jEditorPane_DetailMember.setText("");
+        jScrollPane6.setViewportView(jEditorPane_DetailMember);
 
         jPanel4.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 730, 221));
 
@@ -733,55 +976,55 @@ public class Member extends javax.swing.JFrame {
         jLabel37.setText("Khen Thưởng Đảng VIên Đã Có Thành Tích Tốt:");
         jPanel19.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 86, -1, 31));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableKyLuat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã Quyết Định", "Mã Đảng Viên", "Ngày Quyết Định", "Nội Dung"
+                "Mã Quyết Định", "Mã Đảng Viên", "Ngày Quyết Định", "Người Quyết Định", "Nội Dung"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable2);
+        jScrollPane4.setViewportView(jTableKyLuat);
 
-        jPanel19.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 379, 802, 171));
+        jPanel19.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 360, 802, 190));
 
         jLabel38.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel38.setText("Kỷ Luật Đảng VIên Đã Có Những Sai Phạm:");
         jPanel19.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 330, -1, 31));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        jTableKhenThuong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã Quyết Định", "Mã Đảng Viên", "Ngày Quyết Định", "Nội Dung"
+                "Mã Quyết Định", "Mã Đảng Viên", "Ngày Quyết Định", "Người Quyết Định", "Nội Dung"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane7.setViewportView(jTable4);
+        jScrollPane7.setViewportView(jTableKhenThuong);
 
-        jPanel19.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 135, 802, 168));
+        jPanel19.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 802, 160));
 
         jLabel41.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(255, 51, 51));
@@ -854,6 +1097,10 @@ public class Member extends javax.swing.JFrame {
         cardYeuCau.setVisible(true);
         cardDangVien.setVisible(false);
         cardThanhTich.setVisible(false);
+        
+        ViewTableTransferOut();
+        ViewTransferOut();
+        ViewTableER();
     }//GEN-LAST:event_lblYeuCauMouseClicked
 
     private void lblDangVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangVienMouseClicked
@@ -873,6 +1120,9 @@ public class Member extends javax.swing.JFrame {
         cardYeuCau.setVisible(false);
         cardDangVien.setVisible(false);
         cardThanhTich.setVisible(true);
+        
+        ViewTableReward();
+        ViewTableDiscipline();
     }//GEN-LAST:event_lblThanhTichMouseClicked
 
     private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
@@ -881,18 +1131,182 @@ public class Member extends javax.swing.JFrame {
         new LogIn().setVisible(true);
     }//GEN-LAST:event_lblDangXuatMouseClicked
 
-    private void buttonYCChuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyenActionPerformed
-        String ycMaToChuc, ycNgayChuyen, ycLiDoChuyen,ycLiDoNghi;
-        textFieldYCMaChuyen.getText();
-        textFieldYCNgayChuyen.getText();
-        editorPaneYCLiDoChuyen.getText();
-        
-        
-    }//GEN-LAST:event_buttonYCChuyenActionPerformed
-
     private void jTextFieldNameActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNameActivityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNameActivityActionPerformed
+
+    
+    
+    public void OnOffTransferOut(boolean a, boolean b, boolean c)
+    {   
+        this.buttonCreateNewTransferOut.show(a);
+        this.buttonSentTransferOut.show(b);
+        this.jButtonCancelTranferOut.show(c);
+    }
+    private void buttonCreateNewTransferOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCreateNewTransferOutActionPerformed
+        // TODO add your handling code here:
+        OnOffTransferOut(false, true, true);
+        
+        this.textFieldIdOrgTransfer.setText("");
+        this.textFieldDateTransfer.setText("");
+        this.editorPaneReasonTranfer.setText("");
+        
+    }//GEN-LAST:event_buttonCreateNewTransferOutActionPerformed
+
+    private void buttonYCChuyen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyen2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonYCChuyen2ActionPerformed
+
+    private void buttonSentTransferOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSentTransferOutActionPerformed
+        // TODO add your handling code here:
+        String idMember = user.getPartyMemberId();
+        String idOrg = this.textFieldIdOrgTransfer.getText();
+        String status = "Chờ Duyệt";
+        String date = this.textFieldDateTransfer.getText();
+
+        // Chuyển đổi từ String sang java.sql.Date
+        Date transferDate = java.sql.Date.valueOf(java.time.LocalDate.parse(date, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        String reason = this.editorPaneReasonTranfer.getText();
+
+        //INSERT INTO TransferOut (id, partyMemberId, orgId, status, transferDate, reason)
+        Insert_TransferOut_InDatabase addTransferOut = new Insert_TransferOut_InDatabase();
+        addTransferOut.addTransferOutRecord(idMember, idOrg, status, date, reason);
+        
+        listTransferOut = List_TransferOut_By_PartymemberID.getTransferOutByPartymemberID(user.getPartyMemberId());
+        JOptionPane.showMessageDialog(null, "Thành công!");
+        ViewTransferOut();
+        ViewTableTransferOut();
+        
+    }//GEN-LAST:event_buttonSentTransferOutActionPerformed
+
+    private void jButtonCancelTranferOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelTranferOutMouseClicked
+        // TODO add your handling code here:
+        ViewTransferOut();
+    }//GEN-LAST:event_jButtonCancelTranferOutMouseClicked
+
+    private void jTableTransferOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTransferOutMouseClicked
+        // TODO add your handling code here:
+        posTransferOut = this.jTableTransferOut.getSelectedRow();
+        ViewTransferOut();
+    }//GEN-LAST:event_jTableTransferOutMouseClicked
+
+    private void buttonYCChuyen3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYCChuyen3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonYCChuyen3ActionPerformed
+
+    private void jTableBranchActivityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBranchActivityMouseClicked
+        // TODO add your handling code here:
+        posBranchActy = this.jTableBranchActivity.getSelectedRow();
+        ViewBranchActivity();
+    }//GEN-LAST:event_jTableBranchActivityMouseClicked
+    
+    private void jButton_SignIn_BranchActivityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_SignIn_BranchActivityMouseClicked
+        // TODO add your handling code here:
+        String idMember = user.getPartyMemberId();
+        String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
+        String nameBA = this.jTextFieldNameActivity.getText();
+        String idBA = this.jTextFieldIDActivity.getText();
+        String startDate = this.jTextFieldStartDateActivity.getText();
+        String endDate = this.jTextFieldEndDateActivity.getText();
+        String status = this.jTextFieldStatusActivity.getText();
+        String detail = this.jEditorPaneDescpitActivity.getText();
+        
+        
+        if ("Chưa Đăng Ký".equals(status)){
+            ListBranchActivity editBA = new ListBranchActivity();
+            //String id, String partyMemberId, String activityName, String startDate, String endDate, String status, String description, String orgId
+            String updateStatus = "Chưa Hoàn Thành";
+            editBA.updateBranchActivity(idBA, idMember, nameBA, startDate, endDate, updateStatus, detail, orgID);
+            
+            listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(idMember);
+            
+            JOptionPane.showMessageDialog(null, "Bạn đã đăng ký sinh hoạt thành công!");
+            
+            ViewBranchActivity();
+            ViewTableBranchActivity();
+        }else{
+            ViewBranchActivity();
+            ViewTableBranchActivity();
+            JOptionPane.showMessageDialog(null, "Bạn đã đăng ký sinh hoạt rồi!");
+        }
+        
+    }//GEN-LAST:event_jButton_SignIn_BranchActivityMouseClicked
+
+    private void buttonYCChuyen2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYCChuyen2MouseClicked
+        // TODO add your handling code here:
+        String date = this.textDateOut.getText();
+        String reason = this.editorPaneOut.getText();
+        String status = "Chờ Duyệt";
+        String idMember = user.getPartyMemberId();
+        String orgID = this.textIdOut.getText();
+        
+        if (!"".equals(date) && !"".equals(reason) && !"".equals(orgID)){
+            Insert_OutGroup og = new Insert_OutGroup();
+            og.addEvalRequestRecord(idMember, orgID, date, status, reason);
+
+            listEvalRequest = ListEvalRequest.getEvalRequestsByMemberId(user.getPartyMemberId());
+            ViewTableER();
+            JOptionPane.showMessageDialog(null, "Thành công!");
+        }else{
+            JOptionPane.showMessageDialog(null, "Bạn cần điền hết các mục!");
+        }
+        
+    }//GEN-LAST:event_buttonYCChuyen2MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        this.textDateOut.setText("");
+        this.textIdOut.setText("");
+        this.editorPaneOut.setText("");
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void buttonSentTransferOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSentTransferOutMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_buttonSentTransferOutMouseClicked
+
+    private void jButton_Cancel_BranchActivityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_Cancel_BranchActivityMouseClicked
+        // Get the necessary values
+        String idMember = user.getPartyMemberId();
+        String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
+        String nameBA = this.jTextFieldNameActivity.getText();
+        String idBA = this.jTextFieldIDActivity.getText();
+        String startDate = this.jTextFieldStartDateActivity.getText();
+        String endDate = this.jTextFieldEndDateActivity.getText();
+        String status = this.jTextFieldStatusActivity.getText();
+        String detail = this.jEditorPaneDescpitActivity.getText();
+
+        // Check if the current status is not "Chưa Đăng Ký"
+        if (!"Chưa Đăng Ký".equals(status)) {
+            // Show a confirmation dialog
+            int confirm = JOptionPane.showConfirmDialog(null, 
+                "Bạn có chắc chắn muốn huỷ đăng ký sinh hoạt không?", 
+                "Xác nhận huỷ", 
+                JOptionPane.YES_NO_OPTION);
+
+            // If the user clicks "Yes", proceed with the cancellation
+            if (confirm == JOptionPane.YES_OPTION) {
+                ListBranchActivity editBA = new ListBranchActivity();
+                // Update status to "Chưa Đăng Ký"
+                String updateStatus = "Chưa Đăng Ký";
+                editBA.updateBranchActivity(idBA, idMember, nameBA, startDate, endDate, updateStatus, detail, orgID);
+
+                listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(idMember);
+                JOptionPane.showMessageDialog(null, "Bạn đã huỷ đăng ký sinh hoạt thành công!");
+
+                ViewBranchActivity();
+                ViewTableBranchActivity();
+            } else {
+                // If the user clicks "No", simply return
+                JOptionPane.showMessageDialog(null, "Huỷ bỏ huỷ đăng ký.");
+            }
+        } else {
+            ViewBranchActivity();
+            ViewTableBranchActivity();
+            JOptionPane.showMessageDialog(null, "Lỗi! Bạn chưa đăng ký!");
+        }
+    }//GEN-LAST:event_jButton_Cancel_BranchActivityMouseClicked
 
     /**
      * @param args the command line arguments
@@ -932,20 +1346,24 @@ public class Member extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundMenu;
-    private javax.swing.JButton buttonYCChuyen;
-    private javax.swing.JButton buttonYCNghi;
+    private javax.swing.JButton buttonCreateNewTransferOut;
+    private javax.swing.JButton buttonSentTransferOut;
+    private javax.swing.JButton buttonYCChuyen2;
+    private javax.swing.JButton buttonYCChuyen3;
     private javax.swing.JPanel cardDangVien;
     private javax.swing.JPanel cardSinhHoat;
     private javax.swing.JPanel cardThanhTich;
     private javax.swing.JPanel cardTrangChu;
     private javax.swing.JPanel cardYeuCau;
-    private javax.swing.JEditorPane editorPaneYCLiDoChuyen;
-    private javax.swing.JEditorPane editorPaneYCLiDoNghi;
+    private javax.swing.JEditorPane editorPaneOut;
+    private javax.swing.JEditorPane editorPaneReasonTranfer;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JEditorPane jEditorPane1;
+    private javax.swing.JButton jButtonCancelTranferOut;
+    private javax.swing.JButton jButton_Cancel_BranchActivity;
+    private javax.swing.JButton jButton_SignIn_BranchActivity;
     private javax.swing.JEditorPane jEditorPaneDescpitActivity;
+    private javax.swing.JEditorPane jEditorPane_DetailMember;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -953,12 +1371,9 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -977,40 +1392,55 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
-    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAvatar;
+    private javax.swing.JLabel jLabelNameAcc;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableBranchActivity;
+    private javax.swing.JTable jTableKhenThuong;
+    private javax.swing.JTable jTableKyLuat;
+    private javax.swing.JTable jTableOut;
+    private javax.swing.JTable jTableTransferOut;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextFieldAddress;
     private javax.swing.JTextField jTextFieldBirthDay;
@@ -1034,7 +1464,9 @@ public class Member extends javax.swing.JFrame {
     private javax.swing.JLabel lblThanhTich;
     private javax.swing.JLabel lblTrangChu;
     private javax.swing.JLabel lblYeuCau;
-    private javax.swing.JTextField textFieldYCMaChuyen;
-    private javax.swing.JTextField textFieldYCNgayChuyen;
+    private javax.swing.JTextField textDateOut;
+    private javax.swing.JTextField textFieldDateTransfer;
+    private javax.swing.JTextField textFieldIdOrgTransfer;
+    private javax.swing.JTextField textIdOut;
     // End of variables declaration//GEN-END:variables
 }

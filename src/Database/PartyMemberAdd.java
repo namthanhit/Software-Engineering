@@ -50,7 +50,7 @@ public class PartyMemberAdd {
 
     // Phương thức thêm thành viên mới
     public void addPartyMember(byte[] avatar, String id, String fullName, String birthDate, String joinDate, 
-                               String address, String email, String phoneNumber, String position, String orgId) {
+                               String address, String email, String phoneNumber, String position, String orgId, String detail) {
         Connection conn = null;
         PreparedStatement pstmt = null;
 
@@ -65,8 +65,8 @@ public class PartyMemberAdd {
             conn = DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
 
             // 3. Tạo câu lệnh SQL INSERT
-            String sql = "INSERT INTO PartyMember (avatar, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId) " +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO PartyMember (avatar, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId, detail) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             // 4. Chuẩn bị câu lệnh
             pstmt = conn.prepareStatement(sql);
@@ -80,6 +80,7 @@ public class PartyMemberAdd {
             pstmt.setString(8, phoneNumber);
             pstmt.setString(9, position);
             pstmt.setString(10, orgId);
+            pstmt.setString(11, detail);
 
             // 5. Thực thi câu lệnh
             int rowsInserted = pstmt.executeUpdate();
@@ -105,6 +106,6 @@ public class PartyMemberAdd {
         PartyMemberAdd dao = new PartyMemberAdd();
         // Avatar: để null nếu không có
         dao.addPartyMember(null, "PM005", "Nguyen Van A", "1990-01-01", "2024-01-01", 
-                           "123 Đường ABC", "nguyenvana@example.com", "0912345678", "Member", "ORG01");
+                           "123 Đường ABC", "nguyenvana@example.com", "0912345678", "Member", "ORG01", "2024 lam ctn");
     }
 }

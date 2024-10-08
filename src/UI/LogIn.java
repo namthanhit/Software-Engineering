@@ -8,7 +8,6 @@ import Class.User;
 import Database.CheckOrg;
 import Database.CheckMember;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author buingocduc
