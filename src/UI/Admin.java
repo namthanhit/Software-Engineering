@@ -17,7 +17,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -165,6 +164,11 @@ public class Admin extends javax.swing.JFrame {
         lblDangXuat.setForeground(new java.awt.Color(255, 51, 0));
         lblDangXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDangXuat.setText("Đăng Xuất");
+        lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseClicked(evt);
+            }
+        });
         jplSlideMenu.add(lblDangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 200, 30));
 
         jLabel10.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
@@ -185,7 +189,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel21.setText("Quản trị viên");
         jplSlideMenu.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 200, -1));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/avatar.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-user.png"))); // NOI18N
         jplSlideMenu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
         jplSlideMenu.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 200, 20));
 
@@ -1419,6 +1423,12 @@ private void searchOrg(String ID){
              loadOrg();
         }
     }//GEN-LAST:event_jButtonQLOrgSuaActionPerformed
+
+    private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new LogIn().setVisible(true);
+    }//GEN-LAST:event_lblDangXuatMouseClicked
 
     /**
      * @param args the command line arguments
