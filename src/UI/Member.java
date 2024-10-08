@@ -19,11 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Class.Discipline;
 import Class.EvalRequest;
+import Class.SignBranchActivity;
 import Class.TransferOut;
 import Database.Insert_OutGroup;
 import Database.Insert_TransferOut_InDatabase;
 import Database.ListDisciplinePartyMember;
 import Database.ListEvalRequest;
+import Database.List_Sign_Member;
 import Database.List_TransferOut_By_PartymemberID;
 import java.util.Date;
 /**
@@ -34,7 +36,7 @@ public class Member extends javax.swing.JFrame {
     public User user;
     
     List<PartyMember> listPartyMember = new ArrayList<>();
-    List<BranchActivity> listBranchActivity = new ArrayList<>();
+    List<SignBranchActivity> listSignBranchActivity = new ArrayList<>();
     List<Reward> listReward =  new ArrayList<>();
     List<Discipline> listDiscipline = new ArrayList<>();
     List<TransferOut> listTransferOut = new ArrayList<>();
@@ -64,7 +66,7 @@ public class Member extends javax.swing.JFrame {
         
         String orgID = ListBranchActivity.getPartOrgIdByMemberId(user.getPartyMemberId());
         
-        listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(user.getPartyMemberId());
+        listSignBranchActivity = List_Sign_Member.getBranchActivitiesByIdMember(user.getPartyMemberId());
         
         listReward = ListRewardPartyMember.getBranchActivitiesByOrgId(user.getPartyMemberId());
         
@@ -122,20 +124,25 @@ public class Member extends javax.swing.JFrame {
     
     
     public void ViewBranchActivity() {
-        if (!listBranchActivity.isEmpty()) {
-            BranchActivity currentActivity = listBranchActivity.get(posBranchActy);
-
-            this.jTextFieldNameActivity.setText(currentActivity.getActivityName());
+        if (!listSignBranchActivity.isEmpty()) {
+            SignBranchActivity currentActivity = listSignBranchActivity.get(posBranchActy);
+            
+            String sd = List_Sign_Member.getDateStartByIdBA(currentActivity.getIdBA());
+            String ed = List_Sign_Member.getDateEndByIdBA(currentActivity.getIdBA());
+            String name = List_Sign_Member.getNameAByIdBA(currentActivity.getIdBA());
+            String detail = List_Sign_Member.getDetailByIdBA(currentActivity.getIdBA());
+            
+            this.jTextFieldNameActivity.setText(name);
             this.jTextFieldIDActivity.setText(currentActivity.getId());
 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDateString = formatter.format(currentActivity.getStartDate());
-            String joinDateString = formatter.format(currentActivity.getEndDate());
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            String birthDateString = formatter.format(currentActivity.getStartDate());
+//            String joinDateString = formatter.format(currentActivity.getEndDate());
 
-            this.jTextFieldStartDateActivity.setText(birthDateString);
-            this.jTextFieldEndDateActivity.setText(joinDateString);
-
-            this.jEditorPaneDescpitActivity.setText(currentActivity.getDescription());
+            this.jTextFieldStartDateActivity.setText(sd);
+            this.jTextFieldEndDateActivity.setText(ed);
+            this.jTextFieldStatusActivity.setText(currentActivity.getStatus());
+            this.jEditorPaneDescpitActivity.setText(detail);
             
         } else {
             // Xử lý khi không có hoạt động nào
@@ -145,8 +152,11 @@ public class Member extends javax.swing.JFrame {
     public void ViewTableBranchActivity() {
         DefaultTableModel model = (DefaultTableModel) this.jTableBranchActivity.getModel();
         model.setNumRows(0);
-        for (BranchActivity ba : listBranchActivity) {
-            model.addRow(new Object[]{ba.getId(), ba.getActivityName() , ba.getStartDate(), ba.getEndDate()});
+        for (SignBranchActivity ba : listSignBranchActivity) {
+            String sd = List_Sign_Member.getDateStartByIdBA(ba.getIdBA());
+            String ed = List_Sign_Member.getDateEndByIdBA(ba.getIdBA());
+            String name = List_Sign_Member.getNameAByIdBA(ba.getIdBA());
+            model.addRow(new Object[]{ba.getIdBA(), name, sd, ed, ba.getStatus()});
         }
     }
     
@@ -1355,12 +1365,11 @@ public class Member extends javax.swing.JFrame {
         
         
         if ("Chưa Đăng Ký".equals(status)){
-            ListBranchActivity editBA = new ListBranchActivity();
-            //String id, String partyMemberId, String activityName, String startDate, String endDate, String status, String description, String orgId
+            List_Sign_Member editBA = new List_Sign_Member();
             String updateStatus = "Chưa Hoàn Thành";
-            editBA.updateBranchActivity(idBA, idMember, nameBA, startDate, endDate, updateStatus, detail, orgID);
+            editBA.updateSignBranchActivity(idBA, idMember, orgID, updateStatus);
             
-            listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(idMember);
+            listSignBranchActivity = List_Sign_Member.getBranchActivitiesByIdMember(idBA);
             
             JOptionPane.showMessageDialog(null, "Bạn đã đăng ký sinh hoạt thành công!");
             
@@ -1428,12 +1437,15 @@ public class Member extends javax.swing.JFrame {
 
             // If the user clicks "Yes", proceed with the cancellation
             if (confirm == JOptionPane.YES_OPTION) {
-                ListBranchActivity editBA = new ListBranchActivity();
-                // Update status to "Chưa Đăng Ký"
+//                ListBranchActivity editBA = new ListBranchActivity();
+//                // Update status to "Chưa Đăng Ký"
+//                String updateStatus = "Chưa Đăng Ký";
+//                editBA.updateBranchActivity(idBA, idMember, nameBA, startDate, endDate, updateStatus, detail, orgID);
+                List_Sign_Member editBA = new List_Sign_Member();
                 String updateStatus = "Chưa Đăng Ký";
-                editBA.updateBranchActivity(idBA, idMember, nameBA, startDate, endDate, updateStatus, detail, orgID);
-
-                listBranchActivity = ListBranchActivity.getBranchActivitiesByIdMember(idMember);
+                editBA.updateSignBranchActivity(idBA, idMember, orgID, updateStatus);
+                
+                listSignBranchActivity = List_Sign_Member.getBranchActivitiesByIdMember(idBA);
                 JOptionPane.showMessageDialog(null, "Bạn đã huỷ đăng ký sinh hoạt thành công!");
 
                 ViewBranchActivity();
@@ -1453,20 +1465,25 @@ public class Member extends javax.swing.JFrame {
         // TODO add your handling code here:
         String id = this.jTextField_SearchBA.getText();
         
-        BranchActivity activity = findActivityById(id);
+        SignBranchActivity activity = findActivityById(id);
         if (activity != null) {
             
-            this.jTextFieldNameActivity.setText(activity.getActivityName());
-            this.jTextFieldIDActivity.setText(activity.getId());
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDateString = formatter.format(activity.getStartDate());
-            String joinDateString = formatter.format(activity.getEndDate());
-
-            this.jTextFieldStartDateActivity.setText(birthDateString);
-            this.jTextFieldEndDateActivity.setText(joinDateString);
+            String sd = List_Sign_Member.getDateStartByIdBA(activity.getIdBA());
+            String ed = List_Sign_Member.getDateEndByIdBA(activity.getIdBA());
+            String name = List_Sign_Member.getNameAByIdBA(activity.getIdBA());
+            String detail = List_Sign_Member.getDetailByIdBA(activity.getIdBA());
             
-            this.jEditorPaneDescpitActivity.setText(activity.getDescription());
+            this.jTextFieldNameActivity.setText(name);
+            this.jTextFieldIDActivity.setText(activity.getIdBA());
+
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            String birthDateString = formatter.format(activity.getStartDate());
+//            String joinDateString = formatter.format(activity.getEndDate());
+
+            this.jTextFieldStartDateActivity.setText(sd);
+            this.jTextFieldEndDateActivity.setText(ed);
+            
+            this.jEditorPaneDescpitActivity.setText(detail);
             
         } else {
             JOptionPane.showMessageDialog(null, "Không tìm thấy buổi sinh hoạt với ID này.");
@@ -1478,9 +1495,9 @@ public class Member extends javax.swing.JFrame {
     private void jButton_SignIn_BranchActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SignIn_BranchActivityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_SignIn_BranchActivityActionPerformed
-    public BranchActivity findActivityById(String id) {
-        for (BranchActivity activity : listBranchActivity) {
-            if (activity.getId().equals(id)) {
+    public SignBranchActivity findActivityById(String id) {
+        for (SignBranchActivity activity : listSignBranchActivity) {
+            if (activity.getIdBA().equals(id)) {
                 return activity;  // Trả về đối tượng nếu tìm thấy
             }
         }

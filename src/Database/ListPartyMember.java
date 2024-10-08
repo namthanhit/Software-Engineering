@@ -73,6 +73,43 @@ public class ListPartyMember {
         return fullName;
     }
 
-    
+    public static List<PartyMember> getPartyMembersInOrg(String idOrg) {
+        List<PartyMember> partyMembers = new ArrayList<>();
+        String sql = "SELECT id, fullName, birthDate, joinDate, address, email, phoneNumber, position, avatar, orgId, detail FROM PartyMember WHERE idOrg = ?";
+
+        try (Connection connection = java.sql.DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, idOrg);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String fullName = rs.getString("fullName");
+                Date birthDate = rs.getDate("birthDate");
+                Date joinDate = rs.getDate("joinDate");
+                String address = rs.getString("address");
+                String email = rs.getString("email");
+                String phoneNumber = rs.getString("phoneNumber");
+                String position = rs.getString("position");
+                String orgId = rs.getString("orgId");
+                byte[] avatarBytes = rs.getBytes("avatar");
+                String detail = rs.getString("detail");
+                // Chuyển byte[] avatar thành Icon (ImageIcon)
+                ImageIcon avatar = null;
+                if (avatarBytes != null) {
+                    avatar = new ImageIcon(avatarBytes);
+                }
+
+                // Tạo một đối tượng PartyMember và thêm vào danh sách
+                PartyMember partyMember = new PartyMember(avatar, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId, detail);
+                partyMembers.add(partyMember);
+            }
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+        return partyMembers;
+    }
     
 }

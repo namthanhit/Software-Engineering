@@ -23,33 +23,37 @@ public class List_BranchActivity_Org {
     
     private static DatabaseConfig dbconfig = new DatabaseConfig();
     
-    public static List<BranchActivity> getBranchActivities() {
+    public static List<BranchActivity> getBranchActivities(String orgId) {
         List<BranchActivity> activities = new ArrayList<>();
- 
-        String query = "SELECT id, activityName, startDate, endDate, description, orgId FROM BranchActivity";
+
+        // Use a prepared statement to avoid SQL injection and to handle parameters
+        String query = "SELECT id, activityName, startDate, endDate, description FROM BranchActivity WHERE orgId = ?";
 
         try (Connection connection = java.sql.DriverManager.getConnection(dbconfig.getUrl(), dbconfig.getUsername(), dbconfig.getPassword());
-            Statement stmt = connection.createStatement();
-             ResultSet resultSet = stmt.executeQuery(query)) {
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
 
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String activityName = resultSet.getString("activityName");
-                Date startDate = resultSet.getDate("startDate");
-                Date endDate = resultSet.getDate("endDate");
-                String description = resultSet.getString("description");
-                String orgId = resultSet.getString("orgId");
+            // Set the orgId parameter
+            pstmt.setString(1, orgId);
 
-                BranchActivity activity = new BranchActivity(id, activityName, startDate, endDate, description, orgId);
-                activities.add(activity);
-                
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                while (resultSet.next()) {
+                    String id = resultSet.getString("id");
+                    String activityName = resultSet.getString("activityName");
+                    Date startDate = resultSet.getDate("startDate");
+                    Date endDate = resultSet.getDate("endDate");
+                    String description = resultSet.getString("description");
+
+                    BranchActivity activity = new BranchActivity(id, activityName, startDate, endDate, description, orgId);
+                    activities.add(activity);
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
         return activities;
     }
+
     
     public static String getPartOrgIdByMemberId(String partyMemberId) {
         String orgId = null;
