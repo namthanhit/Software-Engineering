@@ -8,14 +8,17 @@ import Class.Discipline;
 import Class.User;
 
 import Class.PartyMember;
+import Class.Reward;
 import Class.User;
 import Database.DisciplineList;
 import Database.ListDisciplinePartyMember;
 import Database.AddDiscipline;
+import Database.AddReward;
 import Database.ListPartyMember;
 import Database.PartyMemberAdd;
 import Database.PartyMemberDelete;
 import Database.PartyMemberEdit;
+import Database.RewardList;
 import com.sun.jdi.connect.spi.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -38,11 +41,16 @@ public class Organization extends javax.swing.JFrame {
     //list DangVien
     List<PartyMember> listDV = ListPartyMember.getAllPartyMembers();
     List<Discipline> listKL = DisciplineList.getAllDisciplines();
+    
+    List<Reward> listReward = RewardList.getAllRewards();
+    
     private static int pos = 0;
     private static int posKL = 0;
+    private static int posReward = 0;
     private static int stt = 0;
     private static int checkSaveDV = 0;
     private static String name;
+    private static String nameR;
     /* set onoff cho card DangVien */
     public void OnOffDangVien(boolean a, boolean b, boolean c)
     {
@@ -63,6 +71,14 @@ public class Organization extends javax.swing.JFrame {
         
         this.ButtonBHKL.show(b);
         this.ButtonCancelKL.show(b);
+    }
+    
+    public void OnOffReward(boolean a, boolean b)
+    {
+        this.ButtonReward.show(a);
+        
+        this.ButtonBHReward.show(b);
+        this.ButtonCancelReward.show(b);
     }
     
 //set view cho card DangVien
@@ -104,6 +120,23 @@ public class Organization extends javax.swing.JFrame {
         
         OnOffKyLuat(true, false);
     }
+    
+    public void viewReward()
+    {
+        Reward ra = listReward.get(posReward);
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = dateFormat.format(ra.getRewardDate());
+        
+        this.TextFieldIDReward.setText(ra.getId());
+        this.TextFieldPMIDReward.setText(ra.getPartyMemberId());
+        this.TextFieldorgIdReward.setText(ra.getOrgId());
+        this.TextFieldNQDReward.setText(ra.getDecisionMaker());
+        this.TextFielddateReward.setText(date);
+        this.EditorPaneNDReward.setText(ra.getDescription());
+        
+        OnOffReward(true, false);
+    }
 // set viewTable cho crad DangVien
     public void viewTableDv()
     {
@@ -137,6 +170,24 @@ public class Organization extends javax.swing.JFrame {
         }
     }
     
+    public void viewTableReward()
+    {
+        DefaultTableModel tableReward = (DefaultTableModel) this.TableReward.getModel();
+        tableReward.setNumRows(0);
+        for(Reward RA : listReward)
+        {
+            for(PartyMember pm : listDV)
+            {
+                if(RA.getPartyMemberId().equals(pm.getId()))
+                {
+                    nameR = pm.getFullName();
+                    break;
+                }
+            }
+            
+            tableReward.addRow(new Object[] {RA.getId(), RA.getPartyMemberId(), nameR, RA.getRewardDate(), RA.getDecisionMaker(), RA.getDescription()});
+        }
+    }
     /**
      * Creates new form Organization
      */
@@ -154,6 +205,9 @@ public class Organization extends javax.swing.JFrame {
         
         viewKL();
         viewTableKL();
+        
+        viewReward();
+        viewTableReward();
     }
     public Organization(User user) {
         initComponents();
@@ -171,6 +225,9 @@ public class Organization extends javax.swing.JFrame {
         
         viewKL();
         viewTableKL();
+        
+        viewReward();
+        viewTableReward();
     }
   
     //--------------------
@@ -267,20 +324,26 @@ public class Organization extends javax.swing.JFrame {
         jLabel54 = new javax.swing.JLabel();
         jLabel79 = new javax.swing.JLabel();
         jScrollPane16 = new javax.swing.JScrollPane();
-        jTable14 = new javax.swing.JTable();
-        jTextField14 = new javax.swing.JTextField();
-        jButton13 = new javax.swing.JButton();
+        TableReward = new javax.swing.JTable();
+        TextFieldSearchReward = new javax.swing.JTextField();
+        ButtonSearchReward = new javax.swing.JButton();
         jLabel80 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jTextField36 = new javax.swing.JTextField();
+        TextFieldIDReward = new javax.swing.JTextField();
         jLabel38 = new javax.swing.JLabel();
-        jTextField37 = new javax.swing.JTextField();
+        TextFieldPMIDReward = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        TextFieldorgIdReward = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        TextFieldNQDReward = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        TextFielddateReward = new javax.swing.JTextField();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jEditorPane7 = new javax.swing.JEditorPane();
+        EditorPaneNDReward = new javax.swing.JEditorPane();
         jLabel49 = new javax.swing.JLabel();
-        jButton36 = new javax.swing.JButton();
-        jButton37 = new javax.swing.JButton();
-        jButton38 = new javax.swing.JButton();
+        ButtonReward = new javax.swing.JButton();
+        ButtonCancelReward = new javax.swing.JButton();
+        ButtonBHReward = new javax.swing.JButton();
         jLabel81 = new javax.swing.JLabel();
         cardDangVien = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -864,40 +927,44 @@ public class Organization extends javax.swing.JFrame {
         jLabel79.setText("Danh Sách Đảng Viên Đã Có Thành Tích Tốt:");
         cardThanhTich.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 64, -1, 31));
 
-        jTable14.setModel(new javax.swing.table.DefaultTableModel(
+        TableReward.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Quyết Định", "Mã Đảng Viên", "Họ và Tên", "Ngày Quyết Định", "Nội Dung"
+                "Mã Quyết Định", "Mã Đảng Viên", "Họ và Tên", "Ngày Quyết Định", "Người quyết định", "Nội Dung"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane16.setViewportView(jTable14);
+        jScrollPane16.setViewportView(TableReward);
 
         cardThanhTich.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 113, 802, 168));
 
-        jTextField14.setText("Tìm kiếm ");
-        jTextField14.setPreferredSize(new java.awt.Dimension(67, 30));
-        cardThanhTich.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 128, -1));
+        TextFieldSearchReward.setPreferredSize(new java.awt.Dimension(67, 30));
+        cardThanhTich.add(TextFieldSearchReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 128, -1));
 
-        jButton13.setBackground(new java.awt.Color(0, 204, 255));
-        jButton13.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jButton13.setForeground(new java.awt.Color(255, 255, 255));
-        jButton13.setText("Tìm");
-        jButton13.setBorder(null);
-        jButton13.setPreferredSize(new java.awt.Dimension(22, 30));
-        cardThanhTich.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 40, 61, -1));
+        ButtonSearchReward.setBackground(new java.awt.Color(0, 204, 255));
+        ButtonSearchReward.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        ButtonSearchReward.setForeground(new java.awt.Color(255, 255, 255));
+        ButtonSearchReward.setText("Tìm");
+        ButtonSearchReward.setBorder(null);
+        ButtonSearchReward.setPreferredSize(new java.awt.Dimension(22, 30));
+        ButtonSearchReward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonSearchRewardActionPerformed(evt);
+            }
+        });
+        cardThanhTich.add(ButtonSearchReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 40, 61, -1));
 
         jLabel80.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel80.setText("Khen Thưởng Đảng Viên Đã Có Thành Tích Tốt:");
@@ -906,39 +973,76 @@ public class Organization extends javax.swing.JFrame {
         jLabel20.setText("Mã quyết định:");
         cardThanhTich.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 330, -1, -1));
 
-        jTextField36.setText("TT2024LDCB");
-        cardThanhTich.add(jTextField36, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 353, 161, -1));
+        TextFieldIDReward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextFieldIDRewardActionPerformed(evt);
+            }
+        });
+        cardThanhTich.add(TextFieldIDReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 353, 161, -1));
 
         jLabel38.setText("Mã Đảng viên:");
-        cardThanhTich.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 388, 88, -1));
+        cardThanhTich.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 88, -1));
+        cardThanhTich.add(TextFieldPMIDReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 353, 161, -1));
 
-        jTextField37.setText("TT2024LDCB");
-        cardThanhTich.add(jTextField37, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 411, 161, -1));
+        jLabel8.setText("Ngày quyết định:");
+        cardThanhTich.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 470, 100, -1));
+        cardThanhTich.add(TextFieldorgIdReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 420, 160, -1));
 
-        jScrollPane9.setViewportView(jEditorPane7);
+        jLabel21.setText("Mã tổ chức:");
+        cardThanhTich.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 400, 90, -1));
 
-        cardThanhTich.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 353, 522, 157));
+        TextFieldNQDReward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextFieldNQDRewardActionPerformed(evt);
+            }
+        });
+        cardThanhTich.add(TextFieldNQDReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 160, -1));
+
+        jLabel26.setText("Người quyết đinh:");
+        cardThanhTich.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, 110, -1));
+
+        TextFielddateReward.setPreferredSize(new java.awt.Dimension(82, 22));
+        cardThanhTich.add(TextFielddateReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 490, 160, -1));
+
+        jScrollPane9.setViewportView(EditorPaneNDReward);
+
+        cardThanhTich.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(407, 353, 360, 200));
 
         jLabel49.setText("Nội Dung:");
-        cardThanhTich.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 330, -1, -1));
+        cardThanhTich.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 330, -1, -1));
 
-        jButton36.setBackground(new java.awt.Color(0, 153, 0));
-        jButton36.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton36.setForeground(new java.awt.Color(255, 255, 255));
-        jButton36.setText("Khen Thưởng");
-        cardThanhTich.add(jButton36, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 366, -1, -1));
+        ButtonReward.setBackground(new java.awt.Color(0, 153, 0));
+        ButtonReward.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        ButtonReward.setForeground(new java.awt.Color(255, 255, 255));
+        ButtonReward.setText("Khen Thưởng");
+        ButtonReward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRewardActionPerformed(evt);
+            }
+        });
+        cardThanhTich.add(ButtonReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 366, -1, -1));
 
-        jButton37.setBackground(new java.awt.Color(204, 0, 0));
-        jButton37.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jButton37.setForeground(new java.awt.Color(255, 255, 255));
-        jButton37.setText("Huỷ");
-        cardThanhTich.add(jButton37, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 428, 124, -1));
+        ButtonCancelReward.setBackground(new java.awt.Color(204, 0, 0));
+        ButtonCancelReward.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        ButtonCancelReward.setForeground(new java.awt.Color(255, 255, 255));
+        ButtonCancelReward.setText("Huỷ");
+        ButtonCancelReward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonCancelRewardActionPerformed(evt);
+            }
+        });
+        cardThanhTich.add(ButtonCancelReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 428, 124, -1));
 
-        jButton38.setBackground(new java.awt.Color(0, 153, 0));
-        jButton38.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton38.setForeground(new java.awt.Color(255, 255, 255));
-        jButton38.setText("Ban Hành");
-        cardThanhTich.add(jButton38, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 398, 124, -1));
+        ButtonBHReward.setBackground(new java.awt.Color(0, 153, 0));
+        ButtonBHReward.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        ButtonBHReward.setForeground(new java.awt.Color(255, 255, 255));
+        ButtonBHReward.setText("Ban Hành");
+        ButtonBHReward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonBHRewardActionPerformed(evt);
+            }
+        });
+        cardThanhTich.add(ButtonBHReward, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 398, 124, -1));
 
         jLabel81.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bgr.jpg"))); // NOI18N
         cardThanhTich.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -3, 950, 580));
@@ -1634,12 +1738,20 @@ public class Organization extends javax.swing.JFrame {
             String detail = this.EditorPaneQTCT.getText();
             PartyMemberAdd add = new PartyMemberAdd();
             
-            add.addPartyMember(null, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId, detail);
+            if(fullName.isEmpty()|| id.isEmpty() || birthDate.isEmpty()|| orgId.isEmpty()|| joinDate.isEmpty()|| position.isEmpty()|| email.isEmpty()||
+                    phoneNumber.isEmpty()||address.isEmpty()||detail.isEmpty())
+            {
+                JOptionPane.showMessageDialog(null, "Không được để trống!");
+            }
+            else{
+                add.addPartyMember(null, id, fullName, birthDate, joinDate, address, email, phoneNumber, position, orgId, detail);
         
-            listDV = ListPartyMember.getAllPartyMembers();
-            ViewDangVien();
-            viewTableDv();
-        }
+                listDV = ListPartyMember.getAllPartyMembers();
+                ViewDangVien();
+                viewTableDv();
+            }
+            
+                    }
         else if(checkSaveDV == -1){
             String fullName = this.TextFieldHoTen.getText();
             String id = this.TextFieldID.getText();
@@ -1833,13 +1945,21 @@ public class Organization extends javax.swing.JFrame {
         String ngayQDKL = this.TextFieldngayQDKL.getText();
         String orgIdQD = this.TextFieldorgIdKL.getText();
         
-        AddDiscipline add = new AddDiscipline();
+        if(idqd.isEmpty()|| madv.isEmpty()||ndkl.isEmpty()||ngqd.isEmpty()||ngayQDKL.isEmpty()||orgIdQD.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Không được để trống!");
+        }
+        else{
+            AddDiscipline add = new AddDiscipline();
         
-        add.addDiscipline(idqd, madv, orgIdQD, ngqd, ngayQDKL, ndkl);
-        listKL = DisciplineList.getAllDisciplines();
+            add.addDiscipline(idqd, madv, orgIdQD, ngqd, ngayQDKL, ndkl);
+            listKL = DisciplineList.getAllDisciplines();
         
-        viewKL();
-        viewTableKL();
+            viewKL();
+            viewTableKL();
+        }
+        
+        
         
     }//GEN-LAST:event_ButtonBHKLActionPerformed
 
@@ -1896,6 +2016,86 @@ public class Organization extends javax.swing.JFrame {
         
     }//GEN-LAST:event_ButtonSearchKLActionPerformed
 
+    private void TextFieldIDRewardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldIDRewardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldIDRewardActionPerformed
+
+    private void TextFieldNQDRewardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNQDRewardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldNQDRewardActionPerformed
+
+    private void ButtonSearchRewardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSearchRewardActionPerformed
+        // TODO add your handling code here:
+        String search = this.TextFieldSearchReward.getText();
+        posReward = 0;
+        int checksearch = 0;
+        for(Reward ra: listReward)
+        {
+            if(ra.getId().equals(search))
+            {
+                checksearch = 1;
+                break;
+            }
+            posReward++;
+        }
+        
+        if(checksearch == 1)
+        {
+            JOptionPane.showMessageDialog(null, "Thành công!");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Không tìm thấy!");
+            posReward = 0;
+        }
+        
+        viewReward();
+        
+    }//GEN-LAST:event_ButtonSearchRewardActionPerformed
+
+    private void ButtonRewardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRewardActionPerformed
+        // TODO add your handling code here:
+        OnOffReward(false, true);
+        
+        this.TextFieldIDReward.setText("");
+        this.TextFieldPMIDReward.setText("");
+        this.TextFieldorgIdReward.setText("");
+        this.TextFieldNQDReward.setText("");
+        this.TextFielddateReward.setText("");
+        this.EditorPaneNDReward.setText("");
+    }//GEN-LAST:event_ButtonRewardActionPerformed
+
+    private void ButtonCancelRewardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCancelRewardActionPerformed
+        // TODO add your handling code here:
+        viewReward();
+    }//GEN-LAST:event_ButtonCancelRewardActionPerformed
+
+    private void ButtonBHRewardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonBHRewardActionPerformed
+        // TODO add your handling code here:
+        
+        String id = this.TextFieldIDReward.getText();
+        String idpm =  this.TextFieldPMIDReward.getText();
+        String orgid = this.TextFieldorgIdReward.getText();
+        String nqd = this.TextFieldNQDReward.getText();
+        String date = this.TextFielddateReward.getText();
+        String nd = this.EditorPaneNDReward.getText();
+        
+        if(id.isEmpty()||idpm.isEmpty()||orgid.isEmpty()||nqd.isEmpty()||date.isEmpty()||nd.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Không được để trống!");
+        }
+        else{
+            AddReward add = new AddReward();
+            add.addReward(id, idpm, orgid, nqd, date, nd);
+        
+            listReward = RewardList.getAllRewards();
+        
+            viewReward();
+            viewTableReward();
+        }
+        
+    }//GEN-LAST:event_ButtonBHRewardActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1934,33 +2134,45 @@ public class Organization extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundMenu;
     private javax.swing.JButton ButtonBHKL;
+    private javax.swing.JButton ButtonBHReward;
     private javax.swing.JButton ButtonCancelKL;
+    private javax.swing.JButton ButtonCancelReward;
     private javax.swing.JButton ButtonKyLuat;
+    private javax.swing.JButton ButtonReward;
     private javax.swing.JButton ButtonSearchDV;
     private javax.swing.JButton ButtonSearchKL;
+    private javax.swing.JButton ButtonSearchReward;
     private javax.swing.JEditorPane EditorPaneNDKL;
+    private javax.swing.JEditorPane EditorPaneNDReward;
     private javax.swing.JEditorPane EditorPaneQTCT;
     private javax.swing.JTable TableDV;
     private javax.swing.JTable TableKL;
+    private javax.swing.JTable TableReward;
     private javax.swing.JTextField TextFieldAddress;
     private javax.swing.JTextField TextFieldEmail;
     private javax.swing.JTextField TextFieldHoTen;
     private javax.swing.JTextField TextFieldHoTen1;
     private javax.swing.JTextField TextFieldID;
     private javax.swing.JTextField TextFieldIDQD;
+    private javax.swing.JTextField TextFieldIDReward;
     private javax.swing.JTextField TextFieldIDdvKL;
     private javax.swing.JTextField TextFieldNQDKL;
+    private javax.swing.JTextField TextFieldNQDReward;
     private javax.swing.JTextField TextFieldNgaySinh;
     private javax.swing.JTextField TextFieldNgayVao;
     private javax.swing.JTextField TextFieldOrgID;
+    private javax.swing.JTextField TextFieldPMIDReward;
     private javax.swing.JTextField TextFieldPhoneNumber;
     private javax.swing.JTextField TextFieldPosition;
     private javax.swing.JTextField TextFieldSearchDV;
     private javax.swing.JTextField TextFieldSearchIN;
     private javax.swing.JTextField TextFieldSearchKL;
     private javax.swing.JTextField TextFieldSearchOUT;
+    private javax.swing.JTextField TextFieldSearchReward;
+    private javax.swing.JTextField TextFielddateReward;
     private javax.swing.JTextField TextFieldngayQDKL;
     private javax.swing.JTextField TextFieldorgIdKL;
+    private javax.swing.JTextField TextFieldorgIdReward;
     private javax.swing.JButton btnAddDV;
     private javax.swing.JButton btnCancelDV;
     private javax.swing.JButton btnDeleteDV;
@@ -1975,7 +2187,6 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JPanel cardThanhTich;
     private javax.swing.JPanel cardViewDetail;
     private javax.swing.JPanel cardYeuCau;
-    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton20;
@@ -1994,14 +2205,10 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JButton jButton33;
     private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton35;
-    private javax.swing.JButton jButton36;
-    private javax.swing.JButton jButton37;
-    private javax.swing.JButton jButton38;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JEditorPane jEditorPane4;
     private javax.swing.JEditorPane jEditorPane5;
     private javax.swing.JEditorPane jEditorPane6;
-    private javax.swing.JEditorPane jEditorPane7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2015,10 +2222,12 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -2072,6 +2281,7 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel9;
@@ -2099,12 +2309,10 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable12;
-    private javax.swing.JTable jTable14;
     private javax.swing.JTable jTable15;
     private javax.swing.JTable jTable16;
     private javax.swing.JTable jTable17;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
@@ -2123,8 +2331,6 @@ public class Organization extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField33;
     private javax.swing.JTextField jTextField34;
     private javax.swing.JTextField jTextField35;
-    private javax.swing.JTextField jTextField36;
-    private javax.swing.JTextField jTextField37;
     private javax.swing.JPanel jplMain;
     private javax.swing.JPanel jplSlideMenu;
     private javax.swing.JPanel jplTitle;
