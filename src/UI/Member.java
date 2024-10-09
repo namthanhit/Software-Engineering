@@ -133,7 +133,7 @@ public class Member extends javax.swing.JFrame {
             String detail = List_Sign_Member.getDetailByIdBA(currentActivity.getIdBA());
             
             this.jTextFieldNameActivity.setText(name);
-            this.jTextFieldIDActivity.setText(currentActivity.getId());
+            this.jTextFieldIDActivity.setText(currentActivity.getIdBA());
 
 //            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 //            String birthDateString = formatter.format(currentActivity.getStartDate());
@@ -902,7 +902,7 @@ public class Member extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Mã Đảng Viên", "Mã Tổ Chức", "Ngày Chuyển", "Lý Do", "Trạng Thái"
+                "Mã Tổ Chức", "Mã Đảng Viên", "Ngày Chuyển", "Lý Do", "Trạng Thái"
             }
         ));
         jTableTransferOut.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1369,7 +1369,7 @@ public class Member extends javax.swing.JFrame {
             String updateStatus = "Chưa Hoàn Thành";
             editBA.updateSignBranchActivity(idBA, idMember, orgID, updateStatus);
             
-            listSignBranchActivity = List_Sign_Member.getBranchActivitiesByIdMember(idBA);
+            listSignBranchActivity = List_Sign_Member.getBranchActivitiesByIdMember(idMember);
             
             JOptionPane.showMessageDialog(null, "Bạn đã đăng ký sinh hoạt thành công!");
             
@@ -1445,7 +1445,7 @@ public class Member extends javax.swing.JFrame {
                 String updateStatus = "Chưa Đăng Ký";
                 editBA.updateSignBranchActivity(idBA, idMember, orgID, updateStatus);
                 
-                listSignBranchActivity = List_Sign_Member.getBranchActivitiesByIdMember(idBA);
+                listSignBranchActivity = List_Sign_Member.getBranchActivitiesByIdMember(idMember);
                 JOptionPane.showMessageDialog(null, "Bạn đã huỷ đăng ký sinh hoạt thành công!");
 
                 ViewBranchActivity();

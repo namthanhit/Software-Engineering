@@ -958,7 +958,7 @@ public class Admin extends javax.swing.JFrame {
                 jTextFieldQLorgID.setText("");
                 jPasswordFieldCr1.setText("");
                 jPasswordFieldCr2.setText("");
-                JOptionPane.showMessageDialog(rootPane, "DONE!");
+                
             }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -1347,7 +1347,7 @@ private void searchOrg(String ID){
             else{
                 deleteOrg(TextFieldQLOrgId.getText(), jTextFieldQLOrgName.getText(), jFormattedTextFieldDate.getText());
                 loadUserToTablePQ();
-                JOptionPane.showMessageDialog(rootPane, "DONE!");
+                
                 TextFieldQLOrgId.setText("");
                 jTextFieldQLOrgName.setText("");
                 jFormattedTextFieldDate.setText("");
@@ -1384,7 +1384,7 @@ private void searchOrg(String ID){
             else user.setRole(true);
             deleteUser(user);
             loadUserToTablePQ();
-            JOptionPane.showMessageDialog(rootPane, "DONE!");
+            
             jTextFieldPQID.setText("");
             jTextFieldPQorgID.setText("");
             jTextFieldPQMK.setText("");
